@@ -7,7 +7,7 @@
 
 
 //prototypes
-int chToI(char *, int);
+int chToI(char *, int, int);
 int chToI2(char *);
 void OP0(char *, short int **);
 void OP1(char *, short int **);
@@ -60,7 +60,7 @@ int main() {
   short int *Pt[4] = {&P0, &P1, &P2, &P3};
   char input_line[7]; //input from file
   FILE *fp; //file pointer
-  fp = fopen ("Program1.txt","r");
+  fp = fopen ("Program2.txt","r");
   if (!fp) exit(1);
   char ch = 'a';
   int t = 0;
@@ -74,11 +74,6 @@ int main() {
     for(int i = 0; i<6; i++) {
       memory[PC][i] = input_line[i];
     }
-    char * op2 = (char *)malloc(2*sizeof(char));
-    op2[0] = memory[PC][4];
-    op2[1] = memory[PC][5];
-    printf("%c%c", op2[0], op2[1]);
-    exit(1);
     if(ch == EOF) break;
     PC++;
   }
@@ -93,6 +88,7 @@ int main() {
     switch(opcode) {  //compute opcode
       case 0:
       OP0(IR, Pt);
+      printf("%hi", P0);
       PC++;
       break;
 
@@ -282,11 +278,11 @@ int main() {
   fclose(fp);
 }
 
-int chToI(char * num, int length) { //not sure if this returns the correct opcode
+int chToI(char * num, int start, int end) { //not sure if this returns the correct opcode
 	short int finalVal = 0;
   finalVal += num[length - 1] - 48;
-  for (int i = length - 1; i >= 0; i++) {
-  	finalVal += (num[i - 1] - 48) * (pow(10.0, (double) i));
+  for (int i = start; i <= end; i++) {
+  	finalVal += (num[i] - 48) * (pow(10.0, (double) (end-start)));
   }
   return finalVal;
 }
