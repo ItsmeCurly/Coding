@@ -61,7 +61,7 @@ int main() {
   short int PC = 0; //program counter
 	int ACC = 0; //accumulator
   int R0, R1, R2, R3 = 0; //registers
-  int *Rg[4] = {&R0, &R1, &R2, &R3};
+  int * Rg[4] = {&R0, &R1, &R2, &R3};
   short int P0, P1, P2, P3 = 0; //pointers
   short int *Pt[4] = {&P0, &P1, &P2, &P3};
   char input_line[7]; //input from file
@@ -94,14 +94,16 @@ int main() {
   }
   fclose(fp);
   PC = 0;
-
-  while(PC<4) {  //computer loop
+  *Pt[0] = 10;
+  while(PC<5) {  //computer loop
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
     }
-
+    for(int i = 0; i < 4; i++) {
+      printf("%hi ", *Pt[i]);
+    }
+    printf("\n");
     int opcode = chToI(IR, 0, 1); //get opcode
-    printf("%d\n", opcode);
     switch(opcode) {  //compute opcode
       case 0:
       OP0(IR, Pt);
@@ -111,7 +113,6 @@ int main() {
       case 1:
       OP1(IR, Pt);
       PC++;
-      exit(1);
       break;
 
       case 2:
@@ -298,8 +299,8 @@ int main() {
 //helper
 int chToI(char * num, int start, int end) {
 	int finalVal = 0;
-  for (int i = 0; i <= end-start; i++) {
-  	finalVal += ((int)num[i] - 48) * (pow(10.0, (double) (end-start-i)));
+  for (int i = end; i >= start; i--) {
+  	finalVal += ((int)num[i] - 48) * (pow(10.0, (double) (end - i)));
   }
   return finalVal;
 }
@@ -337,9 +338,12 @@ int fetch(char memory[][6], int m_loc) {
 }
 void store(char memory[][6], int line, int num) {
   char * temp = iToCh(num);
+  printf("Store to line: %d", line);
   for(int i = 0; i < 6; i++) {
     memory[line][i] = temp[i];
+
   }
+  fflush(stdout);
 }
 
 void printIR(char *IR) {
@@ -351,6 +355,7 @@ void printIR(char *IR) {
 void OP0(char * IR, short int **Pt) {
   printf("Opcode 00: Load Pointer Immediate\n");
   printIR(IR);
+  int m = parseOp2(IR);
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
 }
 void OP1(char * IR, short int **Pt) {
@@ -383,7 +388,7 @@ void OP5(char * IR, char memory[][6], int *ACC) {
 void OP6(char * IR, char memory[][6], int *ACC, short int **Pt) {
   printf("Opcode 06: Store Accumulator Register Addressing\n");
   printIR(IR);
-  int m_l = *Pt[parseOp1(IR)];
+  int m_l = *Pt[parseOp1Reg(IR)];
   store(memory, m_l, *ACC);
 }
 void OP7(char * IR, char memory[][6], int *ACC) {}
