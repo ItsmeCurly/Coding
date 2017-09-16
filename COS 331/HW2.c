@@ -9,22 +9,22 @@
 //prototypes
 int chToI(char *, int);
 int chToI2(char *);
-void OP0(char *);
-void OP1(char *);
-void OP2(char *);
-void OP3(char *);
-void OP4(char *);
-void OP5(char *);
-void OP6(char *);
-void OP7(char *);
-void OP8(char *);
-void OP9(char *);
-void OP10(char *);
-void OP11(char *);
-void OP12(char *);
-void OP13(char *);
-void OP14(char *);
-void OP15(char *);
+void OP0(char *, short int **);
+void OP1(char *, short int **);
+void OP2(char *, short int **);
+void OP3(char *, int *, short int **);
+void OP4(char *, char *, int *, short int **);
+void OP5(char *, char *, int *);
+void OP6(char *, char *, int *, short int **);
+void OP7(char *, char *, int *);
+void OP8(char *, char *, int **, short int **);
+void OP9(char *, char *, int **);
+void OP10(char *, char *, int **, short int **);
+void OP11(char *, char *, int **);
+void OP12(char *, int *);
+void OP13(char *, int **);
+void OP14(char *, int **);
+void OP15(char *, int **);
 void OP16(char *);
 void OP17(char *);
 void OP18(char *);
@@ -55,7 +55,9 @@ int main() {
   short int PC = 0; //program counter
 	int ACC = 0; //accumulator
   int R0, R1, R2, R3 = 0; //registers
+  int *Rg[4] = {&R0, &R1, &R2, &R3};
   short int P0, P1, P2, P3 = 0; //pointers
+  short int *Pt[4] = {&P0, &P1, &P2, &P3};
   char input_line[7]; //input from file
   FILE *fp; //file pointer
   fp = fopen ("Program1.txt","r");
@@ -63,7 +65,6 @@ int main() {
   char ch = 'a';
   int t = 0;
   while(1) {  //get opcodes from file
-
     while((ch = (char)fgetc(fp)) != EOF) {
       if(ch == '\n') break;
       input_line[t] = ch;
@@ -73,6 +74,11 @@ int main() {
     for(int i = 0; i<6; i++) {
       memory[PC][i] = input_line[i];
     }
+    char * op2 = (char *)malloc(2*sizeof(char));
+    op2[0] = memory[PC][4];
+    op2[1] = memory[PC][5];
+    printf("%c%c", op2[0], op2[1]);
+    exit(1);
     if(ch == EOF) break;
     PC++;
   }
@@ -86,82 +92,82 @@ int main() {
 
     switch(opcode) {  //compute opcode
       case 0:
-      OP0(IR);
+      OP0(IR, Pt);
       PC++;
       break;
 
       case 1:
-      OP1(IR);
+      //OP1(IR);
       PC++;
       break;
 
       case 2:
-      OP2(IR);
+      //OP2(IR);
       PC++;
       break;
 
       case 3:
-      OP3(IR);
+      //OP3(IR);
       PC++;
       break;
 
       case 4:
-      OP4(IR);
+      //OP4(IR);
       PC++;
       break;
 
       case 5:
-      OP5(IR);
+      //OP5(IR);
       PC++;
       break;
 
       case 6:
-      OP6(IR);
+      //OP6(IR);
       PC++;
       break;
 
       case 7:
-      OP7(IR);
+      //OP7(IR);
       PC++;
       break;
 
       case 8:
-      OP8(IR);
+      //OP8(IR);
       PC++;
       break;
 
       case 9:
-      OP9(IR);
+      //OP9(IR);
       PC++;
       break;
 
       case 10:
-      OP10(IR);
+    //  OP10(IR);
       PC++;
       break;
 
       case 11:
-      OP11(IR);
+      //OP11(IR);
       PC++;
       break;
 
       case 12:
-      OP12(IR);
+      //OP12(IR);
       PC++;
       break;
 
       case 13:
-      OP13(IR);
+      //OP13(IR);
       PC++;
       break;
 
       case 14:
-      OP14(IR);
+      //OP14(IR);
       PC++;
       break;
 
       case 15:
-      OP15(IR);
+      //OP15(IR);
       PC++;
       break;
 
@@ -291,22 +297,29 @@ int chToI2(char * num) {  //if first doesn't work use this algorithm for correct
   return x+y;
 }
 //opcodes
-void OP0(char * IR) {}
-void OP1(char * IR) {}
-void OP2(char * IR) {}
-void OP3(char * IR) {}
-void OP4(char * IR) {}
-void OP5(char * IR) {}
-void OP6(char * IR) {}
-void OP7(char * IR) {}
-void OP8(char * IR) {}
-void OP9(char * IR) {}
-void OP10(char * IR) {}
-void OP11(char * IR) {}
-void OP12(char * IR) {}
-void OP13(char * IR) {}
-void OP14(char * IR) {}
-void OP15(char * IR) {}
+void OP0(char * IR, short int **Pt) {
+  char chn = IR[3];
+  int n = (int)chn;
+  char * op2 = (char *)malloc(2*sizeof(char));
+  op2[0] = IR[4];
+  op2[1] = IR[5];
+  *Pt[n] = chToI2(op2);
+}
+void OP1(char * IR, short int **Pt) {}
+void OP2(char * IR, short int **Pt) {}
+void OP3(char * IR, int *ACC, short int **Pt) {}
+void OP4(char * IR, char * memory, int *ACC, short int **Pt) {}
+void OP5(char * IR, char * memory, int *ACC) {}
+void OP6(char * IR, char * memory, int *ACC, short int **Pt) {}
+void OP7(char * IR, char * memory, int *ACC) {}
+void OP8(char * IR, char * memory, int **Rg, short int **Pt) {}
+void OP9(char * IR, char * memory, int **Rg) {}
+void OP10(char * IR, char * memory, int **Rg, short int **Pt) {}
+void OP11(char * IR, char * memory, int **Rg) {}
+void OP12(char * IR, int *R0) {}
+void OP13(char * IR, int **Rg) {}
+void OP14(char * IR, int **Rg) {}
+void OP15(char * IR, int **Rg) {}
 void OP16(char * IR) {}
 void OP17(char * IR) {}
 void OP18(char * IR) {}
