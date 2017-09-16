@@ -1,5 +1,4 @@
-//I do apologize if something is not correct in the includes, if I had a compiler I would know for certain, but cannot remember(I look them up as I code)
-//requires -std=c99 -lm
+//Added a 99ZZZZ at end of text file for exit
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -48,7 +47,6 @@ void OP35(char *);
 void OP99();
 
 int main() {
-
   char IR[6]; //instruction register
   char memory[100][6];  //main memory
   char PSW[2];  //true false status
@@ -77,18 +75,20 @@ int main() {
     if(ch == EOF) break;
     PC++;
   }
+  fclose(fp);
   PC = 0;
   while(1) {  //computer loop
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
     }
 
-    int opcode = chToI2(IR); //get opcode
+    int opcode = chToI(IR, 0, 1); //get opcode
 
     switch(opcode) {  //compute opcode
       case 0:
       OP0(IR, Pt);
       printf("%hi", P0);
+      exit(1);
       PC++;
       break;
 
@@ -275,31 +275,22 @@ int main() {
       default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
     }
   }
-  fclose(fp);
 }
 
-int chToI(char * num, int start, int end) { //not sure if this returns the correct opcode
+//helper
+int chToI(char * num, int start, int end) {
 	short int finalVal = 0;
-  finalVal += num[length - 1] - 48;
+  finalVal += num[(end-start) - 1] - 48;
   for (int i = start; i <= end; i++) {
   	finalVal += (num[i] - 48) * (pow(10.0, (double) (end-start)));
   }
   return finalVal;
 }
 
-int chToI2(char * num) {  //if first doesn't work use this algorithm for correct opcode
-  int x = ((int)num[0] - 48) * 10;
-  int y = ((int)num[1] - 48);
-  return x+y;
-}
 //opcodes
 void OP0(char * IR, short int **Pt) {
-  char chn = IR[3];
-  int n = (int)chn;
-  char * op2 = (char *)malloc(2*sizeof(char));
-  op2[0] = IR[4];
-  op2[1] = IR[5];
-  *Pt[n] = chToI2(op2);
+  int n = chToI(IR, 3, 3);
+  *Pt[n] = chToI(IR, 4, 5);
 }
 void OP1(char * IR, short int **Pt) {}
 void OP2(char * IR, short int **Pt) {}
