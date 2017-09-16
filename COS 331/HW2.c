@@ -62,7 +62,7 @@ int main() {
   int t = 0;
   while(1) {  //get opcodes from file
     if(ch == EOF) break;
-    while((ch = getc(fp)) != '\n' && ch != EOF) {
+    while((ch = getc(fp) != '\n' && ch != EOF) {
       input_line[t] = ch;
       t++;
     }
