@@ -11,7 +11,7 @@ int chToI2(char *);
 void OP0(char *, short int **);
 void OP1(char *, short int **);
 void OP2(char *, short int **);
-void OP3(char *, int *, short int **);
+void OP3(char *, int *);
 void OP4(char *, char *, int *, short int **);
 void OP5(char *, char *, int *);
 void OP6(char *, char *, int *, short int **);
@@ -93,77 +93,77 @@ int main() {
       break;
 
       case 1:
-      //OP1(IR);
+      OP1(IR, Pt);
       PC++;
       break;
 
       case 2:
-      //OP2(IR);
+      OP2(IR, Pt);
       PC++;
       break;
 
       case 3:
-      //OP3(IR);
+      OP3(IR, &ACC, Pt);
       PC++;
       break;
 
       case 4:
-      //OP4(IR);
+      OP4(IR, memory, &ACC, Pt);
       PC++;
       break;
 
       case 5:
-      //OP5(IR);
+      OP5(IR, memory, &ACC);
       PC++;
       break;
 
       case 6:
-      //OP6(IR);
+      OP6(IR, memory, &ACC, Pt);
       PC++;
       break;
 
       case 7:
-      //OP7(IR);
+      OP7(IR, memory, &ACC);
       PC++;
       break;
 
       case 8:
-      //OP8(IR);
+      OP8(IR, memory, Rg, Pt);
       PC++;
       break;
 
       case 9:
-      //OP9(IR);
+      OP9(IR, memory, Rg);
       PC++;
       break;
 
       case 10:
-    //  OP10(IR);
+      OP10(IR, memory, Rg, Pt);
       PC++;
       break;
 
       case 11:
-      //OP11(IR);
+      OP11(IR, memory, Rg);
       PC++;
       break;
 
       case 12:
-      //OP12(IR);
+      OP12(IR, &R0);
       PC++;
       break;
 
       case 13:
-      //OP13(IR);
+      OP13(IR, Rg);
       PC++;
       break;
 
       case 14:
-      //OP14(IR);
+      OP14(IR, Rg);
       PC++;
       break;
 
       case 15:
-      //OP15(IR);
+      OP15(IR, Rg);
       PC++;
       break;
 
@@ -286,18 +286,76 @@ int chToI(char * num, int start, int end) {
   }
   return finalVal;
 }
+int parseOp1(char *IR) {
+  return chToI(IR, 2, 3);
+}
+int parseOp2(char *IR) {
+  return chToI(IR, 4, 5);
+}
+int parseOp1_2(char *IR) {
+  return chToI(IR, 2, 5);
+}
+int parseOp1Reg(char *IR) {
+  return chToI(IR, 3, 3);
+}
+int parseOp2Reg(char *IR) {
+  return chToI(IR, 5, 5);
+}
+int fetch(char * memory, int m_loc) {
+  char * temp = (char *) malloc (sizeof(char) * 6);
+  for(int i = 0; i < 6; i++)
+    temp[i] = memory[p][i];
+  int n = chToI(temp);
+  free(temp);
+  return n;
+}
 
+void printIR(char *IR) {
+  for(int i = 0; i < 6; i++)
+    printf("%c", IR[i]);
+}
 //opcodes
 void OP0(char * IR, short int **Pt) {
-  int n = chToI(IR, 3, 3);
-  *Pt[n] = chToI(IR, 4, 5);
+  printf("Opcode 00: Load Pointer Immediate\n");
+  printIR(IR);
+  *Pt[parseOp1Reg(IR)] = parseOp2(IR);
 }
-void OP1(char * IR, short int **Pt) {}
-void OP2(char * IR, short int **Pt) {}
-void OP3(char * IR, int *ACC, short int **Pt) {}
-void OP4(char * IR, char * memory, int *ACC, short int **Pt) {}
-void OP5(char * IR, char * memory, int *ACC) {}
-void OP6(char * IR, char * memory, int *ACC, short int **Pt) {}
+void OP1(char * IR, short int **Pt) {
+  printf("Opcode 01: Load Pointer Immediate\n");
+  printIR(IR);
+  int n = chToI(IR, 3, 3);
+  *Pt[n] += chToI(IR, 4, 5);
+}
+void OP2(char * IR, short int **Pt) {
+  printf("Opcode 02: Load Pointer Immediate\n");
+  printIR(IR);
+  int n = chToI(IR, 3, 3);
+  *Pt[n] -= chToI(IR, 4, 5);
+}
+void OP3(char * IR, int *ACC) {
+  printf("Opcode 03: Load Pointer Immediate\n");
+  printIR(IR);
+  *ACC = chToI(IR, 2, 5);
+}
+void OP4(char * IR, char * memory, int *ACC, short int **Pt) {
+  printf("Opcode 04: Load Pointer Immediate\n");
+  printIR(IR);
+  int m = *Pt[parseOp1Reg(IR)]
+  &ACC = fetch(memory, m);
+}
+void OP5(char * IR, char * memory, int *ACC) {
+  printf("Opcode 05: Load Pointer Immediate\n");
+  printIR(IR);
+  int m = parseOp1;
+  &ACC = fetch(memory, m);
+}
+void OP6(char * IR, char * memory, int *ACC, short int **Pt) {
+  printf("Opcode 06: Load Pointer Immediate\n");
+  printIR(IR);
+  char c = char*ACC;
+  char *temp[6];
+  for(int )
+}
 void OP7(char * IR, char * memory, int *ACC) {}
 void OP8(char * IR, char * memory, int **Rg, short int **Pt) {}
 void OP9(char * IR, char * memory, int **Rg) {}
