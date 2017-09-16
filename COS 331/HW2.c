@@ -7,19 +7,27 @@
 
 //prototypes
 int chToI(char *, int, int);
-int chToI2(char *);
+char *iToCh(int);
+int parseOp1(char *);
+int parseOp2(char *);
+int parseOp1_2(char *);
+int parseOp1Reg(char *);
+int ParseOp2Reg(char *);
+int fetch(char [][6], int m_loc);
+void store(char [][6], int line, int num);
+void printIR(char *);
 void OP0(char *, short int **);
 void OP1(char *, short int **);
 void OP2(char *, short int **);
 void OP3(char *, int *);
-void OP4(char *, char *, int *, short int **);
-void OP5(char *, char *, int *);
-void OP6(char *, char *, int *, short int **);
-void OP7(char *, char *, int *);
-void OP8(char *, char *, int **, short int **);
-void OP9(char *, char *, int **);
-void OP10(char *, char *, int **, short int **);
-void OP11(char *, char *, int **);
+void OP4(char *, char [][6], int *, short int **);
+void OP5(char *, char [][6], int *);
+void OP6(char *, char [][6], int *, short int **);
+void OP7(char *, char [][6], int *);
+void OP8(char *, char [][6], int **, short int **);
+void OP9(char *, char [][6], int **);
+void OP10(char *, char [][6], int **, short int **);
+void OP11(char *, char [][6], int **);
 void OP12(char *, int *);
 void OP13(char *, int **);
 void OP14(char *, int **);
@@ -49,7 +57,7 @@ void OP99();
 int main() {
   char IR[6]; //instruction register
   char memory[100][6];  //main memory
-  char PSW[2];  //true false status
+  char PSW[2] = {'F', 'F'};  //true false status
   short int PC = 0; //program counter
 	int ACC = 0; //accumulator
   int R0, R1, R2, R3 = 0; //registers
@@ -57,11 +65,20 @@ int main() {
   short int P0, P1, P2, P3 = 0; //pointers
   short int *Pt[4] = {&P0, &P1, &P2, &P3};
   char input_line[7]; //input from file
+
   FILE *fp; //file pointer
   fp = fopen ("Program2.txt","r");
   if (!fp) exit(1);
-  char ch = 'a';
+  char ch;
   int t = 0;
+
+  for(int i = 0; i < 6; i++)
+    IR[i] = '0';
+
+  for(int i = 0; i < 100; i++)
+    for(int j = 0; j < 6; j++)
+      memory[i][j] = '0';
+
   while(1) {  //get opcodes from file
     while((ch = (char)fgetc(fp)) != EOF) {
       if(ch == '\n') break;
@@ -77,24 +94,24 @@ int main() {
   }
   fclose(fp);
   PC = 0;
-  while(1) {  //computer loop
+
+  while(PC<4) {  //computer loop
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
     }
 
     int opcode = chToI(IR, 0, 1); //get opcode
-
+    printf("%d\n", opcode);
     switch(opcode) {  //compute opcode
       case 0:
       OP0(IR, Pt);
-      printf("%hi", P0);
-      exit(1);
       PC++;
       break;
 
       case 1:
       OP1(IR, Pt);
       PC++;
+      exit(1);
       break;
 
       case 2:
@@ -103,7 +120,7 @@ int main() {
       break;
 
       case 3:
-      OP3(IR, &ACC, Pt);
+      OP3(IR, &ACC);
       PC++;
       break;
 
@@ -119,6 +136,7 @@ int main() {
 
       case 6:
       OP6(IR, memory, &ACC, Pt);
+      exit(1);
       PC++;
       break;
 
@@ -279,12 +297,20 @@ int main() {
 
 //helper
 int chToI(char * num, int start, int end) {
-	short int finalVal = 0;
-  finalVal += num[(end-start) - 1] - 48;
-  for (int i = start; i <= end; i++) {
-  	finalVal += (num[i] - 48) * (pow(10.0, (double) (end-start)));
+	int finalVal = 0;
+  for (int i = 0; i <= end-start; i++) {
+  	finalVal += ((int)num[i] - 48) * (pow(10.0, (double) (end-start-i)));
   }
   return finalVal;
+}
+
+char *iToCh(int num) {
+  char *temp = (char *) calloc(6, sizeof(char));
+  int m = num;
+  for (int i = 5; m>0 && i>=0; i++, m/=10) {
+    temp[i] = m%10;
+  }
+  return temp;
 }
 int parseOp1(char *IR) {
   return chToI(IR, 2, 3);
@@ -296,23 +322,30 @@ int parseOp1_2(char *IR) {
   return chToI(IR, 2, 5);
 }
 int parseOp1Reg(char *IR) {
-  return chToI(IR, 3, 3);
+  return (int)IR[3] - 48;
 }
 int parseOp2Reg(char *IR) {
-  return chToI(IR, 5, 5);
+  return (int)IR[5] - 48;
 }
-int fetch(char * memory, int m_loc) {
+int fetch(char memory[][6], int m_loc) {
   char * temp = (char *) malloc (sizeof(char) * 6);
   for(int i = 0; i < 6; i++)
-    temp[i] = memory[p][i];
-  int n = chToI(temp);
+    temp[i] = memory[m_loc][i];
+  int n = chToI(temp, 0, 5);
   free(temp);
   return n;
+}
+void store(char memory[][6], int line, int num) {
+  char * temp = iToCh(num);
+  for(int i = 0; i < 6; i++) {
+    memory[line][i] = temp[i];
+  }
 }
 
 void printIR(char *IR) {
   for(int i = 0; i < 6; i++)
     printf("%c", IR[i]);
+  printf("\n");
 }
 //opcodes
 void OP0(char * IR, short int **Pt) {
@@ -321,46 +354,43 @@ void OP0(char * IR, short int **Pt) {
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
 }
 void OP1(char * IR, short int **Pt) {
-  printf("Opcode 01: Load Pointer Immediate\n");
+  printf("Opcode 01: Add to Pointer Immediate\n");
   printIR(IR);
-  int n = chToI(IR, 3, 3);
-  *Pt[n] += chToI(IR, 4, 5);
+  *Pt[parseOp1Reg(IR)] += parseOp2(IR);
 }
 void OP2(char * IR, short int **Pt) {
-  printf("Opcode 02: Load Pointer Immediate\n");
+  printf("Opcode 02: Subtract From Pointer Immediate\n");
   printIR(IR);
-  int n = chToI(IR, 3, 3);
-  *Pt[n] -= chToI(IR, 4, 5);
+  *Pt[parseOp1Reg(IR)] += parseOp2(IR);
 }
 void OP3(char * IR, int *ACC) {
-  printf("Opcode 03: Load Pointer Immediate\n");
+  printf("Opcode 03: Load Accumulator Immediate\n");
   printIR(IR);
-  *ACC = chToI(IR, 2, 5);
+  *ACC = parseOp1_2(IR);
 }
-void OP4(char * IR, char * memory, int *ACC, short int **Pt) {
-  printf("Opcode 04: Load Pointer Immediate\n");
+void OP4(char * IR, char memory[][6], int *ACC, short int **Pt) {
+  printf("Opcode 04: Load Accumulator Register Addressing\n");
   printIR(IR);
-  int m = *Pt[parseOp1Reg(IR)]
-  &ACC = fetch(memory, m);
+  int m = *Pt[parseOp1Reg(IR)];
+  *ACC = fetch(memory, m);
 }
-void OP5(char * IR, char * memory, int *ACC) {
-  printf("Opcode 05: Load Pointer Immediate\n");
+void OP5(char * IR, char memory[][6], int *ACC) {
+  printf("Opcode 05: Load Accumulator Direct Addressing\n");
   printIR(IR);
-  int m = parseOp1;
-  &ACC = fetch(memory, m);
+  int m = parseOp1(IR);
+  *ACC = fetch(memory, m);
 }
-void OP6(char * IR, char * memory, int *ACC, short int **Pt) {
-  printf("Opcode 06: Load Pointer Immediate\n");
+void OP6(char * IR, char memory[][6], int *ACC, short int **Pt) {
+  printf("Opcode 06: Store Accumulator Register Addressing\n");
   printIR(IR);
-  char c = char*ACC;
-  char *temp[6];
-  for(int )
+  int m_l = *Pt[parseOp1(IR)];
+  store(memory, m_l, *ACC);
 }
-void OP7(char * IR, char * memory, int *ACC) {}
-void OP8(char * IR, char * memory, int **Rg, short int **Pt) {}
-void OP9(char * IR, char * memory, int **Rg) {}
-void OP10(char * IR, char * memory, int **Rg, short int **Pt) {}
-void OP11(char * IR, char * memory, int **Rg) {}
+void OP7(char * IR, char memory[][6], int *ACC) {}
+void OP8(char * IR, char memory[][6], int **Rg, short int **Pt) {}
+void OP9(char * IR, char memory[][6], int **Rg) {}
+void OP10(char * IR, char memory[][6], int **Rg, short int **Pt) {}
+void OP11(char * IR, char memory[][6], int **Rg) {}
 void OP12(char * IR, int *R0) {}
 void OP13(char * IR, int **Rg) {}
 void OP14(char * IR, int **Rg) {}
