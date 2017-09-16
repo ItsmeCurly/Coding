@@ -8,6 +8,7 @@
 
 //prototypes
 int chToI(char *, int);
+int chToI2(char *);
 void OP0(char *);
 void OP1(char *);
 void OP2(char *);
@@ -47,6 +48,7 @@ void OP35(char *);
 void OP99();
 
 int main() {
+
   char IR[6]; //instruction register
   char memory[100][6];  //main memory
   char PSW[2];  //true false status
@@ -58,17 +60,20 @@ int main() {
   FILE *fp; //file pointer
   fp = fopen ("Program1.txt","r");
   if (!fp) exit(1);
-  char ch;
+  char ch = 'a';
   int t = 0;
   while(1) {  //get opcodes from file
-    if(ch == EOF) break;
-    while((ch = getc(fp) != '\n' && ch != EOF) {
+
+    while((ch = (char)fgetc(fp)) != EOF) {
+      if(ch == '\n') break;
       input_line[t] = ch;
       t++;
     }
     t=0;
-    for(int i = 0; i<6; i++)
+    for(int i = 0; i<6; i++) {
       memory[PC][i] = input_line[i];
+    }
+    if(ch == EOF) break;
     PC++;
   }
   PC = 0;
@@ -76,7 +81,8 @@ int main() {
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
     }
-    opcode = chToI(IR); //get opcode
+
+    int opcode = chToI2(IR); //get opcode
 
     switch(opcode) {  //compute opcode
       case 0:
@@ -264,7 +270,7 @@ int main() {
       PC++;
       break;
 
-      default: printf("Unrecognized Opcode: %d", opcode); PC++; break; //decided to let the program continue running
+      default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
     }
   }
   fclose(fp);
@@ -285,7 +291,9 @@ int chToI2(char * num) {  //if first doesn't work use this algorithm for correct
   return x+y;
 }
 //opcodes
-void OP0(char * IR) {}
+void OP0(char * IR) {
+  printf("a\n");
+}
 void OP1(char * IR) {}
 void OP2(char * IR) {}
 void OP3(char * IR) {}
