@@ -77,9 +77,14 @@ int main() {
   for(int i = 0; i < 6; i++)
     IR[i] = '0';
 
-  for(int i = 0; i < 100; i++)
-    for(int j = 0; j < 6; j++)
-      memory[i][j] = '0';
+  for(int i = 0; i < 100; i++) {
+    int j = 0;
+    for(;j<2;j++)
+      memory[i][j] = '9';
+    for(;j<6;j++)
+      memory[i][j] = 'Z';
+  }
+
 
   while(1) {  //get opcodes from file
     while((ch = (char)fgetc(fp)) != EOF) {
@@ -284,6 +289,16 @@ int main() {
       break;
 
       case 99:
+      //my version of GDB testing
+      //printf("Acc: %d, 20: ", ACC);
+      //for(int i = 0; i < 6; i++) {
+        //printf("%c", memory[20][i]);
+      //}
+      //printf(" 21: ");
+      //for(int i = 0; i < 6; i++) {
+      //  printf("%c", memory[21][i]);
+      //}
+      //printf(" R3: %d R2: %d P0: %hi P1: %hi", R3, R2, P0, P1);
       OP99();
       PC++;
       break;
@@ -333,7 +348,7 @@ int fetch(char memory[][6], int m_loc) {
   printf("Fetch at line: %d\n", m_loc);
   for(int i = 0; i < 6; i++)
     temp[i] = memory[m_loc][i];
-  int n = chToI(temp, 0, 3);  //can change
+  int n = chToI(temp, 2, 5);
   return n;
 }
 void store(char memory[100][6], int m_loc, int num) {
