@@ -66,7 +66,7 @@ int main() {
   int * Rg[4] = {&R0, &R1, &R2, &R3};
   short int P0 = 0, P1 = 0, P2 = 0, P3 = 0; //pointers
   short int *Pt[4] = {&P0, &P1, &P2, &P3};
-  char input_line[7]; //input from file
+  char input_line[6]; //input from file
 
   FILE *fp; //file pointer
   fp = fopen ("Program2.txt","r");
@@ -87,6 +87,11 @@ int main() {
 
 
   while(1) {  //get opcodes from file
+    int j = 0;
+    for(;j<2;j++)
+      input_line[j] = '9';
+    for(;j<6;j++)
+      input_line[j] = 'Z';
     while((ch = (char)fgetc(fp)) != EOF) {
       if(ch == '\n') break;
       input_line[t] = ch;
@@ -99,9 +104,15 @@ int main() {
     if(ch == EOF) break;
     PC++;
   }
+  for(int i = 0; i < 100; i++) {
+    for(int j = 0;j<6;j++)
+      printf("%c", memory[i][j]);
+    printf("\n");
+  }
+
   fclose(fp);
+  exit(1);
   PC = 0;
-  *Pt[0] = 10;
   while(1) {  //computer loop
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
