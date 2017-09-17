@@ -30,8 +30,8 @@ void OP10(char *, char [][6], int **, short int **);
 void OP11(char *, char [][6], int **);
 void OP12(char *, int *);
 void OP13(char *, int **);
-void OP14(char *, int **);
-void OP15(char *, int **);
+void OP14(char *, int *, int **);
+void OP15(char *, int *, int **);
 void OP16(char *);
 void OP17(char *);
 void OP18(char *);
@@ -95,7 +95,7 @@ int main() {
   fclose(fp);
   PC = 0;
   *Pt[0] = 10;
-  while(PC<5) {  //computer loop
+  while(1) {  //computer loop
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
     }
@@ -137,7 +137,6 @@ int main() {
 
       case 6:
       OP6(IR, memory, &ACC, Pt);
-      exit(1);
       PC++;
       break;
 
@@ -177,12 +176,12 @@ int main() {
       break;
 
       case 14:
-      OP14(IR, Rg);
+      OP14(IR, &ACC, Rg);
       PC++;
       break;
 
       case 15:
-      OP15(IR, Rg);
+      OP15(IR, &ACC, Rg);
       PC++;
       break;
 
@@ -338,7 +337,7 @@ int fetch(char memory[][6], int m_loc) {
 }
 void store(char memory[][6], int line, int num) {
   char * temp = iToCh(num);
-  printf("Store to line: %d", line);
+  //printf("Store to line: %d", line);
   for(int i = 0; i < 6; i++) {
     memory[line][i] = temp[i];
 
@@ -351,6 +350,7 @@ void printIR(char *IR) {
     printf("%c", IR[i]);
   printf("\n");
 }
+
 //opcodes
 void OP0(char * IR, short int **Pt) {
   printf("Opcode 00: Load Pointer Immediate\n");
@@ -376,14 +376,14 @@ void OP3(char * IR, int *ACC) {
 void OP4(char * IR, char memory[][6], int *ACC, short int **Pt) {
   printf("Opcode 04: Load Accumulator Register Addressing\n");
   printIR(IR);
-  int m = *Pt[parseOp1Reg(IR)];
-  *ACC = fetch(memory, m);
+  int m_l = *Pt[parseOp1Reg(IR)];
+  *ACC = fetch(memory, m_l);
 }
 void OP5(char * IR, char memory[][6], int *ACC) {
   printf("Opcode 05: Load Accumulator Direct Addressing\n");
   printIR(IR);
-  int m = parseOp1(IR);
-  *ACC = fetch(memory, m);
+  int m_l = parseOp1(IR);
+  *ACC = fetch(memory, m_l);
 }
 void OP6(char * IR, char memory[][6], int *ACC, short int **Pt) {
   printf("Opcode 06: Store Accumulator Register Addressing\n");
@@ -391,15 +391,64 @@ void OP6(char * IR, char memory[][6], int *ACC, short int **Pt) {
   int m_l = *Pt[parseOp1Reg(IR)];
   store(memory, m_l, *ACC);
 }
-void OP7(char * IR, char memory[][6], int *ACC) {}
-void OP8(char * IR, char memory[][6], int **Rg, short int **Pt) {}
-void OP9(char * IR, char memory[][6], int **Rg) {}
-void OP10(char * IR, char memory[][6], int **Rg, short int **Pt) {}
-void OP11(char * IR, char memory[][6], int **Rg) {}
-void OP12(char * IR, int *R0) {}
-void OP13(char * IR, int **Rg) {}
-void OP14(char * IR, int **Rg) {}
-void OP15(char * IR, int **Rg) {}
+void OP7(char * IR, char memory[][6], int *ACC) {
+  printf("Opcode 07: Store Accumulator Direct Addressing");
+  printIR(IR);
+  int m_l = parseOp2(IR);
+  store(memory, m_l, *ACC);
+}
+void OP8(char * IR, char memory[][6], int **Rg, short int **Pt) {
+  printf("Opcode 08: Store Register to Memory: Register Addressing");
+  printIR(IR);
+  int r = *Rg[parseOp1Reg(IR)];
+  int m_l = *Pt[parseOp2Reg(IR)];
+  store(memory, m_l, r);
+}
+void OP9(char * IR, char memory[][6], int **Rg) {
+  printf("Opcode 09: Store Register to Memory: Direct Addressing");
+  printIR(IR);
+  int r = *Rg[parseOp1Reg(IR)];
+  int m_l = parseOp2(IR);
+  store(memory, m_l, r);
+}
+void OP10(char * IR, char memory[][6], int **Rg, short int **Pt) {
+  printf("Opcode 10: Load Register from memory: Register Addressing");
+  printIR(IR);
+  int * rPt = Rg[parseOp1Reg(IR)];
+  int m_l = *Pt[parseOp2Reg(IR)];
+  *rPt = fetch(memory, m_l);
+}
+void OP11(char * IR, char memory[][6], int **Rg) {
+  printf("Opcode 11: Load register from memory: Direct Addressing");
+  printIR(IR);
+  int * rPt = Rg[parseOp1Reg(IR)];
+  int m_l = parseOp2(IR);
+  *rPt = fetch(memory, m_l);
+}
+void OP12(char * IR, int *R0) {
+  printf("Opcode 12: Load Register R0 Immediate");
+  printIR(IR);
+  *R0 = parseOp1_2(IR);
+}
+void OP13(char * IR, int **Rg) {
+  printf("Opcode 13: Register to Register Transfer");
+  printIR(IR);
+  int *r1Pt = Rg[parseOp1Reg(IR)];
+  int *r2Pt = Rg[parseOp2Reg(IR)];
+  *r1Pt = *r2Pt;
+}
+void OP14(char * IR, int *ACC, int **Rg) {
+  printf("Opcode 14: Load Accumulator from Register");
+  printIR(IR);
+  int * rPt = Rg[parseOp1Reg(IR)];
+  *ACC = *rPt;
+}
+void OP15(char * IR, int *ACC, int **Rg) {
+  printf("Opcode 15: Load Register from Accumulator");
+  printIR(IR);
+  int * rPt = Rg[parseOp1Reg(IR)];
+  *rPt = *ACC;
+}
 void OP16(char * IR) {}
 void OP17(char * IR) {}
 void OP18(char * IR) {}
