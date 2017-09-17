@@ -1,19 +1,19 @@
-Opcode 0:
-Opcode 1:
-Opcode 2:
-Opcode 3:
-Opcode 4:
-Opcode 5:
-Opcode 6:
-Opcode 7:
-Opcode 8:
-Opcode 9:
-Opcode 10:
-Opcode 11:
-Opcode 12:
-Opcode 13:
-Opcode 14:
-Opcode 15:
+Load Pointer Immediate
+Add to Pointer Immediate
+Subtract From Pointer Immediate
+Load Accumulator Immediate
+Load Accumulator Register Addressing
+Load Accumulator Direct Addressing
+Store Accumulator Register Addressing
+Store Accumulator Direct Addressing
+Store Register to Memory: Register Addressing
+Store Register to Memory: Direct Addressing
+Load Register from memory: Register Addressing
+Load register from memory: Direct Addressing
+Load Register R0 Immediate
+Register to Register Transfer
+Load Accumulator from Register
+Load Register from Accumulator
 Opcode 16:
 Opcode 17:
 Opcode 18:

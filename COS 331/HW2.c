@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
+//EITHER IGNORE THE 99S IN THE MEMORY OR SET IT BACK TO 0 TO READ IT CORRECTLY ON FETCH LATER
 
 
 //prototypes
@@ -100,14 +101,6 @@ int main() {
     for(int i = 0; i < 6; i++) {
       IR[i] = memory[PC][i];
     }
-    //for(int i = 0; i < 4; i++) {
-      //printf("%hi ", *Pt[i]);
-    //}
-    //printf("\n");
-    //for(int i = 0; i < 4; i++) {
-      //printf("%d ", *Rg[i]);
-    //}
-    //printf("\n");
     int opcode = chToI(IR, 0, 1); //get opcode
     switch(opcode) {  //compute opcode
       case 0:
@@ -297,6 +290,7 @@ int main() {
 
       default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
     }
+    printf("\n");
   }
 }
 
@@ -337,25 +331,22 @@ int parseOp2Reg(char *IR) {
 int fetch(char memory[][6], int m_loc) {
   char temp[6];
   printf("Fetch at line: %d\n", m_loc);
-  for(int i = 0; i < 6; i++) {
+  for(int i = 0; i < 6; i++)
     temp[i] = memory[m_loc][i];
-  }
-  int n = chToI(temp, 0, 5);
+  int n = chToI(temp, 0, 3);  //can change
   return n;
 }
 void store(char memory[100][6], int m_loc, int num) {
   char * temp = iToCh(num);
-
   printf("Store to line: %d\n", m_loc);
-  for(int i = 0; i < 6; i++) {
+  for(int i = 0; i < 6; i++)
     memory[m_loc][i] = temp[i];
-  }
-  for(int i = 0; i < 2; i++) {
-    memory[m_loc][i] = '9'; //so that it isn't opcode 00
-  }
+  for(int i = 0; i < 2; i++)
+    memory[m_loc][i] = '9';
 }
 
 void printIR(char *IR) {
+  printf("IR contains: ");
   for(int i = 0; i < 6; i++)
     printf("%c", IR[i]);
   printf("\n");
@@ -363,9 +354,9 @@ void printIR(char *IR) {
 
 //opcodes
 void OP0(char * IR, short int **Pt) {
+  if(IR[2] != 'P') return;
   printf("Opcode 00: Load Pointer Immediate\n");
   printIR(IR);
-  int m = parseOp2(IR);
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
 }
 void OP1(char * IR, short int **Pt) {
@@ -452,6 +443,7 @@ void OP14(char * IR, int *ACC, int **Rg) {
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
   *ACC = *rPt;
+  //printf("%d\n", *ACC);
 }
 void OP15(char * IR, int *ACC, int **Rg) {
   printf("Opcode 15: Load Register from Accumulator\n");
