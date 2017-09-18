@@ -1,9 +1,9 @@
-//Added a 99ZZZZ at end of text file for exit
+//-lm -std=c99
+//text file is named "Program2.txt"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
-//EITHER IGNORE THE 99S IN THE MEMORY OR SET IT BACK TO 0 TO READ IT CORRECTLY ON FETCH LATER
 
 
 //prototypes
@@ -69,7 +69,7 @@ int main() {
   char input_line[6]; //input from file
 
   FILE *fp; //file pointer
-  fp = fopen ("Program2.txt","r");
+  fp = fopen ("Program2.txt","r");  //requires textfile of Program2
   if (!fp) exit(1);
   char ch;
   int t = 0;
@@ -83,9 +83,12 @@ int main() {
       memory[i][j] = '9';
     for(;j<6;j++)
       memory[i][j] = 'Z';
-  }
+  } //instantiate memory to '99ZZZZ'
 
-
+//the j loop line depends on where the EOF line is in the text file, since the while breaks when it
+//reaches a \n, the EOF will be found in the next parse, and will exit the
+//while again, with the contents found in the previous line(atom has a weird
+//way of saving a new blank line for the EOF)
   while(1) {  //get opcodes from file
     int j = 0;
     for(;j<2;j++)
@@ -104,14 +107,9 @@ int main() {
     if(ch == EOF) break;
     PC++;
   }
-  for(int i = 0; i < 100; i++) {
-    for(int j = 0;j<6;j++)
-      printf("%c", memory[i][j]);
-    printf("\n");
-  }
 
-  fclose(fp);
-  exit(1);
+  fclose(fp); //close file
+
   PC = 0;
   while(1) {  //computer loop
     for(int i = 0; i < 6; i++) {
@@ -307,9 +305,9 @@ int main() {
       //}
       //printf(" 21: ");
       //for(int i = 0; i < 6; i++) {
-      //  printf("%c", memory[21][i]);
+        //printf("%c", memory[21][i]);
       //}
-      //printf(" R3: %d R2: %d P0: %hi P1: %hi", R3, R2, P0, P1);
+      //printf(" R3: %d R2: %d P0: %hi P1: %hi\n", R3, R2, P0, P1);
       OP99();
       PC++;
       break;
@@ -321,7 +319,7 @@ int main() {
 }
 
 //helper
-int chToI(char * num, int start, int end) {
+int chToI(char * num, int start, int end) { //helper converts char to int
 	int finalVal = 0;
   for (int i = end; i >= start; i--) {
   	finalVal += ((int)num[i] - 48) * (pow(10.0, (double) (end - i)));
@@ -329,7 +327,7 @@ int chToI(char * num, int start, int end) {
   return finalVal;
 }
 
-char * iToCh(int num) {
+char * iToCh(int num) { //helper converts int to char [] ie 99 = ['0', '0', '0', '0', '9', '9']
   static char temp[6];
   for(int i = 0; i < 6; i++)
     temp[i] = '0';
@@ -339,22 +337,22 @@ char * iToCh(int num) {
   }
   return temp;
 }
-int parseOp1(char *IR) {
+int parseOp1(char *IR) {  //parse op1 for int
   return chToI(IR, 2, 3);
 }
-int parseOp2(char *IR) {
+int parseOp2(char *IR) {  //parse op2 for int
   return chToI(IR, 4, 5);
 }
-int parseOp1_2(char *IR) {
+int parseOp1_2(char *IR) {  //parse op1 and op2 for int
   return chToI(IR, 2, 5);
 }
-int parseOp1Reg(char *IR) {
+int parseOp1Reg(char *IR) { //parse op1 for reg number
   return (int)IR[3] - 48;
 }
-int parseOp2Reg(char *IR) {
+int parseOp2Reg(char *IR) { //parse op2 for reg number
   return (int)IR[5] - 48;
 }
-int fetch(char memory[][6], int m_loc) {
+int fetch(char memory[][6], int m_loc) {  //fetch something from memory
   char temp[6];
   printf("Fetch at line: %d\n", m_loc);
   for(int i = 0; i < 6; i++)
@@ -362,7 +360,7 @@ int fetch(char memory[][6], int m_loc) {
   int n = chToI(temp, 2, 5);
   return n;
 }
-void store(char memory[100][6], int m_loc, int num) {
+void store(char memory[100][6], int m_loc, int num) { //store something in memory
   char * temp = iToCh(num);
   printf("Store to line: %d\n", m_loc);
   for(int i = 0; i < 6; i++)
@@ -371,7 +369,7 @@ void store(char memory[100][6], int m_loc, int num) {
     memory[m_loc][i] = '9';
 }
 
-void printIR(char *IR) {
+void printIR(char *IR) {  //print the IR
   printf("IR contains: ");
   for(int i = 0; i < 6; i++)
     printf("%c", IR[i]);
