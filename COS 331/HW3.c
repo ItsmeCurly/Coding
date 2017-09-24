@@ -45,299 +45,192 @@ void OP16(char *, int *);
 void OP17(char *, int *);
 void OP18(char *, int *, int **);
 void OP19(char *, int *, int **);
-void OP20(char *, int *, short int **);
+void OP20(char *, char [][6], int *, short int **);
 void OP21(char *, char [][6], int *);
 void OP22(char *, char [][6], int *, short int **);
 void OP23(char *, char [][6], int *);
 void OP24(char *, char [][6], char *, int *, short int **);
-void OP25(char *, char [][6], char * , int *, short int **);
-void OP26(char *, char [][6], char * , int *, short int **);
-void OP27(char *, int *);
-void OP28(char *, int *);
-void OP29(char *, int *);
-void OP30(char *, char * , int *, int ** );
-void OP31(char *, char * , int *, int ** );
-void OP32(char *, char * , int *, int ** );
-void OP33(char *, char * , int *);
-void OP34(char *, char * , int *);
+void OP25(char *, char [][6], char *, int *, short int **);
+void OP26(char *, char [][6], char *, int *, short int **);
+void OP27(char *, char *, int *);
+void OP28(char *, char *, int *);
+void OP29(char *, char *, int *);
+void OP30(char *, char *, int *, int **);
+void OP31(char *, char *, int *, int **);
+void OP32(char *, char *, int *, int **);
+void OP33(char *, char *, int *);
+void OP34(char *, char *, int *);
 void OP35(char *, int *);
 void OP99(bool *);
 
 //global variables
-char[37] opcodeDesc;
 
 int main(int argc, char * argv[]) {
-  char IR[6]; //instruction register
 
-  char memory[100][6];  //main memory
-  char PSW[2] = {'F', 'F'};  //true false status
-  short int PC = 0; //program counter
-	int ACC = 0; //accumulator
-  int R0 = 0, R1 = 0, R2 = 0, R3 = 0; //registers
-  int * Rg[4] = {&R0, &R1, &R2, &R3};
-  short int P0 = 0, P1 = 0, P2 = 0, P3 = 0; //pointers
-  short int *Pt[4] = {&P0, &P1, &P2, &P3};
-  char input_line[6]; //input from file
+  for(int i = 0; i < argc; i++) {
+    char IR[6]; //instruction register
 
-  FILE *fp; //file pointer
-  fp = fopen ("Program2.txt","r");  //requires textfile of Program2
-  if (!fp) exit(1);
-  char ch;
-  int t = 0;
+    char memory[100][6];  //main memory
+    char PSW[2] = {'F', 'F'};  //true false status
+    short int PC = 0; //program counter
+  	int ACC = 0; //accumulator
+    int R0 = 0, R1 = 0, R2 = 0, R3 = 0; //registers
+    int * Rg[4] = {&R0, &R1, &R2, &R3};
+    short int P0 = 0, P1 = 0, P2 = 0, P3 = 0; //pointers
+    short int *Pt[4] = {&P0, &P1, &P2, &P3};
+    char input_line[6]; //input from file
 
-  for(int i = 0; i < 6; i++)
-    IR[i] = '0';
+    FILE *fp; //file pointer
+    fp = fopen (argv[i+1] ,"r");  //requires textfile of Program2
+    if (!fp) exit(1);
+    char ch;
+    int t = 0;
 
-  for(int i = 0; i < 100; i++) {
-    int j = 0;
-    for(;j<2;j++)
-      memory[i][j] = '9';
-    for(;j<6;j++)
-      memory[i][j] = 'Z';
-  } //instantiate memory to '99ZZZZ'
+    for(int i = 0; i < 6; i++)
+      IR[i] = '0';
+    for(int i = 0; i < 100; i++) {
+      int j = 0;
+      for(;j<2;j++)
+        memory[i][j] = '9';
+      for(;j<6;j++)
+        memory[i][j] = 'Z';
+    } //instantiate memory to '99ZZZZ'
 
-  //the j loop line depends on where the EOF line is in the text file, since the while breaks when it
-  //reaches a \n, the EOF will be found in the next parse, and will exit the
-  //while again, with the contents found in the previous line(atom has a weird
-  //way of saving a new blank line for the EOF)
-  while(1) {  //get opcodes from file
-    if(PC > 99) {
-      printfError('s');
+    //the j loop line depends on where the EOF line is in the text file, since the while breaks when it
+    //reaches a \n, the EOF will be found in the next parse, and will exit the
+    //while again, with the contents found in the previous line(atom has a weird
+    //way of saving a new blank line for the EOF)
+    while(1) {  //get opcodes from file
+      if(PC > 99)
+        printfError('s');
+      int j = 0;
+      for(;j<2;j++)
+        input_line[j] = '9';
+      for(;j<6;j++)
+        input_line[j] = 'Z';
+      while((ch = (char)fgetc(fp)) != EOF) {
+        if(ch == '\n' || t > 5) break;
+        input_line[t] = ch;
+        t++;
+      }
+      t=0;
+      for(int i = 0; i<6; i++)
+        memory[PC][i] = input_line[i];
+
+      if(ch == EOF) break;
+      PC++;
     }
-    int j = 0;
-    for(;j<2;j++)
-      input_line[j] = '9';
-    for(;j<6;j++)
-      input_line[j] = 'Z';
-    while((ch = (char)fgetc(fp)) != EOF) {
-      if(ch == '\n' || t > 5) break;
-      input_line[t] = ch;
-      t++;
+
+    fclose(fp); //close file
+
+    PC = 0;
+    while(1) {  //computer loop
+      for(int i = 0; i < 6; i++) {
+        IR[i] = memory[PC][i];
+      }
+      bool leave = false;
+      int opcode = chToI(IR, 0, 1); //get opcode
+      switch(opcode) {  //compute opcode
+        case 0: OP0(IR, Pt); PC++; break;
+
+        case 1: OP1(IR, Pt); PC++; break;
+
+        case 2: OP2(IR, Pt); PC++; break;
+
+        case 3: OP3(IR, &ACC); PC++; break;
+
+        case 4: OP4(IR, memory, &ACC, Pt); PC++; break;
+
+        case 5: OP5(IR, memory, &ACC); PC++; break;
+
+        case 6: OP6(IR, memory, &ACC, Pt); PC++; break;
+
+        case 7: OP7(IR, memory, &ACC); PC++; break;
+
+        case 8: OP8(IR, memory, Rg, Pt); PC++; break;
+
+        case 9: OP9(IR, memory, Rg); PC++; break;
+
+        case 10: OP10(IR, memory, Rg, Pt); PC++; break;
+
+        case 11: OP11(IR, memory, Rg); PC++; break;
+
+        case 12: OP12(IR, &R0); PC++; break;
+
+        case 13: OP13(IR, Rg); PC++; break;
+
+        case 14: OP14(IR, &ACC, Rg); PC++; break;
+
+        case 15: OP15(IR, &ACC, Rg); PC++; break;
+
+        case 16: OP16(IR, &ACC); PC++; break;
+
+        case 17: OP17(IR, &ACC); PC++; break;
+
+        case 18: OP18(IR, &ACC, Rg); PC++; break;
+
+        case 19: OP19(IR, &ACC, Rg); PC++; break;
+
+        case 20: OP20(IR, memory, &ACC, Pt); PC++; break;
+
+        case 21: OP21(IR, memory, &ACC); PC++; break;
+
+        case 22: OP22(IR, memory, &ACC, Pt); PC++; break;
+
+        case 23: OP23(IR, memory, &ACC); PC++; break;
+
+        case 24: OP24(IR, memory, PSW, &ACC, Pt); PC++; break;
+
+        case 25: OP25(IR, memory, PSW, &ACC, Pt); PC++; break;
+
+        case 26: OP26(IR, memory, PSW, &ACC, Pt); PC++; break;
+
+        case 27: OP27(IR, PSW, &ACC); PC++; break;
+
+        case 28: OP28(IR, PSW, &ACC); PC++; break;
+
+        case 29: OP29(IR, PSW, &ACC); PC++; break;
+
+        case 30: OP30(IR, PSW, &ACC, Rg); PC++; break;
+
+        case 31: OP31(IR, PSW, &ACC, Rg); PC++; break;
+
+        case 32: OP32(IR, PSW, &ACC, Rg); PC++; break;
+
+        case 33: OP33(IR, PSW, &ACC); PC++; break;
+
+        case 34: OP34(IR, PSW, &ACC); PC++; break;
+
+        case 35: OP35(IR, &ACC); PC++; break;
+
+        case 99:
+        //my version of GDB testing
+        //printf("Acc: %d, 20: ", ACC);
+        //for(int i = 0; i < 6; i++) {
+          //printf("%c", memory[20][i]);
+        //}
+        //printf(" 21: ");
+        //for(int i = 0; i < 6; i++) {
+          //printf("%c", memory[21][i]);
+        //}
+        //printf(" R3: %d R2: %d P0: %hi P1: %hi\n", R3, R2, P0, P1);
+        OP99(&leave);
+        PC++;
+        break;
+
+        default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
+      }
+      printf("\n");
+      if(leave) break;
     }
-    t=0;
-    for(int i = 0; i<6; i++) {
-      memory[PC][i] = input_line[i];
-    }
-    if(ch == EOF) break;
-    PC++;
+    printf("Terminating process");
   }
-
-  fclose(fp); //close file
-
-  PC = 0;
-  while(1) {  //computer loop
-    for(int i = 0; i < 6; i++) {
-      IR[i] = memory[PC][i];
-    }
-    bool leave = false;
-    int opcode = chToI(IR, 0, 1); //get opcode
-    switch(opcode) {  //compute opcode
-      case 0:
-      OP0(IR, Pt);
-      PC++;
-      break;
-
-      case 1:
-      OP1(IR, Pt);
-      PC++;
-      break;
-
-      case 2:
-      OP2(IR, Pt);
-      PC++;
-      break;
-
-      case 3:
-      OP3(IR, &ACC);
-      PC++;
-      break;
-
-      case 4:
-      OP4(IR, memory, &ACC, Pt);
-      PC++;
-      break;
-
-      case 5:
-      OP5(IR, memory, &ACC);
-      PC++;
-      break;
-
-      case 6:
-      OP6(IR, memory, &ACC, Pt);
-      PC++;
-      break;
-
-      case 7:
-      OP7(IR, memory, &ACC);
-      PC++;
-      break;
-
-      case 8:
-      OP8(IR, memory, Rg, Pt);
-      PC++;
-      break;
-
-      case 9:
-      OP9(IR, memory, Rg);
-      PC++;
-      break;
-
-      case 10:
-      OP10(IR, memory, Rg, Pt);
-      PC++;
-      break;
-
-      case 11:
-      OP11(IR, memory, Rg);
-      PC++;
-      break;
-
-      case 12:
-      OP12(IR, &R0);
-      PC++;
-      break;
-
-      case 13:
-      OP13(IR, Rg);
-      PC++;
-      break;
-
-      case 14:
-      OP14(IR, &ACC, Rg);
-      PC++;
-      break;
-
-      case 15:
-      OP15(IR, &ACC, Rg);
-      PC++;
-      break;
-
-      case 16:
-      OP16(IR);
-      PC++;
-      break;
-
-      case 17:
-      OP17(IR);
-      PC++;
-      break;
-
-      case 18:
-      OP18(IR);
-      PC++;
-      break;
-
-      case 19:
-      OP19(IR);
-      PC++;
-      break;
-
-      case 20:
-      OP20(IR);
-      PC++;
-      break;
-
-      case 21:
-      OP21(IR);
-      PC++;
-      break;
-
-      case 22:
-      OP22(IR);
-      PC++;
-      break;
-
-      case 23:
-      OP23(IR);
-      PC++;
-      break;
-
-      case 24:
-      OP24(IR);
-      PC++;
-      break;
-
-      case 25:
-      OP25(IR);
-      PC++;
-      break;
-
-      case 26:
-      OP26(IR);
-      PC++;
-      break;
-
-      case 27:
-      OP27(IR);
-      PC++;
-      break;
-
-      case 28:
-      OP28(IR);
-      PC++;
-      break;
-
-      case 29:
-      OP29(IR);
-      PC++;
-      break;
-
-      case 30:
-      OP30(IR);
-      PC++;
-      break;
-
-      case 31:
-      OP31(IR);
-      PC++;
-      break;
-
-      case 32:
-      OP32(IR);
-      PC++;
-      break;
-
-      case 33:
-      OP33(IR);
-      PC++;
-      break;
-
-      case 34:
-      OP34(IR);
-      PC++;
-      break;
-
-      case 35:
-      OP35(IR);
-      PC++;
-      break;
-
-      case 99:
-      //my version of GDB testing
-      //printf("Acc: %d, 20: ", ACC);
-      //for(int i = 0; i < 6; i++) {
-        //printf("%c", memory[20][i]);
-      //}
-      //printf(" 21: ");
-      //for(int i = 0; i < 6; i++) {
-        //printf("%c", memory[21][i]);
-      //}
-      //printf(" R3: %d R2: %d P0: %hi P1: %hi\n", R3, R2, P0, P1);
-      OP99(&leave);
-      PC++;
-      break;
-
-      default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
-    }
-    printf("\n");
-    if(leave) break;
-  }
-  printf("Terminating process");
+  //put gdb flag here
   exit(1);
 }
 
 //helper
-printfError(char error) {
+void printfError(char error) {
   switch(error) {
     case 's': printf("Registration fault(core dumped)"); break;
     case 'n': printf("Null pointer exception"); break;
@@ -430,18 +323,11 @@ void printIR(char *IR) {  //print the IR
   printf("\n");
 }
 
-void printOpcode(int opcode, char *IR) {
-  if (opcode == 99) {
-    printf(opcodeDesc[36]);
-    printIR(IR);
-  }
-  else printf(opcodeDesc[opcode])
-}
-
 //opcodes
 void OP0(char * IR, short int **Pt) {
   if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) return;
+
   printf("Opcode 00: Load Pointer Immediate\n");
   printIR(IR);
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
@@ -449,6 +335,7 @@ void OP0(char * IR, short int **Pt) {
 void OP1(char * IR, short int **Pt) {
   if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) return;
+
   printf("Opcode 01: Add to Pointer Immediate\n");
   printIR(IR);
   *Pt[parseOp1Reg(IR)] += parseOp2(IR);
@@ -456,12 +343,14 @@ void OP1(char * IR, short int **Pt) {
 void OP2(char * IR, short int **Pt) {
   if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) return;
+
   printf("Opcode 02: Subtract From Pointer Immediate\n");
   printIR(IR);
   *Pt[parseOp1Reg(IR)] += parseOp2(IR);
 }
 void OP3(char * IR, int *ACC) {
   if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
   printf("Opcode 03: Load Accumulator Immediate\n");
   printIR(IR);
   *ACC = parseOp1_2(IR);
@@ -529,6 +418,8 @@ void OP11(char * IR, char memory[][6], int **Rg) {
   *rPt = fetch(memory, m_l);
 }
 void OP12(char * IR, int *R0) {
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
   printf("Opcode 12: Load Register R0 Immediate\n");
   printIR(IR);
   *R0 = parseOp1_2(IR);
@@ -536,6 +427,7 @@ void OP12(char * IR, int *R0) {
 void OP13(char * IR, int **Rg) {
   if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   if(IR[4] != 'R' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
+
   printf("Opcode 13: Register to Register Transfer\n");
   printIR(IR);
   int *r1Pt = Rg[parseOp1Reg(IR)];
@@ -544,6 +436,7 @@ void OP13(char * IR, int **Rg) {
 }
 void OP14(char * IR, int *ACC, int **Rg) {
   if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
   printf("Opcode 14: Load Accumulator from Register\n");
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
@@ -552,31 +445,176 @@ void OP14(char * IR, int *ACC, int **Rg) {
 }
 void OP15(char * IR, int *ACC, int **Rg) {
   if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
   printf("Opcode 15: Load Register from Accumulator\n");
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
   *rPt = *ACC;
 }
-void OP16(char * IR, int *ACC) {}
-void OP17(char * IR, int *ACC) {}
-void OP18(char * IR, int *ACC, int **Rg) {}
-void OP19(char * IR, int *ACC, int **Rg) {}
-void OP20(char * IR, int *ACC, short int **Pt) {}
-void OP21(char * IR, char memory[][6], int *ACC) {}
-void OP22(char * IR, char memory[][6], int *ACC, short int **Pt) {}
-void OP23(char * IR, char memory[][6], int *ACC) {}
-void OP24(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {}
-void OP25(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {}
-void OP26(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {}
-void OP27(char * IR, int *ACC) {}
-void OP28(char * IR, int *ACC) {}
-void OP29(char * IR, int *ACC) {}
-void OP30(char * IR, char * PSW, int *ACC, int ** Rg) {}
-void OP31(char * IR, char * PSW, int *ACC, int ** Rg) {}
-void OP32(char * IR, char * PSW, int *ACC, int ** Rg) {}
-void OP33(char * IR, char * PSW, int *PC) {}
-void OP34(char * IR, char * PSW, int *PC) {}
-void OP35(char * IR, int *PC) {}
+void OP16(char * IR, int *ACC) {
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
+  printf("Opcode 16: Add Accumulator Immediate\n");
+  printIR(IR);
+  *ACC += chToI(IR, 2, 5);
+}
+void OP17(char * IR, int *ACC) {
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
+  printf("Opcode 17: Subtract Accumulator Immediate\n");
+  printIR(IR);
+  *ACC -= chToI(IR, 2, 5);
+}
+void OP18(char * IR, int *ACC, int **Rg) {
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 18: Add contents of Register to Accumulator\n");
+  printIR(IR);
+
+  int * rPt = Rg[parseOp1Reg(IR)];
+  *ACC += *rPt;
+}
+void OP19(char * IR, int *ACC, int **Rg) {
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 19: Subtract contents of Register to Accumulator\n");
+  printIR(IR);
+
+  int * rPt = Rg[parseOp1Reg(IR)];
+  *ACC += *rPt;
+}
+void OP20(char * IR, char memory [][6], int *ACC, short int **Pt) {
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 20: Add Accumulator Register Addressing\n");
+  printIR(IR);
+  int m_l = *Pt[parseOp1Reg(IR)];
+  *ACC += fetch(memory, m_l);
+}
+void OP21(char * IR, char memory[][6], int *ACC) {
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
+
+  printf("Opcode 21: Add Accumulator Direct Addressing\n");
+  printIR(IR);
+  int m_l = parseOp1(IR);
+  *ACC += fetch(memory, m_l);
+}
+void OP22(char * IR, char memory[][6], int *ACC, short int **Pt) {
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 22: Subtract Accumulator Register Addressing\n");
+  printIR(IR);
+
+  int m_l = *Pt[parseOp1Reg(IR)];
+  *ACC -= fetch(memory, m_l);
+}
+void OP23(char * IR, char memory[][6], int *ACC) {
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
+
+  printf("Opcode 23: Subtract Accumulator Direct Addressing\n");
+  printIR(IR);
+  int m_l = parseOp1(IR);
+  *ACC -= fetch(memory, m_l);
+}
+void OP24(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 24: Compare Equal Register Addressing\n");
+  printIR(IR);
+
+  int m_l = *Pt[parseOp1Reg(IR)];
+  int temp = fetch(memory, m_l);
+  if(*ACC == temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP25(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 25: Compare Less Register Addressing\n");
+  printIR(IR);
+
+  int m_l = *Pt[parseOp1Reg(IR)];
+  int temp = fetch(memory, m_l);
+  if(*ACC < temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP26(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 26: Compare Greater Register Addressing\n");
+  printIR(IR);
+
+  int m_l = *Pt[parseOp1Reg(IR)];
+  int temp = fetch(memory, m_l);
+
+  if(*ACC > temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP27(char * IR, char * PSW, int *ACC) {
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
+  printf("Opcode 27: Compare Greater Immediate\n");
+  printIR(IR);
+  int temp = parseOp1_2(IR);
+  if(*ACC > temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP28(char * IR, char * PSW, int *ACC) {
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
+  printf("Opcode 28: Compare Equal Immediate\n");
+  printIR(IR);
+  int temp = parseOp1_2(IR);
+  if(*ACC == temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP29(char * IR, char * PSW, int *ACC) {
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
+
+  printf("Opcode 29: Compare Less Immediate\n");
+  printIR(IR);
+  int temp = parseOp1_2(IR);
+  if(*ACC < temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP30(char * IR, char * PSW, int *ACC, int ** Rg) {
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 32: Compare Register Equal\n");
+  printIR(IR);
+  int * temp = Rg[parseOp1Reg(IR)];
+  if(*ACC == *temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP31(char * IR, char * PSW, int *ACC, int ** Rg) {
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 31: Compare Register Less\n");
+  printIR(IR);
+  int * temp = Rg[parseOp1Reg(IR)];
+  if(*ACC == *temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP32(char * IR, char * PSW, int *ACC, int ** Rg) {
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
+
+  printf("Opcode 32: Compare Register Greater\n");
+  printIR(IR);
+  int * temp = Rg[parseOp1Reg(IR)];
+  if(*ACC == *temp) PSW[0] = 'T';
+  else PSW[0] = 'F';
+}
+void OP33(char * IR, char * PSW, int *PC) {
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
+  if(PSW[0] == 'T') *PC = parseOp1(IR);
+}
+void OP34(char * IR, char * PSW, int *PC) {
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
+  if(PSW[0] == 'F') *PC = parseOp1(IR);
+}
+void OP35(char * IR, int *PC) {
+  *PC = parseOp1(IR);
+}
 void OP99(bool *leave) {
   *leave = true;
 }
