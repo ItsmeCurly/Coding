@@ -299,15 +299,15 @@ int main() {
 
       case 99:
       //my version of GDB testing
-      //printf("Acc: %d, 20: ", ACC);
-      //for(int i = 0; i < 6; i++) {
-        //printf("%c", memory[20][i]);
-      //}
-      //printf(" 21: ");
-      //for(int i = 0; i < 6; i++) {
-        //printf("%c", memory[21][i]);
-      //}
-      //printf(" R3: %d R2: %d P0: %hi P1: %hi\n", R3, R2, P0, P1);
+      printf("Acc: %d, 20: ", ACC);
+      for(int i = 0; i < 6; i++) {
+        printf("%c", memory[20][i]);
+      }
+      printf(" 21: ");
+      for(int i = 0; i < 6; i++) {
+        printf("%c", memory[21][i]);
+      }
+      printf(" R3: %d R2: %d P0: %hi P1: %hi\n", R3, R2, P0, P1);
       OP99();
       PC++;
       break;
@@ -378,7 +378,7 @@ void printIR(char *IR) {  //print the IR
 
 //opcodes
 void OP0(char * IR, short int **Pt) {
-
+  if(IR[2] != 'P') return;
   printf("Opcode 00: Load Pointer Immediate\n");
   printIR(IR);
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
@@ -389,7 +389,6 @@ void OP1(char * IR, short int **Pt) {
   *Pt[parseOp1Reg(IR)] += parseOp2(IR);
 }
 void OP2(char * IR, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 02: Subtract From Pointer Immediate\n");
   printIR(IR);
   *Pt[parseOp1Reg(IR)] += parseOp2(IR);
@@ -400,7 +399,6 @@ void OP3(char * IR, int *ACC) {
   *ACC = parseOp1_2(IR);
 }
 void OP4(char * IR, char memory[][6], int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 04: Load Accumulator Register Addressing\n");
   printIR(IR);
   int m_l = *Pt[parseOp1Reg(IR)];
@@ -425,8 +423,6 @@ void OP7(char * IR, char memory[][6], int *ACC) {
   store(memory, m_l, *ACC);
 }
 void OP8(char * IR, char memory[][6], int **Rg, short int **Pt) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(IR[4] != 'P' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
   printf("Opcode 08: Store Register to Memory: Register Addressing\n");
   printIR(IR);
   int r = *Rg[parseOp1Reg(IR)];
@@ -434,7 +430,6 @@ void OP8(char * IR, char memory[][6], int **Rg, short int **Pt) {
   store(memory, m_l, r);
 }
 void OP9(char * IR, char memory[][6], int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 09: Store Register to Memory: Direct Addressing\n");
   printIR(IR);
   int r = *Rg[parseOp1Reg(IR)];
@@ -442,8 +437,6 @@ void OP9(char * IR, char memory[][6], int **Rg) {
   store(memory, m_l, r);
 }
 void OP10(char * IR, char memory[][6], int **Rg, short int **Pt) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(IR[4] != 'P' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
   printf("Opcode 10: Load Register from memory: Register Addressing\n");
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
@@ -451,7 +444,6 @@ void OP10(char * IR, char memory[][6], int **Rg, short int **Pt) {
   *rPt = fetch(memory, m_l);
 }
 void OP11(char * IR, char memory[][6], int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 11: Load register from memory: Direct Addressing\n");
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
@@ -464,8 +456,6 @@ void OP12(char * IR, int *R0) {
   *R0 = parseOp1_2(IR);
 }
 void OP13(char * IR, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(IR[4] != 'R' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
   printf("Opcode 13: Register to Register Transfer\n");
   printIR(IR);
   int *r1Pt = Rg[parseOp1Reg(IR)];
@@ -473,7 +463,6 @@ void OP13(char * IR, int **Rg) {
   *r1Pt = *r2Pt;
 }
 void OP14(char * IR, int *ACC, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 14: Load Accumulator from Register\n");
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
@@ -481,7 +470,6 @@ void OP14(char * IR, int *ACC, int **Rg) {
   //printf("%d\n", *ACC);
 }
 void OP15(char * IR, int *ACC, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 15: Load Register from Accumulator\n");
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
