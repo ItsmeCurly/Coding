@@ -1,5 +1,5 @@
-//-lm -std=c99
-//text file is named "Program2.txt"
+//-lm
+//loaded files are program1 and program2
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -65,9 +65,10 @@ void OP99(bool *);
 
 //global variables
 
+//main function
 int main(int argc, char * argv[]) {
 
-  for(int i = 0; i < argc; i++) {
+  for(int i = 0; i < argc; i++) { //to iterate through files
     char IR[6]; //instruction register
 
     char memory[100][6];  //main memory
@@ -80,14 +81,19 @@ int main(int argc, char * argv[]) {
     short int *Pt[4] = {&P0, &P1, &P2, &P3};
     char input_line[6]; //input from file
 
+
     FILE *fp; //file pointer
-    fp = fopen (argv[i+1] ,"r");  //requires textfile of Program2
-    if (!fp) exit(1);
+    fp = fopen (argv[i+1] ,"r");  //requires textfile of programs
+    if (!fp) {
+      printfError('f');
+      continue;
+    }
     char ch;
     int t = 0;
+    int program_line = 0;
 
-    for(int i = 0; i < 6; i++)
-      IR[i] = '0';
+    //for(int i = 0; i < 6; i++)
+      //IR[i] = '0';
     for(int i = 0; i < 100; i++) {
       int j = 0;
       for(;j<2;j++)
@@ -95,19 +101,22 @@ int main(int argc, char * argv[]) {
       for(;j<6;j++)
         memory[i][j] = 'Z';
     } //instantiate memory to '99ZZZZ'
-
+    printf("Loading Process\n");
     //the j loop line depends on where the EOF line is in the text file, since the while breaks when it
     //reaches a \n, the EOF will be found in the next parse, and will exit the
     //while again, with the contents found in the previous line(atom has a weird
     //way of saving a new blank line for the EOF)
     while(1) {  //get opcodes from file
-      if(PC > 99)
+      if(PC > 99) {
         printfError('s');
+        break;
+      }
       int j = 0;
       for(;j<2;j++)
         input_line[j] = '9';
       for(;j<6;j++)
         input_line[j] = 'Z';
+
       while((ch = (char)fgetc(fp)) != EOF) {
         if(ch == '\n' || t > 5) break;
         input_line[t] = ch;
@@ -115,20 +124,17 @@ int main(int argc, char * argv[]) {
       }
       t=0;
       for(int i = 0; i<6; i++)
-        memory[PC][i] = input_line[i];
-
+        memory[program_line][i] = input_line[i];
       if(ch == EOF) break;
-      PC++;
+      program_line++;
     }
 
     fclose(fp); //close file
 
-    PC = 0;
-    while(1) {  //computer loop
-      for(int i = 0; i < 6; i++) {
+    while(1) {  //OS loop
+      for(int i = 0; i < 6; i++)
         IR[i] = memory[PC][i];
-      }
-      bool leave = false;
+      bool leave = false; //to break while without exit(1)
       int opcode = chToI(IR, 0, 1); //get opcode
       switch(opcode) {  //compute opcode
         case 0: OP0(IR, Pt); PC++; break;
@@ -203,20 +209,7 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &ACC); PC++; break;
 
-        case 99:
-        //my version of GDB testing
-        //printf("Acc: %d, 20: ", ACC);
-        //for(int i = 0; i < 6; i++) {
-          //printf("%c", memory[20][i]);
-        //}
-        //printf(" 21: ");
-        //for(int i = 0; i < 6; i++) {
-          //printf("%c", memory[21][i]);
-        //}
-        //printf(" R3: %d R2: %d P0: %hi P1: %hi\n", R3, R2, P0, P1);
-        OP99(&leave);
-        PC++;
-        break;
+        case 99: OP99(&leave); PC++; break;
 
         default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
       }
@@ -234,6 +227,7 @@ void printfError(char error) {
   switch(error) {
     case 's': printf("Registration fault(core dumped)"); break;
     case 'n': printf("Null pointer exception"); break;
+    case 'f': printf("File not found exception"); break;
     default: printf("Unknown error occurred"); break;
   }
 }
