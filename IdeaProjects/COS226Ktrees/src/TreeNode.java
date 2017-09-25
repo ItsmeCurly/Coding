@@ -37,8 +37,12 @@ public class TreeNode implements Comparable<TreeNode> {
     }
 
     public int compareTo(TreeNode o) {
-        return 0;
-        //TODO
+        if (this.getKey() == o.getKey())
+            return 0;
+        else if (this.getKey() < o.getKey())
+            return -1;
+        else
+            return 1;
     }
 
     @Override
