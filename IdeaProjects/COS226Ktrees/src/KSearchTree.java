@@ -97,7 +97,7 @@ public class KSearchTree {
     @Override
     public String toString() {
         return "KSearchTree{" +
-                "root=" + root +
+                "root=" + root.toString() +
                 '}';
     }
 }

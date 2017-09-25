@@ -8,6 +8,8 @@ public class main {
     public static void main(String[] args) throws IOException {
         RecordManager rm = new RecordManager(4);
         rm.getKst().setRoot(new TreeNode(1, "a"));
+        rm.getKst().store(new TreeNode(2, "b"));
+
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //StringTokenizer st;
         //String line, delimiter = " ";

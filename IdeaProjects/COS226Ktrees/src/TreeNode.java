@@ -104,6 +104,6 @@ public class TreeNode implements Comparable<TreeNode> {
 
     @Override
     public String toString() {
-        return this.key + ": " + this.data;
+        return this.key + ": " + this.data + " - Child: " + child.toString();
     }
 }
