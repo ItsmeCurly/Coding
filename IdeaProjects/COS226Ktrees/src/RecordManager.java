@@ -9,5 +9,19 @@ public class RecordManager {
         kst = new KSearchTree(k);
     }
 
+    public int search(int k) {
+        return kst.search(k);
+    }
 
+    public void store(TreeNode node) {
+        kst.store(node);
+    }
+
+    public TreeNode searchNode(int k) {
+        return kst.searchNode(k);
+    }
+
+    public void delete(int k) {
+        kst.delete(k);
+    }
 }
