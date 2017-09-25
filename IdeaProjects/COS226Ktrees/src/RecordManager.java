@@ -9,6 +9,10 @@ public class RecordManager {
         kst = new KSearchTree(k);
     }
 
+    public KSearchTree getKst() {
+        return kst;
+    }
+
     public int search(int key) {
         return kst.search(key);
     }
