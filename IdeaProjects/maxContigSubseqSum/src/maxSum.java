@@ -1,4 +1,42 @@
+import java.util.Random;
+import java.io.File;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 public class maxSum {
+    public static void main(String[] args) throws IOException {
+        Random rand = new Random();
+        BufferedWriter bw = new BufferedWriter(new FileWriter("results.txt"));
+        for (int j = 0; j < 10; j++) {
+            int randomSize = rand.nextInt(300) + 1;
+            int[] a = new int[randomSize];
+
+            for (int i = 0; i < randomSize; i++) {
+                a[i] = rand.nextInt(250) - 125;
+            }
+            long startTime = System.currentTimeMillis();
+            maxSubsequenceSumN3(a);
+            long endTime = System.currentTimeMillis();
+
+            String str = "N^3 function timing: " + (endTime - startTime) + "\n";
+            bw.write(str);
+
+            startTime = System.currentTimeMillis();
+            maxSubsequenceSumN2(a);
+            endTime = System.currentTimeMillis();
+
+            str = "N^2 function timing: " + (endTime - startTime) + "\n";
+            bw.write(str);
+
+            startTime = System.currentTimeMillis();
+            maxSubsequenceSumN(a);
+            endTime = System.currentTimeMillis();
+
+            str = "N function timing: " + (endTime - startTime) + "\n";
+            bw.write(str);
+        }
+    }
+
     public static int maxSubsequenceSumN3(int[] a) {
         int maxSum = 0;
         for (int i = 0; i < a.length; i++)
