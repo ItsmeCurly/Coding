@@ -30,11 +30,11 @@ public class RecordManager {
     }
 
     public int size() {
-
+        return 0;
     }
 
     public int height() {
-
+        return 0;
     }
 
     @Override
