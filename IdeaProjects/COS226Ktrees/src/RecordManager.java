@@ -29,6 +29,14 @@ public class RecordManager {
         kst.delete(key);
     }
 
+    public int size() {
+
+    }
+
+    public int height() {
+
+    }
+
     @Override
     public String toString() {
         return kst.toString();

@@ -15,7 +15,6 @@ public class KSearchTree {
     public KSearchTree(TreeNode root, int k) {
         this.k = k;
         this.root = root;
-
     }
 
     public int search(int key) {
