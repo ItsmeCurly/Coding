@@ -57,20 +57,22 @@ public class KSearchTree {
     public void store(TreeNode node) {
         if (search(node.getKey()) <= 0) {
             if (size() == 1) {
-                createPair(node);
+                TreeNode parent = new TreeNode();
+                parent.setINode();
+                TreeNode temp = getRoot();
+                setRoot(parent);
+                parent.setChild(temp);
             }
             insert(node, root);
         }
     }
 
     private void insert(TreeNode insert, TreeNode node) {
-        if (node != null) {
-            if (node.getChild().compareTo(insert) > 0) {
-                TreeNode parent = createPair(insert);
-                node.setNextSibling(parent);
-            } else {
-                insert(insert, node.getNextSibling());
-            }
+        if (node.getChild().compareTo(insert) > 0) {
+            TreeNode parent = createPair(insert);
+            node.setNextSibling(parent);
+        } else if (node.getNextSibling() != null) {
+            insert(insert, node.getNextSibling());
         } else {
             TreeNode parent = createPair(insert);
             node.setNextSibling(parent);
@@ -81,6 +83,7 @@ public class KSearchTree {
         TreeNode parent = new TreeNode();
         parent.setINode();
         parent.setChild(node);
+        System.out.println(toString());
         return parent;
     }
 
@@ -109,8 +112,8 @@ public class KSearchTree {
 
     @Override
     public String toString() {
-        return "KSearchTree{" +
-                "root=" + root.toString() +
-                '}';
+        if (root != null) {
+            return root.toString();
+        } else return "Empty";
     }
 }

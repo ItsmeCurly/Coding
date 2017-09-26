@@ -113,7 +113,8 @@ public class TreeNode implements Comparable<TreeNode> {
      * @return: return string of the data in the treenode, differing between the i-node and l-node
      */
     public String toString() {
-        if (getId() == 0) return this.key + ": " + this.data + " - Child: " + child.toString();
+        if (getId() == 0) return "O - Child: " + ((child != null) ? child.toString() : "empty") +
+                ((getNextSibling() != null) ? ("\n|\n" + getNextSibling().toString()) : "");
         else return this.key + ": " + this.data;
     }
 }

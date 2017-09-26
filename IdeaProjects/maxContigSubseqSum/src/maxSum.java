@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.io.File;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -18,21 +17,21 @@ public class maxSum {
             maxSubsequenceSumN3(a);
             long endTime = System.currentTimeMillis();
 
-            String str = "N^3 function timing: " + (endTime - startTime) + "\n";
+            String str = "N^3 function timing: " + (endTime - startTime) + " ms\n";
             bw.write(str);
 
             startTime = System.currentTimeMillis();
             maxSubsequenceSumN2(a);
             endTime = System.currentTimeMillis();
 
-            str = "N^2 function timing: " + (endTime - startTime) + "\n";
+            str = "N^2 function timing: " + (endTime - startTime) + " ms\n";
             bw.write(str);
 
             startTime = System.currentTimeMillis();
             maxSubsequenceSumN(a);
             endTime = System.currentTimeMillis();
 
-            str = "N function timing: " + (endTime - startTime) + "\n";
+            str = "N function timing: " + (endTime - startTime) + " ms\n";
             bw.write(str);
         }
     }
