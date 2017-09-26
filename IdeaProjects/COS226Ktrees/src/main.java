@@ -37,7 +37,6 @@ public class main {
             System.out.println();
         } else if (command.equals("e")) {
             int k = Integer.parseInt(st.nextToken());
-
             System.out.println(rm.search(k));
         } else if (command.equals("r")) {
             int k = Integer.parseInt(st.nextToken());
