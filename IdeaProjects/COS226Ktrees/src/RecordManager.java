@@ -28,4 +28,9 @@ public class RecordManager {
     public void delete(int key) {
         kst.delete(key);
     }
+
+    @Override
+    public String toString() {
+        return kst.toString();
+    }
 }

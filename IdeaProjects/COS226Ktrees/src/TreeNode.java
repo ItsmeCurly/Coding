@@ -1,11 +1,13 @@
 
 
 public class TreeNode implements Comparable<TreeNode> {
+    //node key:data
     private int key;
     private String data;
 
     private int id; //i node is 0, l node is 1
-    //neighboring treenodes for leftmost-child right-sibling BT
+
+    //implementation of linked list
     private TreeNode nextSibling;
     private TreeNode child;
     private TreeNode parent;
@@ -17,6 +19,7 @@ public class TreeNode implements Comparable<TreeNode> {
     }
 
     //constructor with key and data
+
     public TreeNode(int key, String data) {
         this.key = key;
         this.data = data;
@@ -90,9 +93,12 @@ public class TreeNode implements Comparable<TreeNode> {
             nextSibling.setNextSibling(this.nextSibling);
             this.nextSibling = nextSibling;
         }
-
     }
 
+    /**
+     * @param o: the other TreeNode to compare to the original
+     * @return: if equal return 0, if other is greater return -1, if greater return 1
+     */
     public int compareTo(TreeNode o) {
         if (this.getKey() == o.getKey())
             return 0;
@@ -103,7 +109,11 @@ public class TreeNode implements Comparable<TreeNode> {
     }
 
     @Override
+    /**
+     * @return: return string of the data in the treenode, differing between the i-node and l-node
+     */
     public String toString() {
-        return this.key + ": " + this.data + " - Child: " + child.toString();
+        if (getId() == 0) return this.key + ": " + this.data + " - Child: " + child.toString();
+        else return this.key + ": " + this.data;
     }
 }
