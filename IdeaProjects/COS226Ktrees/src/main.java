@@ -8,10 +8,10 @@ public class main {
     public static void main(String[] args) throws IOException {
         RecordManager rm = new RecordManager(4);
         System.out.println(rm.toString());
-        rm.getKst().setRoot(new TreeNode(1, "a"));
+        rm.getKst().setRoot(new TreeNode(2, "b"));
         System.out.println(rm.toString());
 
-        rm.getKst().store(new TreeNode(2, "b"));
+        rm.getKst().store(new TreeNode(1, "a"));
         System.out.println("\n");
         System.out.println(rm.toString());
     }

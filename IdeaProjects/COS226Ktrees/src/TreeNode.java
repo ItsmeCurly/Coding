@@ -89,12 +89,19 @@ public class TreeNode implements Comparable<TreeNode> {
     }
 
     public void setNextSibling(TreeNode nextSibling) {
-        if (this.nextSibling != nextSibling) {
-            nextSibling.setNextSibling(this.nextSibling);
-            this.nextSibling = nextSibling;
-        }
+        this.nextSibling = nextSibling;
     }
 
+    public void setNSib() {
+        TreeNode temp = this.nextSibling;
+        setSiblings(this, nextSibling);
+        if (temp != null) setSiblings(nextSibling, temp);
+    }
+
+    public void setSiblings(TreeNode a, TreeNode b) {
+        a.setNextSibling(b);
+
+    }
     /**
      * @param o: the other TreeNode to compare to the original
      * @return: if equal return 0, if other is greater return -1, if greater return 1

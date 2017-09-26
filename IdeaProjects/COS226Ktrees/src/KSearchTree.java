@@ -23,10 +23,11 @@ public class KSearchTree {
 
     private int search(TreeNode node, int key) {
         if (node != null) {
-            if (node.getKey() == key) {
-                return 1;
+            if (node.getChild() != null) {
+                if (node.getChild().getKey() == key)
+                    return 1;
+                return search(node.getNextSibling(), key);
             }
-            return Math.max(search(node.getChild(), key), search(node.getNextSibling(), key));
         }
         return 0;
     }
@@ -37,31 +38,40 @@ public class KSearchTree {
 
     public TreeNode searchNode(TreeNode node, int key) {
         if (node != null) {
-            if (node.getKey() == key) {
-                return node;
+            if (node.getChild().getKey() == key) {
+                return node.getChild();
             }
-            TreeNode child = searchNode(node.getChild(), key);
-            TreeNode sibling = searchNode(node.getNextSibling(), key);
-            if (child != null)
-                return child;
-            else if (sibling != null)
-                return sibling;
+            return searchNode(node.getNextSibling(), key);
         }
         return null;
     }
 
-    public void delete(int k) {
-        //TODO
+    public void delete(int key) {
+        if (search(k) == 1) {
+            delete(root, k);
+        }
     }
 
+    private void delete(TreeNode node, int k) {
+        if (node.getChild().getKey() == k) deleteNode(node);
+        else delete(node.getNextSibling(), k);
+    }
+
+    private void deleteNode(TreeNode node) {
+
+    }
+
+
     public void store(TreeNode node) {
-        if (search(node.getKey()) <= 0) {
+        if (search(node.getKey()) == 0) {
             if (size() == 1) {
-                TreeNode parent = new TreeNode();
-                parent.setINode();
-                TreeNode temp = getRoot();
+                TreeNode parent = createPair(root);
                 setRoot(parent);
-                parent.setChild(temp);
+            }
+            if (node.getKey() < root.getChild().getKey()) {
+                TreeNode parent = createPair(node);
+                parent.setNextSibling(root);
+                setRoot(parent);
             }
             insert(node, root);
         }
@@ -83,7 +93,6 @@ public class KSearchTree {
         TreeNode parent = new TreeNode();
         parent.setINode();
         parent.setChild(node);
-        System.out.println(toString());
         return parent;
     }
 
