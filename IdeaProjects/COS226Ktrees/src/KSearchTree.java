@@ -14,7 +14,10 @@ public class KSearchTree {
 
     public KSearchTree(TreeNode root, int k) {
         this.k = k;
-        this.root = root;
+        if (root != null) {
+            TreeNode parent = createPair(root);
+            root = parent;
+        }
     }
 
     public int search(int key) {
@@ -47,42 +50,36 @@ public class KSearchTree {
     }
 
     public void delete(int key) {
-        if (search(k) == 1) {
-            delete(root, k);
+        if (search(key) == 1) {
+            if (key == root.getChild().getKey()) {
+                if (root.getNextSibling() == null) root = null;
+                else setRoot(root.getNextSibling());
+            } else delete(root, null, key);
         }
     }
 
-    private void delete(TreeNode node, int k) {
-        if (node.getChild().getKey() == k) deleteNode(node);
-        else delete(node.getNextSibling(), k);
-    }
-
-    private void deleteNode(TreeNode node) {
-
+    private void delete(TreeNode node, TreeNode prevNode, int key) {
+        if (node.getChild() != null && node.getChild().getKey() == key) prevNode.setNextSibling(node.getNextSibling());
+        else delete(node.getNextSibling(), node, key);
     }
 
 
     public void store(TreeNode node) {
-        if (search(node.getKey()) == 0) {
-            if (size() == 1) {
-                TreeNode parent = createPair(root);
-                setRoot(parent);
-            }
-            if (node.getKey() < root.getChild().getKey()) {
-                TreeNode parent = createPair(node);
-                parent.setNextSibling(root);
-                setRoot(parent);
-            }
-            insert(node, root);
-        }
+        if (size() == 0) {
+            TreeNode parent = createPair(node);
+            setRoot(parent);
+        } else insert(node, root, null);
     }
 
-    private void insert(TreeNode insert, TreeNode node) {
-        if (node.getChild().compareTo(insert) > 0) {
+    private void insert(TreeNode insert, TreeNode node, TreeNode prevNode) {
+        if (node.getChild().compareTo(insert) == 0) node.setData(insert.getData());
+        else if (node.getChild().compareTo(insert) > 0) {
             TreeNode parent = createPair(insert);
-            node.setNextSibling(parent);
+            if (prevNode != null) prevNode.setNextSibling(parent);
+            parent.setNextSibling(node);
+            if (node.getChild().compareTo(root.getChild()) == 0) setRoot(parent);
         } else if (node.getNextSibling() != null) {
-            insert(insert, node.getNextSibling());
+            insert(insert, node.getNextSibling(), node);
         } else {
             TreeNode parent = createPair(insert);
             node.setNextSibling(parent);

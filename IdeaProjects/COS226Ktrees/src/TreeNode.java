@@ -9,9 +9,9 @@ public class TreeNode implements Comparable<TreeNode> {
 
     //implementation of linked list
     private TreeNode nextSibling;
+
+    private TreeNode prevSibling;
     private TreeNode child;
-    private TreeNode parent;
-    private TreeNode previousSibling;
 
     //default constructor
     public TreeNode() {
@@ -51,14 +51,6 @@ public class TreeNode implements Comparable<TreeNode> {
         setId(1);
     }
 
-    public TreeNode getPreviousSibling() {
-        return previousSibling;
-    }
-
-    public void setPreviousSibling(TreeNode previousSibling) {
-        this.previousSibling = previousSibling;
-    }
-
     public String getData() {
         return data;
     }
@@ -73,15 +65,6 @@ public class TreeNode implements Comparable<TreeNode> {
 
     public void setChild(TreeNode child) {
         this.child = child;
-        child.setParent(this);
-    }
-
-    public TreeNode getParent() {
-        return parent;
-    }
-
-    public void setParent(TreeNode parent) {
-        this.parent = parent;
     }
 
     public TreeNode getNextSibling() {
@@ -92,16 +75,7 @@ public class TreeNode implements Comparable<TreeNode> {
         this.nextSibling = nextSibling;
     }
 
-    public void setNSib() {
-        TreeNode temp = this.nextSibling;
-        setSiblings(this, nextSibling);
-        if (temp != null) setSiblings(nextSibling, temp);
-    }
 
-    public void setSiblings(TreeNode a, TreeNode b) {
-        a.setNextSibling(b);
-
-    }
     /**
      * @param o: the other TreeNode to compare to the original
      * @return: if equal return 0, if other is greater return -1, if greater return 1
