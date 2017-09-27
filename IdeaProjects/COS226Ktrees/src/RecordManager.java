@@ -9,6 +9,9 @@ public class RecordManager {
         kst = new KSearchTree(k);
     }
 
+    public void makeNew(int k) {
+        kst = new KSearchTree(k);
+    }
     public KSearchTree getKst() {
         return kst;
     }
@@ -30,11 +33,11 @@ public class RecordManager {
     }
 
     public int size() {
-        return 0;
+        return kst.size();
     }
 
     public int height() {
-        return 0;
+        return kst.height();
     }
 
     @Override

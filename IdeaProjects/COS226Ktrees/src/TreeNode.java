@@ -1,7 +1,7 @@
 
 
 public class TreeNode implements Comparable<TreeNode> {
-    //node key:data
+    //node key:data pair
     private int key;
     private String data;
 
@@ -16,6 +16,7 @@ public class TreeNode implements Comparable<TreeNode> {
     //default constructor
     public TreeNode() {
         this(0, null);
+        this.id = 0;
     }
 
     //constructor with key and data
@@ -94,8 +95,8 @@ public class TreeNode implements Comparable<TreeNode> {
      * @return: return string of the data in the treenode, differing between the i-node and l-node
      */
     public String toString() {
-        if (getId() == 0) return "O - Child: " + ((child != null) ? child.toString() : "empty") +
+        if (getId() == 0) return "O - " + ((child != null) ? child.toString() : "empty") +
                 ((getNextSibling() != null) ? ("\n|\n" + getNextSibling().toString()) : "");
-        else return this.key + ": " + this.data;
+        else return this.key + " " + this.data;
     }
 }

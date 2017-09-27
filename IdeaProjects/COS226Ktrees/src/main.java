@@ -33,7 +33,7 @@ public class main {
             line = br.readLine();
             st = new StringTokenizer(line, delimiter);
 
-            getInput(st, rm);
+            go = getInput(st, rm);
         }
     }
 
@@ -42,7 +42,7 @@ public class main {
         if (command.equalsIgnoreCase("q")) {
             return false;
         } else if (command.equals("c")) {
-            rm = new RecordManager(Integer.parseInt(st.nextToken()));
+            rm.makeNew(Integer.parseInt(st.nextToken()));
             System.out.println();
         } else if (command.equals("s")) {
             int key = Integer.parseInt(st.nextToken());

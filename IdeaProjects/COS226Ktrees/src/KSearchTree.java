@@ -113,7 +113,13 @@ public class KSearchTree {
     }
 
     public int height() {
-        return 0;
+        TreeNode node = root;
+        int height = 0;
+        while (node != null) {
+            height += 1;
+            node = node.getNextSibling();
+        }
+        return height;
     }
 
     @Override
