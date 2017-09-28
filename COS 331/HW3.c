@@ -14,7 +14,7 @@ int parseOp1(char *);
 int parseOp2(char *);
 int parseOp1_2(char *);
 int parseOp1Reg(char *);
-int ParseOp2Reg(char *);
+int parseOp2Reg(char *);
 int fetch(char [][6], int);
 void store(char [][6], int line, int);
 void printMemory(char [][6]);
@@ -68,22 +68,21 @@ void OP99(bool *);
 //main function
 int main(int argc, char * argv[]) {
 
-  for(int i = 0; i < argc; i++) { //to iterate through files
-    char IR[6]; //instruction register
+  char IR[6]; //instruction register
 
-    char memory[100][6];  //main memory
-    char PSW[2] = {'F', 'F'};  //true false status
-    short int PC = 0; //program counter
-  	int ACC = 0; //accumulator
-    int R0 = 0, R1 = 0, R2 = 0, R3 = 0; //registers
-    int * Rg[4] = {&R0, &R1, &R2, &R3};
-    short int P0 = 0, P1 = 0, P2 = 0, P3 = 0; //pointers
-    short int *Pt[4] = {&P0, &P1, &P2, &P3};
-    char input_line[6]; //input from file
+  char memory[100][6];  //main memory
+  char PSW[2] = {'F', 'F'};  //true false status
+  int PC = 0; //program counter
+  int ACC = 0; //accumulator
+  int R0 = 0, R1 = 0, R2 = 0, R3 = 0; //registers
+  int * Rg[4] = {&R0, &R1, &R2, &R3};
+  short int P0 = 0, P1 = 0, P2 = 0, P3 = 0; //pointers
+  short int *Pt[4] = {&P0, &P1, &P2, &P3};
+  char input_line[6]; //input from file
 
-
+  for(int i = 1; i < argc; i++) { //to iterate through files
     FILE *fp; //file pointer
-    fp = fopen (argv[i+1] ,"r");  //requires textfile of programs
+    fp = fopen (argv[i] ,"r");  //requires textfile of programs
     if (!fp) {
       printfError('f');
       continue;
@@ -92,8 +91,6 @@ int main(int argc, char * argv[]) {
     int t = 0;
     int program_line = 0;
 
-    //for(int i = 0; i < 6; i++)
-      //IR[i] = '0';
     for(int i = 0; i < 100; i++) {
       int j = 0;
       for(;j<2;j++)
@@ -101,6 +98,13 @@ int main(int argc, char * argv[]) {
       for(;j<6;j++)
         memory[i][j] = 'Z';
     } //instantiate memory to '99ZZZZ'
+    for(int i = 0; i < 6; i++)
+      PSW[i] = 'F';
+    PC = 0;
+    ACC = 0;
+    R0 = 0, R1 = 0, R2 = 0, R3 = 0;
+    P0 = 0, P1 = 0, P2 = 0, P3 = 0;
+
     printf("Loading Process\n");
     //the j loop line depends on where the EOF line is in the text file, since the while breaks when it
     //reaches a \n, the EOF will be found in the next parse, and will exit the
@@ -118,7 +122,10 @@ int main(int argc, char * argv[]) {
         input_line[j] = 'Z';
 
       while((ch = (char)fgetc(fp)) != EOF) {
-        if(ch == '\n' || t > 5) break;
+        if(ch == '\n' || t > 6) {
+          if(t > 6) printfError('s');
+          break;
+        }
         input_line[t] = ch;
         t++;
       }
@@ -130,7 +137,6 @@ int main(int argc, char * argv[]) {
     }
 
     fclose(fp); //close file
-
     while(1) {  //OS loop
       for(int i = 0; i < 6; i++)
         IR[i] = memory[PC][i];
@@ -203,11 +209,11 @@ int main(int argc, char * argv[]) {
 
         case 32: OP32(IR, PSW, &ACC, Rg); PC++; break;
 
-        case 33: OP33(IR, PSW, &ACC); PC++; break;
+        case 33: OP33(IR, PSW, &PC); PC++; break;
 
-        case 34: OP34(IR, PSW, &ACC); PC++; break;
+        case 34: OP34(IR, PSW, &PC); PC++; break;
 
-        case 35: OP35(IR, &ACC); PC++; break;
+        case 35: OP35(IR, &PC); PC++; break;
 
         case 99: OP99(&leave); PC++; break;
 
@@ -216,20 +222,24 @@ int main(int argc, char * argv[]) {
       printf("\n");
       if(leave) break;
     }
-    printf("Terminating process");
+    printf("Terminating process\n");
+
+    printf("Breakpoint here\n");
   }
-  //put gdb flag here
+
   exit(1);
 }
 
 //helper
 void printfError(char error) {
   switch(error) {
-    case 's': printf("Registration fault(core dumped)"); break;
-    case 'n': printf("Null pointer exception"); break;
-    case 'f': printf("File not found exception"); break;
-    default: printf("Unknown error occurred"); break;
+    case 's': printf("Segmentation fault(core dumped)\n"); break;
+    case 'n': printf("Null pointer exception\n"); break;
+    case 'f': printf("File not found exception\n"); break;
+    default: printf("Unknown error occurred\n"); break;
   }
+  printf("Exiting...\n");
+  exit(1);
 }
 
 int chToI(char * num, int start, int end) { //helper converts char to int
@@ -275,7 +285,7 @@ int fetch(char memory[][6], int m_loc) {  //fetch something from memory
 }
 void store(char memory[100][6], int m_loc, int num) { //store something in memory
   char * temp = iToCh(num);
-  printf("Store to line: %d\n", m_loc);
+  printf("Store to line: %d: %d\n", m_loc, num);
   for(int i = 0; i < 6; i++)
     memory[m_loc][i] = temp[i];
   for(int i = 0; i < 2; i++)
@@ -324,6 +334,7 @@ void OP0(char * IR, short int **Pt) {
 
   printf("Opcode 00: Load Pointer Immediate\n");
   printIR(IR);
+
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
 }
 void OP1(char * IR, short int **Pt) {
@@ -435,7 +446,6 @@ void OP14(char * IR, int *ACC, int **Rg) {
   printIR(IR);
   int * rPt = Rg[parseOp1Reg(IR)];
   *ACC = *rPt;
-  //printf("%d\n", *ACC);
 }
 void OP15(char * IR, int *ACC, int **Rg) {
   if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
@@ -475,7 +485,7 @@ void OP19(char * IR, int *ACC, int **Rg) {
   printIR(IR);
 
   int * rPt = Rg[parseOp1Reg(IR)];
-  *ACC += *rPt;
+  *ACC -= *rPt;
 }
 void OP20(char * IR, char memory [][6], int *ACC, short int **Pt) {
   if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
@@ -483,7 +493,9 @@ void OP20(char * IR, char memory [][6], int *ACC, short int **Pt) {
   printf("Opcode 20: Add Accumulator Register Addressing\n");
   printIR(IR);
   int m_l = *Pt[parseOp1Reg(IR)];
+  printf("%d", *ACC);
   *ACC += fetch(memory, m_l);
+  printf("%d", *ACC);
 }
 void OP21(char * IR, char memory[][6], int *ACC) {
   if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
@@ -567,6 +579,7 @@ void OP29(char * IR, char * PSW, int *ACC) {
 
   printf("Opcode 29: Compare Less Immediate\n");
   printIR(IR);
+
   int temp = parseOp1_2(IR);
   if(*ACC < temp) PSW[0] = 'T';
   else PSW[0] = 'F';
@@ -600,15 +613,24 @@ void OP32(char * IR, char * PSW, int *ACC, int ** Rg) {
 }
 void OP33(char * IR, char * PSW, int *PC) {
   if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
-  if(PSW[0] == 'T') *PC = parseOp1(IR);
+  printf("Opcode 33: Branch Conditional True\n");
+  if(PSW[0] == 'T') *PC = parseOp1(IR) - 1;
 }
 void OP34(char * IR, char * PSW, int *PC) {
   if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
-  if(PSW[0] == 'F') *PC = parseOp1(IR);
+  printf("Opcode 34: Branch Conditional False\n");
+  printIR(IR);
+
+  if(PSW[0] == 'F') *PC = parseOp1(IR) - 1;
 }
 void OP35(char * IR, int *PC) {
-  *PC = parseOp1(IR);
+  printf("Opcode 35: Branch Unconditional\n");
+  printIR(IR);
+
+  *PC = parseOp1(IR) - 1;
 }
 void OP99(bool *leave) {
+  printf("Opcode 99: Halt");
   *leave = true;
+
 }
