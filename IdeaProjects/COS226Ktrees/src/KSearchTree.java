@@ -1,8 +1,8 @@
 import java.util.LinkedList;
 
 public class KSearchTree {
-    private TreeNode root;
-    private int k;
+    private TreeNode root;  //the root of the tree
+    private int k;  // k value of tree
 
     public KSearchTree() {
         this(0);
@@ -14,27 +14,35 @@ public class KSearchTree {
 
     public KSearchTree(TreeNode root, int k) {
         this.k = k;
-        if (root != null) {
+        if (root != null) { //if root is not null, set root as l-node's parent(created here)
             TreeNode parent = createPair(root);
             root = parent;
         }
     }
 
+    /**
+     * @param key: the key of the root to search
+     * @return return 1 if found, 0 if not
+     */
     public int search(int key) {
         return search(root, key);
     }
 
     private int search(TreeNode node, int key) {
-        if (node != null) {
+        if (node != null)
             if (node.getChild() != null) {
                 if (node.getChild().getKey() == key)
                     return 1;
                 return search(node.getNextSibling(), key);
             }
-        }
         return 0;
     }
 
+    /**
+     *
+     * @param key: the key of the root to search
+     * @return return node if found, null if not
+     */
     public TreeNode searchN(int key) {
         return searchNode(root, key);
     }
@@ -49,6 +57,10 @@ public class KSearchTree {
         return null;
     }
 
+    /**
+     *
+     * @param key: key of node to find
+     */
     public void delete(int key) {
         if (search(key) == 1) {
             if (key == root.getChild().getKey()) {
@@ -63,7 +75,10 @@ public class KSearchTree {
         else delete(node.getNextSibling(), node, key);
     }
 
-
+    /**
+     *
+     * @param node: the node to store
+     */
     public void store(TreeNode node) {
         if (size() == 0) {
             TreeNode parent = createPair(node);
@@ -86,21 +101,33 @@ public class KSearchTree {
         }
     }
 
-    private TreeNode createPair(TreeNode node) {
+    private TreeNode createPair(TreeNode node) {    //creates a pair of nodes, i-node and l-node
         TreeNode parent = new TreeNode();
         parent.setINode();
         parent.setChild(node);
         return parent;
     }
 
+    /**
+     *
+     * @return root: the root of the tree
+     */
     public TreeNode getRoot() {
         return root;
     }
 
+    /**
+     *
+     * @param root: the root to set
+     */
     public void setRoot(TreeNode root) {
         this.root = root;
     }
 
+    /**
+     *
+     * @return: the size of the tree
+     */
     public int size() {
         TreeNode node = root;
         int size = 0;
@@ -112,6 +139,10 @@ public class KSearchTree {
         return size;
     }
 
+    /**
+     *
+     * @return: the height of the tree
+     */
     public int height() {
         TreeNode node = root;
         int height = 0;

@@ -1,3 +1,7 @@
+/**
+ * This class doesn't serve as a class on itself, it serves as a passerby for the creation of new KSearchTree
+ * units within main, and main is the main class that runs the code.
+ */
 public class RecordManager {
     private KSearchTree kst;
 
@@ -12,6 +16,7 @@ public class RecordManager {
     public void makeNew(int k) {
         kst = new KSearchTree(k);
     }
+
     public KSearchTree getKst() {
         return kst;
     }

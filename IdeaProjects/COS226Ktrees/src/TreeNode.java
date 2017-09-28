@@ -1,5 +1,3 @@
-
-
 public class TreeNode implements Comparable<TreeNode> {
     //node key:data pair
     private int key;
@@ -9,8 +7,6 @@ public class TreeNode implements Comparable<TreeNode> {
 
     //implementation of linked list
     private TreeNode nextSibling;
-
-    private TreeNode prevSibling;
     private TreeNode child;
 
     //default constructor
@@ -79,15 +75,19 @@ public class TreeNode implements Comparable<TreeNode> {
 
     /**
      * @param o: the other TreeNode to compare to the original
-     * @return: if equal return 0, if other is greater return -1, if greater return 1
+     * @return int:  if equal return 0, if other is greater return -1, if greater return 1
      */
     public int compareTo(TreeNode o) {
-        if (this.getKey() == o.getKey())
-            return 0;
-        else if (this.getKey() < o.getKey())
-            return -1;
-        else
-            return 1;
+        return Integer.compare(getKey(), o.getKey());
+    }
+
+    private String print(int depth) {
+        String space = "";
+        for (int i = 0; i < depth; i++) space += "   ";
+        if (getId() == 0)
+            return "O -- " + ((child != null) ? child.toString() : "empty") +
+                    ((getNextSibling() != null) ? ("\n" + space + getNextSibling().print(depth + 1)) : "");
+        else return this.key + " " + this.data;
     }
 
     @Override
@@ -95,8 +95,7 @@ public class TreeNode implements Comparable<TreeNode> {
      * @return: return string of the data in the treenode, differing between the i-node and l-node
      */
     public String toString() {
-        if (getId() == 0) return "O - " + ((child != null) ? child.toString() : "empty") +
-                ((getNextSibling() != null) ? ("\n|\n" + getNextSibling().toString()) : "");
-        else return this.key + " " + this.data;
+        return print(1);
+
     }
 }
