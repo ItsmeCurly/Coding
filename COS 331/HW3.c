@@ -1,5 +1,12 @@
 //-lm
 //loaded files are program1 and program2
+//both files can be run at once, and my program has a printf statement that indicates where to put the breakpoint at 227(subject to change possibly)
+//opcodes 33-34-35 have special changes that aren't intuitive, just cheaty really. When they set the PC, they set it to -1 the set value, and then
+//the case/switch statement incrememnts it to reach the desired value. This is to avoid the fact that the conditional may be false, and the program
+//will continue despite being true/false
+//Instead of exiting loop with halt, the halt will set a bool to false to exit the while statement and reach the end of the for loop, which will go
+//on to the next program(ie program1 -> program2)
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -67,7 +74,7 @@ void OP99(bool *);
 
 //main function
 int main(int argc, char * argv[]) {
-
+  //initialize and declare
   char IR[6]; //instruction register
 
   char memory[100][6];  //main memory
@@ -90,7 +97,7 @@ int main(int argc, char * argv[]) {
     char ch;
     int t = 0;
     int program_line = 0;
-
+    //reset all variables for certain process within argv
     for(int i = 0; i < 100; i++) {
       int j = 0;
       for(;j<2;j++)
@@ -112,7 +119,7 @@ int main(int argc, char * argv[]) {
     //way of saving a new blank line for the EOF)
     while(1) {  //get opcodes from file
       if(PC > 99) {
-        printfError('s');
+        printfError('s'); //segmentation fault - memory too far
         break;
       }
       int j = 0;
@@ -224,24 +231,27 @@ int main(int argc, char * argv[]) {
     }
     printf("Terminating process\n");
 
-    printf("Breakpoint here\n");
+    printf("Breakpoint here\n\n");
   }
 
   exit(1);
 }
 
-//helper
+//error method
 void printfError(char error) {
   switch(error) {
     case 's': printf("Segmentation fault(core dumped)\n"); break;
     case 'n': printf("Null pointer exception\n"); break;
     case 'f': printf("File not found exception\n"); break;
+    case 'o': printf("Incorrect operand supplied to opcode\n"); break;
     default: printf("Unknown error occurred\n"); break;
   }
-  printf("Exiting...\n");
-  exit(1);
+  //printf("Exiting...\n");
+  //exit(1);
+  //can exit here or not
+  printf("\n");
 }
-
+//helper methods
 int chToI(char * num, int start, int end) { //helper converts char to int
 	int finalVal = 0;
   for (int i = end; i >= start; i--) {
@@ -285,7 +295,7 @@ int fetch(char memory[][6], int m_loc) {  //fetch something from memory
 }
 void store(char memory[100][6], int m_loc, int num) { //store something in memory
   char * temp = iToCh(num);
-  printf("Store to line: %d: %d\n", m_loc, num);
+  printf("Store to line %d: %d\n", m_loc, num);
   for(int i = 0; i < 6; i++)
     memory[m_loc][i] = temp[i];
   for(int i = 0; i < 2; i++)
@@ -326,230 +336,330 @@ void printIR(char *IR) {  //print the IR
     printf("%c", IR[i]);
   printf("\n");
 }
+//end helper methods
 
 //opcodes
+//every opcode implements a certain error checking method to check if the operands are correct before executing the opcode
 void OP0(char * IR, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) return;
-
   printf("Opcode 00: Load Pointer Immediate\n");
   printIR(IR);
 
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) {
+    printfError('o');
+    return;
+  }
   *Pt[parseOp1Reg(IR)] = parseOp2(IR);
 }
 void OP1(char * IR, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) return;
-
   printf("Opcode 01: Add to Pointer Immediate\n");
   printIR(IR);
+
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) {
+    printfError('o');
+    return;
+  }
   *Pt[parseOp1Reg(IR)] += parseOp2(IR);
 }
 void OP2(char * IR, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) return;
-
   printf("Opcode 02: Subtract From Pointer Immediate\n");
   printIR(IR);
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) {
+    printfError('o');
+    return;
+  }
   *Pt[parseOp1Reg(IR)] += parseOp2(IR);
 }
 void OP3(char * IR, int *ACC) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 03: Load Accumulator Immediate\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
   *ACC = parseOp1_2(IR);
 }
 void OP4(char * IR, char memory[][6], int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 04: Load Accumulator Register Addressing\n");
   printIR(IR);
+
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
   *ACC = fetch(memory, m_l);
 }
 void OP5(char * IR, char memory[][6], int *ACC) {
-  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
   printf("Opcode 05: Load Accumulator Direct Addressing\n");
   printIR(IR);
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   int m_l = parseOp1(IR);
   *ACC = fetch(memory, m_l);
 }
 void OP6(char * IR, char memory[][6], int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 06: Store Accumulator Register Addressing\n");
   printIR(IR);
+
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
   store(memory, m_l, *ACC);
 }
 void OP7(char * IR, char memory[][6], int *ACC) {
   printf("Opcode 07: Store Accumulator Direct Addressing\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   int m_l = parseOp1(IR);
   store(memory, m_l, *ACC);
 }
 void OP8(char * IR, char memory[][6], int **Rg, short int **Pt) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(IR[4] != 'P' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
   printf("Opcode 08: Store Register to Memory: Register Addressing\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(IR[4] != 'P' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int r = *Rg[parseOp1Reg(IR)];
   int m_l = *Pt[parseOp2Reg(IR)];
   store(memory, m_l, r);
 }
 void OP9(char * IR, char memory[][6], int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 09: Store Register to Memory: Direct Addressing\n");
   printIR(IR);
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int r = *Rg[parseOp1Reg(IR)];
   int m_l = parseOp2(IR);
   store(memory, m_l, r);
 }
 void OP10(char * IR, char memory[][6], int **Rg, short int **Pt) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(IR[4] != 'P' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
   printf("Opcode 10: Load Register from memory: Register Addressing\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(IR[4] != 'P' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * rPt = Rg[parseOp1Reg(IR)];
   int m_l = *Pt[parseOp2Reg(IR)];
   *rPt = fetch(memory, m_l);
 }
 void OP11(char * IR, char memory[][6], int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
   printf("Opcode 11: Load register from memory: Direct Addressing\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(!(chToI(IR, 4, 5) >= 0 && chToI(IR, 4, 5) <= 99)) {
+    printfError('o');
+    return;
+  }
   int * rPt = Rg[parseOp1Reg(IR)];
   int m_l = parseOp2(IR);
   *rPt = fetch(memory, m_l);
 }
 void OP12(char * IR, int *R0) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 12: Load Register R0 Immediate\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
   *R0 = parseOp1_2(IR);
 }
 void OP13(char * IR, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-  if(IR[4] != 'R' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) return;
-
   printf("Opcode 13: Register to Register Transfer\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(IR[4] != 'R' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int *r1Pt = Rg[parseOp1Reg(IR)];
   int *r2Pt = Rg[parseOp2Reg(IR)];
   *r1Pt = *r2Pt;
 }
 void OP14(char * IR, int *ACC, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 14: Load Accumulator from Register\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * rPt = Rg[parseOp1Reg(IR)];
   *ACC = *rPt;
 }
 void OP15(char * IR, int *ACC, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 15: Load Register from Accumulator\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * rPt = Rg[parseOp1Reg(IR)];
   *rPt = *ACC;
 }
 void OP16(char * IR, int *ACC) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 16: Add Accumulator Immediate\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
   *ACC += chToI(IR, 2, 5);
 }
 void OP17(char * IR, int *ACC) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 17: Subtract Accumulator Immediate\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
   *ACC -= chToI(IR, 2, 5);
 }
 void OP18(char * IR, int *ACC, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 18: Add contents of Register to Accumulator\n");
   printIR(IR);
 
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * rPt = Rg[parseOp1Reg(IR)];
   *ACC += *rPt;
 }
 void OP19(char * IR, int *ACC, int **Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 19: Subtract contents of Register to Accumulator\n");
   printIR(IR);
 
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * rPt = Rg[parseOp1Reg(IR)];
   *ACC -= *rPt;
 }
 void OP20(char * IR, char memory [][6], int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 20: Add Accumulator Register Addressing\n");
   printIR(IR);
+
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
-  printf("%d", *ACC);
   *ACC += fetch(memory, m_l);
-  printf("%d", *ACC);
 }
 void OP21(char * IR, char memory[][6], int *ACC) {
-  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
-
   printf("Opcode 21: Add Accumulator Direct Addressing\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   int m_l = parseOp1(IR);
   *ACC += fetch(memory, m_l);
 }
 void OP22(char * IR, char memory[][6], int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
-  printf("Opcode 22: Subtract Accumulator Register Addressing\n");
+  printf("Opcode 23: Subtract Accumulator Direct Addressing\n");
   printIR(IR);
-
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
   *ACC -= fetch(memory, m_l);
 }
 void OP23(char * IR, char memory[][6], int *ACC) {
-  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
-
   printf("Opcode 23: Subtract Accumulator Direct Addressing\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   int m_l = parseOp1(IR);
   *ACC -= fetch(memory, m_l);
 }
 void OP24(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 24: Compare Equal Register Addressing\n");
   printIR(IR);
 
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
   int temp = fetch(memory, m_l);
   if(*ACC == temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP25(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 25: Compare Less Register Addressing\n");
   printIR(IR);
 
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
   int temp = fetch(memory, m_l);
   if(*ACC < temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP26(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
-  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 26: Compare Greater Register Addressing\n");
   printIR(IR);
 
+  if(IR[2] != 'P' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int m_l = *Pt[parseOp1Reg(IR)];
   int temp = fetch(memory, m_l);
 
@@ -557,80 +667,111 @@ void OP26(char * IR, char memory[][6], char * PSW, int *ACC, short int **Pt) {
   else PSW[0] = 'F';
 }
 void OP27(char * IR, char * PSW, int *ACC) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 27: Compare Greater Immediate\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
+
   int temp = parseOp1_2(IR);
   if(*ACC > temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP28(char * IR, char * PSW, int *ACC) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 28: Compare Equal Immediate\n");
   printIR(IR);
+
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
+
   int temp = parseOp1_2(IR);
   if(*ACC == temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP29(char * IR, char * PSW, int *ACC) {
-  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) return;
-
   printf("Opcode 29: Compare Less Immediate\n");
   printIR(IR);
 
+  if(!(chToI(IR, 2, 5) >= 0 && chToI(IR, 2, 5) <= 9999)) {
+    printfError('o');
+    return;
+  }
   int temp = parseOp1_2(IR);
   if(*ACC < temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP30(char * IR, char * PSW, int *ACC, int ** Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 32: Compare Register Equal\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * temp = Rg[parseOp1Reg(IR)];
   if(*ACC == *temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP31(char * IR, char * PSW, int *ACC, int ** Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 31: Compare Register Less\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * temp = Rg[parseOp1Reg(IR)];
   if(*ACC == *temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP32(char * IR, char * PSW, int *ACC, int ** Rg) {
-  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) return;
-
   printf("Opcode 32: Compare Register Greater\n");
   printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
   int * temp = Rg[parseOp1Reg(IR)];
   if(*ACC == *temp) PSW[0] = 'T';
   else PSW[0] = 'F';
 }
 void OP33(char * IR, char * PSW, int *PC) {
-  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
   printf("Opcode 33: Branch Conditional True\n");
+  printIR(IR);
+
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   if(PSW[0] == 'T') *PC = parseOp1(IR) - 1;
 }
 void OP34(char * IR, char * PSW, int *PC) {
-  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) return;
   printf("Opcode 34: Branch Conditional False\n");
   printIR(IR);
 
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   if(PSW[0] == 'F') *PC = parseOp1(IR) - 1;
 }
 void OP35(char * IR, int *PC) {
   printf("Opcode 35: Branch Unconditional\n");
   printIR(IR);
-
+  
+  if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
+    printfError('o');
+    return;
+  }
   *PC = parseOp1(IR) - 1;
 }
+//does not leave immediately, rather sets a boolean to false to not stop entire program and go to next process
 void OP99(bool *leave) {
   printf("Opcode 99: Halt");
   *leave = true;
-
 }
