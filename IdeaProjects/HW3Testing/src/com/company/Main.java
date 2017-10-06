@@ -35,11 +35,13 @@ public class Main {
         int hashVal = 0;
         System.out.println(hashVal);
         for(int i = 0; i < key.length(); i++) {
-
-            hashVal = (hashVal * 128 + key.charAt(i)) % 17;
-            System.out.println(key.charAt(i)+" : " +hashVal);
+            hashVal = hashVal * 37 + key.charAt(i);
         }
 
+        hashVal %= 17;
+        if(hashVal < 0)
+            hashVal += 17;
+        System.out.println(key + ": " + hashVal);
         return hashVal;
     }
 }
