@@ -763,7 +763,7 @@ void OP34(char * IR, char * PSW, int *PC) {
 void OP35(char * IR, int *PC) {
   printf("Opcode 35: Branch Unconditional\n");
   printIR(IR);
-  
+
   if(!(chToI(IR, 2, 3) >= 0 && chToI(IR, 2, 3) <= 99)) {
     printfError('o');
     return;
