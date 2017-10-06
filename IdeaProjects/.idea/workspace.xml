@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ec703d3-432a-4cb1-ad8f-776d5e970d17" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../.idea/artifacts/Coding_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/COS226Ktrees/src/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/exporting2/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/maxContigSubseqSum/src/results.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/exporting2/src/results.txt" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maxContigSubseqSum/results.txt" afterPath="$PROJECT_DIR$/COS226Ktrees/src/README" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/production/Coding/KSearchTree.class" afterPath="$PROJECT_DIR$/COS226Ktrees/production/Coding/KSearchTree.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/production/Coding/RecordManager.class" afterPath="$PROJECT_DIR$/COS226Ktrees/production/Coding/RecordManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/production/Coding/TreeNode.class" afterPath="$PROJECT_DIR$/COS226Ktrees/production/Coding/TreeNode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/production/Coding/main.class" afterPath="$PROJECT_DIR$/COS226Ktrees/production/Coding/main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/production/Coding/maxSum.class" afterPath="$PROJECT_DIR$/COS226Ktrees/production/Coding/maxSum.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/Coding.iml" afterPath="$PROJECT_DIR$/../.idea/Coding.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/src/KSearchTree.java" afterPath="$PROJECT_DIR$/COS226Ktrees/src/KSearchTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/src/RecordManager.java" afterPath="$PROJECT_DIR$/COS226Ktrees/src/RecordManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/src/TreeNode.java" afterPath="$PROJECT_DIR$/COS226Ktrees/src/TreeNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/COS226Ktrees/src/main.java" afterPath="$PROJECT_DIR$/COS226Ktrees/src/main.java" />
-    </list>
+    <list default="true" id="5ec703d3-432a-4cb1-ad8f-776d5e970d17" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,8 +18,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="356" />
-    <option name="y" value="-23" />
+    <option name="x" value="923" />
+    <option name="y" value="84" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -59,9 +41,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -78,11 +57,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/COS226Ktrees" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
