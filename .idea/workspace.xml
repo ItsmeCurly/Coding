@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="af37bf02-59db-4e8a-8d65-b93f85e60b4d" name="Default" comment="" />
+    <list default="true" id="af37bf02-59db-4e8a-8d65-b93f85e60b4d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IdeaProjects/.idea/workspace.xml" afterPath="$PROJECT_DIR$/IdeaProjects/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IdeaProjects/COS226Ktrees/.idea/COS226Ktrees.iml" afterPath="$PROJECT_DIR$/IdeaProjects/COS226Ktrees/.idea/COS226Ktrees.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IdeaProjects/COS226Ktrees/.idea/workspace.xml" afterPath="$PROJECT_DIR$/IdeaProjects/COS226Ktrees/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -160,9 +165,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -181,11 +186,17 @@
               <item name="IdeaProjects" type="462c0819:PsiDirectoryNode" />
               <item name="COS226Ktrees" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Coding" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Coding" type="462c0819:PsiDirectoryNode" />
+              <item name="IdeaProjects" type="462c0819:PsiDirectoryNode" />
+              <item name="maxContigSubseqSum" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -194,7 +205,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/exporting" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
