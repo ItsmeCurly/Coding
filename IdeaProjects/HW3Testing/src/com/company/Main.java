@@ -32,7 +32,6 @@ public class Main {
         int hashVal = 0;
         for(int i = 0; i < key.length(); i++) {
             hashVal = hashVal * 37 + key.charAt(i);
-            //System.out.println(key.charAt(i)+" : " +hashVal);
         }
 
         hashVal %= 17;

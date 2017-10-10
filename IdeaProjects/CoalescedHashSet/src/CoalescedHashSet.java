@@ -67,12 +67,14 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
     }
     @Override
     public boolean add(E x) {
+        int lastPos = findLastPos(x);
         int currentPos = findPos(x);
         if(isActive(array, currentPos))
             return false;
         if(array[currentPos] == null)
             occupied++;
-        array[currentPos] = new HashEntry(x, true);
+        array[lastPos].nextPos = currentPos;
+        array[currentPos] = new HashEntry(x, -1, true);
         currentSize++;
         modCount++;
         if(occupied > array.length / 2)
