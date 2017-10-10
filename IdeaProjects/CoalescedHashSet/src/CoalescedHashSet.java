@@ -94,6 +94,10 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
         int offset = 1;
         int currentPos = (x == null) ?
                 0 : Math.abs(x.hashCode() % array.length);
+        while (array[currentPos].nextPos != -1) {
+            currentPos = array[currentPos].nextPos;
+        }
+
         while(array[currentPos] != null) {
             if(x == null) {
                 if (array[currentPos].element == null)
