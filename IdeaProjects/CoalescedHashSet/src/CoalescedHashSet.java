@@ -114,6 +114,15 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
         return currentPos;
     }
 
+    private int findLastPos(Object x) {
+        int currentPos = (x == null) ?
+                0 : Math.abs(x.hashCode() % array.length);
+        while (array[currentPos].nextPos != -1) {
+            currentPos = array[currentPos].nextPos;
+        }
+        return currentPos;
+    }
+
     private void allocateArray(int arraySize) {
         array = new HashEntry[arraySize];
     }
