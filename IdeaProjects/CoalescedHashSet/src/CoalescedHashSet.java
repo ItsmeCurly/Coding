@@ -203,6 +203,7 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
             this.element = element;
             this.nextPos = nextPos;
             this.isActive = isActive;
+
         }
     }
 }
