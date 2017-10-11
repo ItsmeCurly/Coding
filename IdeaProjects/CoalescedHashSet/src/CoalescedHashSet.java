@@ -92,28 +92,19 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
                 add((E) oldArray[i].element);
     }
 
-    private int findPos(Object x) {
-        int offset = 1;
-        int currentPos = (x == null) ?
-                0 : Math.abs(x.hashCode() % array.length);
-        while (array[currentPos].nextPos != -1) {
-            currentPos = array[currentPos].nextPos;
-        }
+    private static boolean isPrime(int n) {
+        for (int m = 2; m <= n / 2; m++)
+            if (n % m == 0)
+                return false;
+        return true;
+    }
 
-        while(array[currentPos] != null) {
-            if(x == null) {
-                if (array[currentPos].element == null)
-                    break;
-            }
-            else if(x.equals(array[currentPos].element))
-                break;
-
-            currentPos += offset;
-            offset += 2;
-            if(currentPos >= array.length)
-                currentPos -= array.length;
-        }
-        return currentPos;
+    private static int nextPrime(int n) {
+        if (n % 2 == 0)
+            n++;
+        for (; !isPrime(n); n += 2)
+            ;
+        return n;
     }
 
     private int findLastPos(Object x) {
@@ -129,19 +120,31 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
         array = new HashEntry[arraySize];
     }
 
-    private static int nextPrime(int n) {
-        if(n%2 == 0)
-            n++;
-        for( ; !isPrime(n); n += 2)
-            ;
-        return n;
-    }
+    private int findPos(Object x) {
+        int offset = 1;
+        int currentPos = (x == null) ?
+                0 : Math.abs(x.hashCode() % array.length);
 
-    private static boolean isPrime(int n) {
-        for(int m = 2; m < n; m++)
-            if(n%m == 0)
-                return false;
-        return true;
+        if (array[currentPos].nextPos != -1)
+            while (array[currentPos].nextPos != -1)
+                currentPos = array[currentPos].nextPos;
+        else if (array[currentPos] != null)
+            currentPos = 0;
+
+        while(array[currentPos] != null) {
+            if(x == null) {
+                if (array[currentPos].element == null)
+                    break;
+            }
+            else if(x.equals(array[currentPos].element))
+                break;
+
+            currentPos += offset;
+            offset += 2;
+            if(currentPos >= array.length)
+                currentPos -= array.length;
+        }
+        return currentPos;
     }
 
     private class HashSetIterator implements Iterator<E> {
