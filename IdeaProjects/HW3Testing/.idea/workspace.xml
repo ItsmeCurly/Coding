@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="018e43dd-8713-475f-86e0-0550cd27a10e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../CoalescedHashSet/src/HashSet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../CoalescedHashSet/src/README.md" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../CoalescedHashSet/src/CoalescedHashSet.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../CoalescedHashSet/src/TestClass.java" afterPath="$PROJECT_DIR$/../CoalescedHashSet/src/TestClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../CoalescedHashSet/src/README.md" afterPath="$PROJECT_DIR$/../CoalescedHashSet/src/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
