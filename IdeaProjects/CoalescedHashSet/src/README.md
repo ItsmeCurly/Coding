@@ -8,4 +8,4 @@ Some of the debugging lines were left in the program for testing purposes, and t
 Using TestClass.java will insert the 10 words from the homework into a hash table using coalesced hashing,
 and if the toString is called will display the connections of the linked list as well.
 *findPos in HashSet has two println's that are commented out for debugging purposes along with the toString in the TestClass. If all of these are uncommented,
-it is easier to see the product of the hash table than using the iterator, as the nulls are displayed with the non-nulls in the toString
+it is easier to see the product of the hash table than using the iterator, as the nulls are displayed with the non-nulls in the toString.
