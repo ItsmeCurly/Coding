@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E> {
+public class HashSet<E> extends AbstractCollection<E> implements Set<E> {
     private static final int DEFAULT_TABLE_SIZE = 17;
     private int currentSize; //occupied not including the deleted items
     private int occupied; // current size of the stored items
@@ -11,7 +11,7 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
     /**
      * Default constructor
      */
-    public CoalescedHashSet() {
+    public HashSet() {
         allocateArray(DEFAULT_TABLE_SIZE);
         clear();
     }
@@ -19,128 +19,22 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
     /**
      * @param other: the other array to set equal to the hashset
      */
-    public CoalescedHashSet(Collection<? extends E> other) {
-        allocateArray(nextPrime(other.size()*2));
+    public HashSet(Collection<? extends E> other) {
+        allocateArray(nextPrime(other.size() * 2));
         clear();
 
-        for(E element : other) {
+        for (E element : other) {
             add(element);
         }
     }
 
     /**
-     *
      * @param arr - the array to reference from
      * @param pos - the position of the object
      * @return whether the given item in the array is active(not deleted)
      */
     private static boolean isActive(HashEntry[] arr, int pos) {
         return arr[pos] != null && arr[pos].isActive;
-    }
-
-    /**
-     * @return the number of occupied slots in the hash table
-     */
-    public int size() {
-        return occupied;
-    }
-
-    /**
-     *
-     * @return the iterator of the hash table
-     */
-    public Iterator<E> iterator() {
-        return new HashSetIterator();
-    }
-
-    /**
-     * return if the hash table contains the given x object
-     */
-    @Override
-    public boolean contains(Object x) {
-        return isActive(array, findPos(x));
-    }
-
-    /**
-     *
-     * @param x the object to compare
-     * @return the match of the object
-     */
-    public E getMatch(E x) {
-        int currentPos = findPos(x);
-        if(isActive(array, currentPos))
-            return (E) array[currentPos].element;
-        return null;
-    }
-
-    /**
-     *
-     * @param x the object to remove
-     * @return whether the object was successfully removed or not
-     */
-    @Override
-    public boolean remove(Object x) {
-        int currentPos = findPos(x);
-        if(!isActive(array,currentPos))
-            return false;
-        array[currentPos].isActive = false;
-        currentSize--;
-        modCount++;
-
-        if(currentSize < array.length / 8)
-            rehash();
-        return true;
-    }
-
-    /**
-     * clears the array
-     */
-    @Override
-    public void clear() {
-        currentSize = occupied = 0;
-        modCount++;
-        for(int i = 0; i < array.length; i++) {
-            array[i] = null;
-        }
-    }
-
-    /**
-     *
-     * @param x the item to add
-     * @return whether the item was successfully added or not
-     */
-    @Override
-    public boolean add(E x) {
-        int lastPos = findLastPos(x);
-        int currentPos = findPos(x);
-        if(isActive(array, currentPos))
-            return false;
-        if(array[currentPos] == null)
-            occupied++;
-        if(lastPos != -1)
-            array[lastPos].nextPos = currentPos;
-        array[currentPos] = new HashEntry(x, -1, true);
-        currentSize++;
-        modCount++;
-
-        //System.out.println(toString());
-
-        if (occupied > array.length / 2)
-            rehash();
-        return true;
-    }
-
-    /**
-     * resize the array
-     */
-    private void rehash() {
-        HashEntry [] oldArray = array;
-
-        allocateArray(4 * size());
-        currentSize = occupied = 0;
-        for(int i = 0; i < oldArray.length; i++)
-            if(isActive(oldArray, i))
-                add((E) oldArray[i].element);
     }
 
     private static boolean isPrime(int n) {
@@ -159,14 +53,114 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
     }
 
     /**
-     *
+     * @return the number of occupied slots in the hash table
+     */
+    public int size() {
+        return occupied;
+    }
+
+    /**
+     * @return the iterator of the hash table
+     */
+    public Iterator<E> iterator() {
+        return new HashSetIterator();
+    }
+
+    /**
+     * return if the hash table contains the given x object
+     */
+    @Override
+    public boolean contains(Object x) {
+        return isActive(array, findPos(x));
+    }
+
+    /**
+     * @param x the object to compare
+     * @return the match of the object
+     */
+    public E getMatch(E x) {
+        int currentPos = findPos(x);
+        if (isActive(array, currentPos))
+            return (E) array[currentPos].element;
+        return null;
+    }
+
+    /**
+     * @param x the object to remove
+     * @return whether the object was successfully removed or not
+     */
+    @Override
+    public boolean remove(Object x) {
+        int currentPos = findPos(x);
+        if (!isActive(array, currentPos))
+            return false;
+        array[currentPos].isActive = false;
+        currentSize--;
+        modCount++;
+
+        if (currentSize < array.length / 8)
+            rehash();
+        return true;
+    }
+
+    /**
+     * clears the array
+     */
+    @Override
+    public void clear() {
+        currentSize = occupied = 0;
+        modCount++;
+        for (int i = 0; i < array.length; i++) {
+            array[i] = null;
+        }
+    }
+
+    /**
+     * @param x the item to add
+     * @return whether the item was successfully added or not
+     */
+    @Override
+    public boolean add(E x) {
+        int lastPos = findLastPos(x);
+        int currentPos = findPos(x);
+        if (isActive(array, currentPos))
+            return false;
+        if (array[currentPos] == null)
+            occupied++;
+        if (lastPos != -1)
+            array[lastPos].nextPos = currentPos;
+        array[currentPos] = new HashEntry(x, -1, true);
+        currentSize++;
+        modCount++;
+
+        //System.out.println(toString());
+
+        if (occupied > array.length / 2)
+            rehash();
+        return true;
+    }
+
+    /**
+     * resize the array
+     */
+    private void rehash() {
+        HashEntry[] oldArray = array;
+
+        allocateArray(4 * size());
+        currentSize = occupied = 0;
+        for (int i = 0; i < oldArray.length; i++)
+            if (isActive(oldArray, i))
+                add((E) oldArray[i].element);
+    }
+
+    /**
      * @param x the item given to find the last part of the linked list of
      * @return the position of the last object of the linked list, or -1 if no linked list is present
      */
     private int findLastPos(Object x) {
         int lastPos = (x == null) ?
                 0 : Math.abs(x.hashCode() % array.length);
-        if(array[lastPos] != null) {
+        if (array[lastPos] != null) {
             while (array[lastPos].nextPos != -1)
                 lastPos = array[lastPos].nextPos;
             return lastPos;
@@ -175,7 +169,6 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
     }
 
     /**
-     *
      * @param x the item to find the position in the hash table for
      * @return the position of where the item should be inserted into the hash table
      */
@@ -190,17 +183,16 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
         else if (array[currentPos] != null)
             currentPos = 0;
 
-        while(array[currentPos] != null) {
-            if(x == null) {
+        while (array[currentPos] != null) {
+            if (x == null) {
                 if (array[currentPos].element == null)
                     break;
-            }
-            else if(x.equals(array[currentPos].element))
+            } else if (x.equals(array[currentPos].element))
                 break;
             currentPos++;
 //            currentPos += offset;
 //            offset += 2;
-            if(currentPos >= array.length)
+            if (currentPos >= array.length)
                 currentPos -= array.length;
         }
         //System.out.println("insert to: " + currentPos);
@@ -208,7 +200,6 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
     }
 
     /**
-     *
      * @param arraySize the size of the array to instantiate
      */
     private void allocateArray(int arraySize) {
@@ -256,19 +247,19 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
 
 
         public boolean hasNext() {
-            if(expectedModCount != modCount) {
+            if (expectedModCount != modCount) {
                 throw new ConcurrentModificationException();
             }
             return visited != size();
         }
 
         public E next() {
-            if(!hasNext())
+            if (!hasNext())
                 throw new NoSuchElementException();
 
             do {
                 currentPos++;
-            } while(currentPos < array.length &&
+            } while (currentPos < array.length &&
                     !isActive(array, currentPos));
 
             visited++;
@@ -276,9 +267,9 @@ public class CoalescedHashSet<E> extends AbstractCollection<E> implements Set<E>
         }
 
         public void remove() {
-            if(expectedModCount != modCount)
+            if (expectedModCount != modCount)
                 throw new ConcurrentModificationException();
-            if(currentPos == -1 || !isActive(array, currentPos))
+            if (currentPos == -1 || !isActive(array, currentPos))
                 throw new IllegalStateException();
 
             array[currentPos].isActive = false;

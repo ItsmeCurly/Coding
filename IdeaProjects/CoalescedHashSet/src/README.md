@@ -1,0 +1,2 @@
+In this program, the user is to interact with a hash table by inserting
+specific objects into it and having the program automatically insert the objects into a hash table with the collision resolution of coalesced hashing.

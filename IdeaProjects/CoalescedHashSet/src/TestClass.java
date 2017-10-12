@@ -1,6 +1,6 @@
 public class TestClass {
     public static void main(String[] args) {
-        CoalescedHashSet<String> chs = new CoalescedHashSet<>();
+        HashSet<String> chs = new HashSet<>();
 
         chs.add("Yea,");
         chs.add("slimy");
@@ -12,6 +12,5 @@ public class TestClass {
         chs.add("Upon");
         chs.add("the");
         chs.add("sea.");
-
     }
 }
