@@ -3,17 +3,17 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        hash3("burbled");
-        hash3("Yea,");
-        hash3("slimy");
-        hash3("things");
-        hash3("did");
-        hash3("crawl");
-        hash3("with");
-        hash3("legs");
-        hash3("Upon");
-        hash3("the");
-        hash3("sea.");
+        hash2("burbled");
+        hash2("Yea,");
+        hash2("slimy");
+        hash2("things");
+        hash2("did");
+        hash2("crawl");
+        hash2("with");
+        hash2("legs");
+        hash2("Upon");
+        hash2("the");
+        hash2("sea.");
     }
 
     private static int hash1(String key) {
@@ -45,6 +45,7 @@ public class Main {
         int hashVal = 0;
         for(int i = 0; i< key.length(); i++) {
             hashVal += key.charAt(i);
+            System.out.println(key.charAt(i)+" : " +hashVal);
         }
         System.out.println(key + ": " + hashVal % 17);
         return (hashVal % 17);

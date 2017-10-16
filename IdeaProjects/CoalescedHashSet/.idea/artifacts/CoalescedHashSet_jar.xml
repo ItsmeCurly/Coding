@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CoalescedHashSet:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CoalescedHashSet_jar</output-path>
+    <root id="archive" name="CoalescedHashSet.jar">
+      <element id="module-output" name="CoalescedHashSet" />
+    </root>
+  </artifact>
+</component>
