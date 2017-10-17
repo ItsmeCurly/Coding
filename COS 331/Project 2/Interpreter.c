@@ -68,24 +68,25 @@ struct PCB {
   struct PCB *Next_PCB;
   int PID;
   int ACC;
-  int * Rg[4];
-  short int * Pt[4];
+  int R0, R1, R2, R3;
+  short int P0, P1, P2, P3;
   char PSW[2];
   int BAR, EAR, LR;
   int IC; //timeslice
-}
+};
 
 //global variables
-struct PCB *ptr, *tmp;
+
 
 //main function
 int main(int argc, char * argv[]) {
+  struct PCB *ptr, *tmp;
   if(argc == 1) {
-    printf("No programs called");
-    return;
+    printf("No programs called\n");
+    exit(1);
   }
 
-  ptr = (struct *PCB) malloc(sizeof(struct PCB));
+  ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
   ptr -> PID = 0;
   ptr -> BAR = 0;
@@ -94,7 +95,7 @@ int main(int argc, char * argv[]) {
   tmp = ptr;
 
   for(int k = 1; k < 10; k++) {
-    tmp -> Next_PCB = (struct *PCB) malloc(sizeof(struct PCB));
+    tmp -> Next_PCB = (struct PCB *) malloc(sizeof(struct PCB));
     tmp -> Next_PCB -> Next_PCB = NULL;
     tmp -> Next_PCB  -> PID = k;
     tmp -> Next_PCB -> BAR = 0 + k * 100;
@@ -120,6 +121,8 @@ int main(int argc, char * argv[]) {
   char ch;
   int t = 0;
   int program_line = 0;
+
+
   //reset all variables for certain process within argv
   for(int i = 0; i < 1000; i++) {
     int j = 0;
@@ -128,19 +131,19 @@ int main(int argc, char * argv[]) {
     for(;j<6;j++)
       memory[i][j] = 'Z';
   } //instantiate memory to '99ZZZZ'
-
   printf("Loading Process\n");
-
   //get opcodes from file
-  for(int i = 1; i < argc; i++) {
+  for(int l = 1; l < argc; l++) {
     FILE *fp;
-    fp = fopen(argv[i], "r");
+    fp = fopen(argv[l], "r");
     if(!fp) {
       printfError('f');
       continue;
     }
     program_line = 0;
+
     while(1) {
+      printf("%d", program_line);
       if(program_line > 99) {
         printfError('s'); //segmentation fault - memory too far
         continue;
@@ -161,8 +164,10 @@ int main(int argc, char * argv[]) {
         t++;
       }
       t=0;
-      for(int k = 0; k<6; i++)
-        memory[program_line + (i-1) * 100][k] = input_line[k];
+      for(int k = 0; k<6; k++) {
+        memory[program_line + (l-1) * 100][k] = input_line[k];
+        printf("%d\n", program_line + (l-1) * 100);
+      }
       if(ch == EOF) break;
       program_line++;
     }
@@ -176,7 +181,7 @@ int main(int argc, char * argv[]) {
       for(int i = 0; i < 6; i++)
         IR[i] = memory[EA][i];
 
-      //bool leave = false; //to break while without exit(1)
+      bool leave = false; //to break while without exit(1)
       int opcode = chToI(IR, 0, 1); //get opcode
       switch(opcode) {  //compute opcode
         case 0: OP0(IR, Pt); PC++; break;
@@ -257,7 +262,11 @@ int main(int argc, char * argv[]) {
       }
       printf("\n");
 
-      printf("Terminating process\n");
+
+      if(leave) {
+        printf("Terminating process\n");
+        break;
+      }
     }
 
     tmp -> ACC = ACC;
@@ -269,7 +278,8 @@ int main(int argc, char * argv[]) {
     tmp -> P1 = P1;
     tmp -> P2 = P2;
     tmp -> P3 = P3;
-    tmp -> PSW = PSW;
+    for(int i = 0; i < 2; i++)
+      tmp -> PSW[i] = PSW[i];
 
     PC = 0;
     ACC = 0;
@@ -281,7 +291,8 @@ int main(int argc, char * argv[]) {
     P1 = 0;
     P2 = 0;
     P3 = 0;
-    PSW = {'F', 'F'};
+    PSW[0] = 'F';
+    PSW[1] = 'F';
 
     tmp = tmp -> Next_PCB;
   }
@@ -294,7 +305,7 @@ int main(int argc, char * argv[]) {
 //error method
 void printfError(char error) {
   switch(error) {
-    case 's': printf("Segmentation fault(core dumped)\n"); break;
+    case 's': printf("S fault(core dumped)\n"); break;
     case 'n': printf("Null pointer exception\n"); break;
     case 'f': printf("File not found exception\n"); break;
     case 'o': printf("Incorrect operand supplied to opcode\n"); break;
