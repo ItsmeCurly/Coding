@@ -305,7 +305,7 @@ int main(int argc, char * argv[]) {
 //error method
 void printfError(char error) {
   switch(error) {
-    case 's': printf("S fault(core dumped)\n"); break;
+    case 's': printf("Seg fault(core dumped)\n"); break;
     case 'n': printf("Null pointer exception\n"); break;
     case 'f': printf("File not found exception\n"); break;
     case 'o': printf("Incorrect operand supplied to opcode\n"); break;
@@ -365,7 +365,8 @@ void store(char memory[100][6], int m_loc, int num) { //store something in memor
     memory[m_loc][i] = '9';
 }
 void printMemory(char memory[][6]) {
-  for(int i = 0; i < 100; i++) {
+  for(int i = 0; i < 1000; i++) {
+    printf("%d ", i);
     for(int j = 0; j < 6; j++)
       printf("%c", memory[i][j]);
     printf("\n");
