@@ -80,7 +80,8 @@ struct PCB {
 
 //main function
 int main(int argc, char * argv[]) {
-  struct PCB *ptr, *tmp;
+  struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
+  
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -173,11 +174,13 @@ int main(int argc, char * argv[]) {
     }
     fclose(fp);
   }
-  tmp = ptr;
+
+  struct PCB * currentPCB = ptr;
+
   for(int i = 1; i < argc; i++) {
-    int EA = PC + tmp -> BAR;
+    int EA;
     while(1) {  //OS loop
-      EA = PC + tmp -> BAR;
+      EA = PC + currentPCB -> BAR;
       for(int i = 0; i < 6; i++)
         IR[i] = memory[EA][i];
 
@@ -269,17 +272,19 @@ int main(int argc, char * argv[]) {
       }
     }
 
-    tmp -> ACC = ACC;
-    tmp -> R0 = R0;
-    tmp -> R1 = R1;
-    tmp -> R2 = R2;
-    tmp -> R3 = R3;
-    tmp -> P0 = P0;
-    tmp -> P1 = P1;
-    tmp -> P2 = P2;
-    tmp -> P3 = P3;
+    //program is finished, context switch
+    currentPCB -> ACC = ACC;
+    currentPCB -> R0 = R0;
+    currentPCB -> R1 = R1;
+    currentPCB -> R2 = R2;
+    currentPCB -> R3 = R3;
+    currentPCB -> P0 = P0;
+    currentPCB -> P1 = P1;
+    currentPCB -> P2 = P2;
+    currentPCB -> P3 = P3;
+
     for(int i = 0; i < 2; i++)
-      tmp -> PSW[i] = PSW[i];
+      currentPCB -> PSW[i] = PSW[i];
 
     PC = 0;
     ACC = 0;
@@ -293,10 +298,13 @@ int main(int argc, char * argv[]) {
     P3 = 0;
     PSW[0] = 'F';
     PSW[1] = 'F';
+    printf("soijdf");
 
-    tmp = tmp -> Next_PCB;
+    currentPCB = currentPCB -> Next_PCB;
+    //end context switch
+
   }
-  //printMemory(memory);
+  printMemory(memory);
   //printRegisters(Rg);
   //printAccumulator(ACC);
   exit(1);
