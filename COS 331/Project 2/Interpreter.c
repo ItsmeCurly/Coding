@@ -1,11 +1,4 @@
 //-lm
-//loaded files are program1 and program2
-//both files can be run at once, and my program has a printf statement that indicates where to put the breakpoint at 227(subject to change possibly)
-//opcodes 33-34-35 have special changes that aren't intuitive, just cheaty really. When they set the PC, they set it to -1 the set value, and then
-//the case/switch statement incrememnts it to reach the desired value. This is to avoid the fact that the conditional may be false, and the program
-//will continue despite being true/false
-//Instead of exiting loop with halt, the halt will set a bool to false to exit the while statement and reach the end of the for loop, which will go
-//on to the next program(ie program1 -> program2)
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -70,14 +63,52 @@ void OP34(char *, char *, int *);
 void OP35(char *, int *);
 void OP99(bool *);
 
+//structs
+struct PCB {
+  struct PCB *Next_PCB;
+  int PID;
+  int ACC;
+  int R0, R1, R2, R3;
+  short int P0, P1, P2, P3;
+  char PSW[2];
+  int BAR, EAR, LR;
+  int IC; //timeslice
+};
+
 //global variables
+
 
 //main function
 int main(int argc, char * argv[]) {
+  struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
+  
+  if(argc == 1) {
+    printf("No programs called\n");
+    exit(1);
+  }
+
+  ptr = (struct PCB *) malloc(sizeof(struct PCB));
+  ptr -> Next_PCB = NULL;
+  ptr -> PID = 0;
+  ptr -> BAR = 0;
+  ptr -> LR = 99;
+
+  tmp = ptr;
+
+  for(int k = 1; k < 10; k++) {
+    tmp -> Next_PCB = (struct PCB *) malloc(sizeof(struct PCB));
+    tmp -> Next_PCB -> Next_PCB = NULL;
+    tmp -> Next_PCB  -> PID = k;
+    tmp -> Next_PCB -> BAR = 0 + k * 100;
+    tmp -> Next_PCB -> LR = 99 + k * 100;
+    tmp = tmp -> Next_PCB;
+  }
+
   //initialize and declare
+
   char IR[6]; //instruction register
 
-  char memory[100][6];  //main memory
+  char memory[1000][6];  //main memory
   char PSW[2] = {'F', 'F'};  //true false status
   int PC = 0; //program counter
   int ACC = 0; //accumulator
@@ -87,41 +118,38 @@ int main(int argc, char * argv[]) {
   short int *Pt[4] = {&P0, &P1, &P2, &P3};
   char input_line[6]; //input from file
 
-  for(int i = 1; i < argc; i++) { //to iterate through files
-    FILE *fp; //file pointer
-    fp = fopen (argv[i] ,"r");  //requires textfile of programs
-    if (!fp) {
+  //for here
+  char ch;
+  int t = 0;
+  int program_line = 0;
+
+
+  //reset all variables for certain process within argv
+  for(int i = 0; i < 1000; i++) {
+    int j = 0;
+    for(;j<2;j++)
+      memory[i][j] = '9';
+    for(;j<6;j++)
+      memory[i][j] = 'Z';
+  } //instantiate memory to '99ZZZZ'
+  printf("Loading Process\n");
+  //get opcodes from file
+  for(int l = 1; l < argc; l++) {
+    FILE *fp;
+    fp = fopen(argv[l], "r");
+    if(!fp) {
       printfError('f');
       continue;
     }
-    char ch;
-    int t = 0;
-    int program_line = 0;
-    //reset all variables for certain process within argv
-    for(int i = 0; i < 100; i++) {
-      int j = 0;
-      for(;j<2;j++)
-        memory[i][j] = '9';
-      for(;j<6;j++)
-        memory[i][j] = 'Z';
-    } //instantiate memory to '99ZZZZ'
-    for(int i = 0; i < 6; i++)
-      PSW[i] = 'F';
-    PC = 0;
-    ACC = 0;
-    R0 = 0, R1 = 0, R2 = 0, R3 = 0;
-    P0 = 0, P1 = 0, P2 = 0, P3 = 0;
+    program_line = 0;
 
-    printf("Loading Process\n");
-    //the j loop line depends on where the EOF line is in the text file, since the while breaks when it
-    //reaches a \n, the EOF will be found in the next parse, and will exit the
-    //while again, with the contents found in the previous line(atom has a weird
-    //way of saving a new blank line for the EOF)
-    while(1) {  //get opcodes from file
-      if(PC > 99) {
+    while(1) {
+      printf("%d", program_line);
+      if(program_line > 99) {
         printfError('s'); //segmentation fault - memory too far
-        break;
+        continue;
       }
+
       int j = 0;
       for(;j<2;j++)
         input_line[j] = '9';
@@ -137,16 +165,25 @@ int main(int argc, char * argv[]) {
         t++;
       }
       t=0;
-      for(int i = 0; i<6; i++)
-        memory[program_line][i] = input_line[i];
+      for(int k = 0; k<6; k++) {
+        memory[program_line + (l-1) * 100][k] = input_line[k];
+        printf("%d\n", program_line + (l-1) * 100);
+      }
       if(ch == EOF) break;
       program_line++;
     }
+    fclose(fp);
+  }
 
-    fclose(fp); //close file
+  struct PCB * currentPCB = ptr;
+
+  for(int i = 1; i < argc; i++) {
+    int EA;
     while(1) {  //OS loop
+      EA = PC + currentPCB -> BAR;
       for(int i = 0; i < 6; i++)
-        IR[i] = memory[PC][i];
+        IR[i] = memory[EA][i];
+
       bool leave = false; //to break while without exit(1)
       int opcode = chToI(IR, 0, 1); //get opcode
       switch(opcode) {  //compute opcode
@@ -227,20 +264,56 @@ int main(int argc, char * argv[]) {
         default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
       }
       printf("\n");
-      if(leave) break;
+
+
+      if(leave) {
+        printf("Terminating process\n");
+        break;
+      }
     }
-    printf("Terminating process\n");
 
-    printf("Breakpoint here\n\n");
+    //program is finished, context switch
+    currentPCB -> ACC = ACC;
+    currentPCB -> R0 = R0;
+    currentPCB -> R1 = R1;
+    currentPCB -> R2 = R2;
+    currentPCB -> R3 = R3;
+    currentPCB -> P0 = P0;
+    currentPCB -> P1 = P1;
+    currentPCB -> P2 = P2;
+    currentPCB -> P3 = P3;
+
+    for(int i = 0; i < 2; i++)
+      currentPCB -> PSW[i] = PSW[i];
+
+    PC = 0;
+    ACC = 0;
+    R0 = 0;
+    R1 = 0;
+    R2 = 0;
+    R3 = 0;
+    P0 = 0;
+    P1 = 0;
+    P2 = 0;
+    P3 = 0;
+    PSW[0] = 'F';
+    PSW[1] = 'F';
+    printf("soijdf");
+
+    currentPCB = currentPCB -> Next_PCB;
+    //end context switch
+
   }
-
+  printMemory(memory);
+  //printRegisters(Rg);
+  //printAccumulator(ACC);
   exit(1);
 }
 
 //error method
 void printfError(char error) {
   switch(error) {
-    case 's': printf("Segmentation fault(core dumped)\n"); break;
+    case 's': printf("Seg fault(core dumped)\n"); break;
     case 'n': printf("Null pointer exception\n"); break;
     case 'f': printf("File not found exception\n"); break;
     case 'o': printf("Incorrect operand supplied to opcode\n"); break;
@@ -254,9 +327,8 @@ void printfError(char error) {
 //helper methods
 int chToI(char * num, int start, int end) { //helper converts char to int
 	int finalVal = 0;
-  for (int i = end; i >= start; i--) {
+  for (int i = end; i >= start; i--)
   	finalVal += ((int)num[i] - 48) * (pow(10.0, (double) (end - i)));
-  }
   return finalVal;
 }
 
@@ -265,9 +337,8 @@ char * iToCh(int num) { //helper converts int to char [] ie 99 = ['0', '0', '0',
   for(int i = 0; i < 6; i++)
     temp[i] = '0';
   int m = num;
-  for (int i = 5; m>0 && i>=0; i--, m/=10) {
+  for (int i = 5; m>0 && i>=0; i--, m/=10)
     temp[i] = (char)(((int)'0') + m%10);
-  }
   return temp;
 }
 int parseOp1(char *IR) {  //parse op1 for int
@@ -302,7 +373,8 @@ void store(char memory[100][6], int m_loc, int num) { //store something in memor
     memory[m_loc][i] = '9';
 }
 void printMemory(char memory[][6]) {
-  for(int i = 0; i < 100; i++) {
+  for(int i = 0; i < 1000; i++) {
+    printf("%d ", i);
     for(int j = 0; j < 6; j++)
       printf("%c", memory[i][j]);
     printf("\n");
