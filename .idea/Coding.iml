@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/IdeaProjects/COS226Ktrees/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/IdeaProjects/maxContigSubseqSum/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/IdeaProjects/HW3Testing/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/IdeaProjects/Trees/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/IdeaProjects/CoalescedHashSet/src" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/IdeaProjects/COS226Ktrees" />
     <orderEntry type="inheritedJdk" />
