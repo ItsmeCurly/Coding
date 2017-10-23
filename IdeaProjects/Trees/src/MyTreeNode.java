@@ -112,7 +112,6 @@ public class MyTreeNode<E> implements TreeNode<E> {
 	public List<TreeNode<E>> getPreOrder() {
 		List<TreeNode<E>> preOrder = new LinkedList<TreeNode<E>>();
 		getPreOrder(this, preOrder);
-		
 		return preOrder;
 	}
 	
