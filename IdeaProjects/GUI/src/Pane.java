@@ -1,17 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.StringTokenizer;
 
 public class Pane extends JPanel implements ActionListener {
-    private final String spacing1 = " ";
-    private final String spacing2 = "                 ";
     private final String ITEMS[] = {"<none>", "c", "s", "e", "r", "d", "xs", "xh", "xp"};
-    private JPanel lowerPane;
-    private JPanel upperPane;
-    private JComboBox<String> cb;
     private RecordManager rm;
+
+    private JPanel[][] jp;
+
+    private JComboBox<String> cb;
     private JTextField jt;
     private JLabel com;
     private JLabel args;
@@ -24,6 +22,7 @@ public class Pane extends JPanel implements ActionListener {
 
     public Pane() {
         command = -1;
+        text = "";
 
         cb = new JComboBox<>(ITEMS);
         cb.addActionListener(this);
@@ -33,34 +32,32 @@ public class Pane extends JPanel implements ActionListener {
         jt = new JTextField(2);
         jt.addActionListener(this);
 
-        com = new JLabel("Commands" + spacing1);
-        args = new JLabel("Args" + spacing2);
-
-        upperPane = new JPanel();
-        lowerPane = new JPanel();
+        com = new JLabel("Commands");
+        args = new JLabel("Args");
 
         jb = new JButton("Run");
+        jb.addActionListener(this);
+        setLayout(new GridLayout(2, 3));
 
-        upperPane.setLayout(new FlowLayout());
-        lowerPane.setLayout(new FlowLayout());
-
+        jp = new JPanel[2][3];
+        for (int i = 0; i < jp.length; i++) {
+            for (int j = 0; j < jp[0].length; j++) {
+                jp[i][j] = new JPanel();
+                add(jp[i][j]);
+            }
+        }
         createUI();
-
-        setLayout(new GridLayout(2, 3);
-
-        add(upperPane, "North");
-        add(lowerPane, "Center");
     }
 
     private void createUI() {
-        upperPane.add(com);
-        upperPane.add(args);
+        jp[0][0].add(com);
+        jp[0][1].add(args);
 
         args.setVisible(false);
 
-        lowerPane.add(cb);
-        lowerPane.add(jt);
-        lowerPane.add(jb);
+        jp[1][0].add(cb);
+        jp[1][1].add(jt);
+        jp[1][2].add(jb);
 
         jt.setVisible(false);
         jb.setVisible(false);
@@ -74,11 +71,9 @@ public class Pane extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getSource());
         if (e.getSource().equals(cb)) {
-            boolean show = false;
-            boolean hide = true;
             if (cb.getSelectedItem().equals("<none>")) {
-                reveal(false, false, false);
                 command = -1;
+                reveal(false, false, false);
             } else if (cb.getSelectedItem().equals("c")) {
                 command = 0;
                 reveal(true, true, true);
@@ -107,23 +102,51 @@ public class Pane extends JPanel implements ActionListener {
         } else if (e.getSource().equals(jt)) {
             text = jt.getText();
         } else if (e.getSource().equals(jb)) {
-            st = new StringTokenizer(text, " ");
             int key;
             String data;
+
             switch (command) {
                 case 0:
+                    if (text.equals("")) {
+                        displayCaption("Command requires args in form c k");
+                        break;
+                    }
+
+                    st = new StringTokenizer(text, " ");
+
                     rm.makeNew(Integer.parseInt(st.nextToken()));
                     break;
                 case 1:
+                    if (text.equals("")) {
+                        displayCaption("Command requires args in form s k d");
+                        break;
+                    }
+
+                    st = new StringTokenizer(text, " ");
+
                     key = Integer.parseInt(st.nextToken());
                     data = st.nextToken();
                     rm.store(new TreeNode(key, data));
                     break;
                 case 2:
+                    if (text.equals("")) {
+                        displayCaption("Command requires args in form e k");
+                        break;
+                    }
+
+                    st = new StringTokenizer(text, " ");
+
                     key = Integer.parseInt(st.nextToken());
                     System.out.println(rm.search(key));
                     break;
                 case 3:
+                    if (text.equals("")) {
+                        displayCaption("Command requires args in form d k");
+                        break;
+                    }
+
+                    st = new StringTokenizer(text, " ");
+
                     key = Integer.parseInt(st.nextToken());
                     TreeNode find = rm.searchNode(key);
                     if (find != null) {
@@ -132,6 +155,13 @@ public class Pane extends JPanel implements ActionListener {
                     }
                     break;
                 case 4:
+                    if (text.equals("")) {
+                        displayCaption("Command requires args in form d k");
+                        break;
+                    }
+
+                    st = new StringTokenizer(text, " ");
+
                     key = Integer.parseInt(st.nextToken());
                     rm.delete(key);
                     break;
@@ -147,13 +177,107 @@ public class Pane extends JPanel implements ActionListener {
 
             }
             reveal(false, false, false);
-        }
-        repaint();
-    }
 
+            repaint();
+        }
+
+    }
     private void reveal(boolean arg, boolean text, boolean button) {
         args.setVisible(arg);
         jt.setVisible(text);
         jb.setVisible(button);
+    }
+
+    private void displayCaption(String caption) {
+        CaptionFrame cf = new CaptionFrame(caption, getParent());
+        cf.setLocationRelativeTo(null);
+    }
+
+    private class CaptionFrame extends JFrame implements WindowListener, WindowFocusListener, ActionListener {
+        private JButton jb;
+
+        public CaptionFrame(String caption, Container parent) {
+            super();
+
+            JLabel jl = new JLabel(caption);
+            jb = new JButton("Ok");
+            jb.addActionListener(this);
+
+            Container cp = getContentPane();
+
+            cp.add(jl, "Center");
+            cp.add(jb, "South");
+
+            pack();
+            setVisible(true);
+        }
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            dispose();
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(jb)) {
+                dispose();
+            }
+        }
+
+        @Override
+        public void windowGainedFocus(WindowEvent e) {
+        }
+
+        @Override
+        public void windowLostFocus(WindowEvent e) {
+            dispose();
+        }
+    }
+
+    private class ResultFrame extends JFrame implements ActionListener {
+        private JButton jb;
+
+        public ResultFrame(String caption, Container parent) {
+            super();
+
+            JPanel jp = new JPanel();
+            jp.setLayout(new BorderLayout());
+
+            JTextArea jta = new JTextArea(15, 30);
+
+            pack();
+            setVisible(true);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(jb)) {
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            }
+        }
     }
 }
