@@ -74,7 +74,5 @@ public class Window extends JFrame implements WindowListener {
     @Override
     public void windowIconified(WindowEvent e) {
 
-        dispose();
-        System.exit(0);
     }
 }

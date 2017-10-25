@@ -1,11 +1,9 @@
 package com.GUI;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.StringTokenizer;
@@ -15,8 +13,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private final String ITEMS[] = {"<none>", "c", "s", "e", "r", "d", "xs", "xh", "xp"};
     private RecordManager rm;
 
-    private StateFrame sf1;
-    //private StateFrame sf2;
+    private StateFrame sf;
 
     private JPanel[][] jp;
 
@@ -32,11 +29,8 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         command = -1;
         text = "";
 
-        sf1 = new StateFrame(new Point((int) (Window.SCREENSIZE.getWidth() * 3 / 4 - SFSIZE.getWidth() / 2),
+        sf = new StateFrame(new Point((int) (Window.SCREENSIZE.getWidth() * 3 / 4 - SFSIZE.getWidth() / 2),
                 (int) (Window.SCREENSIZE.getHeight() / 2 - SFSIZE.getHeight() / 2)));
-
-//        sf2 = new StateFrame(new Point((int)(Window.SCREENSIZE.getWidth() / 4 - SFSIZE.getWidth() / 2),
-//                (int) (Window.SCREENSIZE.getHeight() / 2 - SFSIZE.getHeight() / 2)));
 
         cb = new JComboBox<>(ITEMS);
         cb.addActionListener(this);
@@ -132,16 +126,21 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             switch (command) {
                 case 0:
                     try {
+                        if (text.equals("")) text = "2";
                         st = new StringTokenizer(text, " ");
                         key = Integer.parseInt(st.nextToken());
+                        if (key < 2) throw new InvalidKValException();
                     } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form c k");
+                        break;
+                    } catch (InvalidKValException err) {
+                        displayCaption("K Value for tree must be > 1");
                         break;
                     }
                     executed = true;
 
                     rm.makeNew(key);
-                    sf1.append("New tree created with k value " + text + "\n\n");
+                    sf.appendConsole("New tree created with k value " + text + "\n\n");
                     updateStateFrame();
                     resetText();
                     break;
@@ -157,7 +156,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     executed = true;
 
                     rm.store(new TreeNode(key, data));
-                    sf1.append("Node successfully stored\n\n");
+                    sf.appendConsole("Node successfully stored\n\n");
                     updateStateFrame();
                     resetText();
                     break;
@@ -171,7 +170,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     }
                     executed = true;
 
-                    sf1.append(rm.search(key) + "\n\n");
+                    sf.appendConsole(rm.search(key) + "\n\n");
                     updateStateFrame();
                     resetText();
                     break;
@@ -187,7 +186,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     TreeNode find = rm.searchNode(key);
                     if (find != null) {
                         data = find.getData();
-                        sf1.append((data != null) ? data + "\n\n" : "");
+                        sf.appendConsole((data != null) ? data + "\n\n" : "");
                     }
                     updateStateFrame();
                     resetText();
@@ -204,33 +203,31 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     executed = true;
 
                     if (rm.delete(key))
-                        sf1.append("Node successfully deleted\n\n");
-                    else sf1.append("Node not deleted\n\n");
+                        sf.appendConsole("Node successfully deleted\n\n");
+                    else sf.appendConsole("Node not deleted\n\n");
                     updateStateFrame();
                     resetText();
                     break;
                 case 5:
                     executed = true;
-                    sf1.append("Size: " + rm.size() + "\n\n");
+                    sf.appendConsole("Size: " + rm.size() + "\n\n");
                     updateStateFrame();
                     resetText();
                     break;
                 case 6:
                     executed = true;
-                    sf1.append("Height: " + rm.height() + "\n\n");
+                    sf.appendConsole("Height: " + rm.height() + "\n\n");
                     updateStateFrame();
                     resetText();
                     break;
                 case 7:
                     executed = true;
-                    sf1.append(rm.toString() + "\n\n");
+                    sf.appendConsole(rm.toString() + "\n\n");
                     updateStateFrame();
                     resetText();
                     break;
             }
             if (executed) {
-                sf1.setVisible(true);
-
                 cb.setSelectedIndex(0);
                 command = -1;
                 reveal(false, false, false);
@@ -246,8 +243,8 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     }
 
     private void updateStateFrame() {
-        //sf2.delete();
-        //sf2.append(rm.toString());
+        sf.deleteState();
+        sf.setState(rm.toString());
     }
 
     private void reveal(boolean arg, boolean text, boolean button) {
@@ -262,7 +259,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
 
     @Override
     public void focusGained(FocusEvent e) {
-        //DO NOTHING
     }
 
     @Override
@@ -305,40 +301,70 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     }
 
     private class StateFrame extends JFrame {
-
-        public void del
-        private JTextArea jta;
-        private String text, writeText;
+        private JTextArea console;
+        private JTextArea treeState;
+        private String text, writeText, treeText;
 
         StateFrame(Point loc) {
+            JPanel jp = new JPanel(new GridLayout(1, 2));
+            Border border = BorderFactory.createLineBorder(Color.black);
+
             text = writeText = "";
-            jta = new JTextArea(15, 30);
-            jta.setEditable(false);
+
+            console = new JTextArea("Console: \n", 20, 30);
+            treeState = new JTextArea("Tree State: \n", 20, 30);
+
+            console.setEditable(false);
+            treeState.setEditable(false);
+
+            console.setBorder(border);
+            treeState.setBorder(border);
+
+            jp.add(console);
+            jp.add(treeState);
 
             Container c = getContentPane();
-            c.add(jta);
+            c.add(jp);
 
-            setPreferredSize(SFSIZE);
-
+            setResizable(false);
             setLocation(loc);
-            setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    setExtendedState(JFrame.ICONIFIED);
+                }
+            });
+
             pack();
+            setVisible(true);
         }
 
-        ete() {
+        void deleteConsole() {
             writeText = "";
-            jta.setText(writeText);
+            console.setText(writeText);
         }
 
-        void append(String aString) {
+        void deleteState() {
+            treeText = "";
+            treeState.setText(treeText);
+        }
+
+        void appendConsole(String aString) {
             text = aString;
             writeText += text;
-            jta.setText(writeText);
+            console.setText(writeText);
             text = "";
-        }.
+            System.out.println(console.getText());
+        }
 
-        void append(int aString) {
-            append(String.valueOf(aString));
+        void appendConsole(int aString) {
+            appendConsole(String.valueOf(aString));
+        }
+
+        void setState(String aString) {
+            treeText = aString;
+            treeState.setText(treeText);
         }
     }
 }

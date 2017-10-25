@@ -88,8 +88,10 @@ public class KSearchTree {
     }
 
     private void insert(TreeNode insert, TreeNode node, TreeNode prevNode) {
-        if (node.getChild().compareTo(insert) == 0)
-            node.setData(insert.getData());
+        if (node.getChild().compareTo(insert) == 0) {
+            System.out.println("a");
+            node.getChild().setData(insert.getData());
+        }
         else if (node.getChild().compareTo(insert) > 0) {
             TreeNode parent = createPair(insert);
             if (prevNode != null) prevNode.setNextSibling(parent);
