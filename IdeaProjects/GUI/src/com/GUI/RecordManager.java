@@ -35,8 +35,8 @@ public class RecordManager {
         return kst.searchN(key);
     }
 
-    public void delete(int key) {
-        kst.delete(key);
+    public boolean delete(int key) {
+        return kst.delete(key);
     }
 
     public int size() {

@@ -59,19 +59,22 @@ public class KSearchTree {
     /**
      * @param key: key of node to find
      */
-    public void delete(int key) {
+    public boolean delete(int key) {
         if (search(key) == 1) {
             if (key == root.getChild().getKey()) {
                 if (root.getNextSibling() == null) root = null;
                 else setRoot(root.getNextSibling());
-            } else delete(root, null, key);
-        }
+                return true;
+            } else return delete(root, null, key);
+        } else
+            return false;
     }
 
-    private void delete(TreeNode node, TreeNode prevNode, int key) {
+    private boolean delete(TreeNode node, TreeNode prevNode, int key) {
         if (node.getChild() != null && node.getChild().getKey() == key)
             prevNode.setNextSibling(node.getNextSibling());
-        else delete(node.getNextSibling(), node, key);
+        else return delete(node.getNextSibling(), node, key);
+        return true;
     }
 
     /**
