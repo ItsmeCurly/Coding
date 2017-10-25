@@ -1,3 +1,5 @@
+package com.GUI;
+
 public class KSearchTree {
     private TreeNode root;  //the root of the tree
     private int k;  // k value of tree

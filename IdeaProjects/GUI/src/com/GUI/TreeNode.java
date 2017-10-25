@@ -1,3 +1,5 @@
+package com.GUI;
+
 public class TreeNode implements Comparable<TreeNode> {
     //node key:data pair
     private int key;
@@ -74,7 +76,7 @@ public class TreeNode implements Comparable<TreeNode> {
 
 
     /**
-     * @param o: the other TreeNode to compare to the original
+     * @param o: the other com.GUI.TreeNode to compare to the original
      * @return int:  if equal return 0, if other is greater return -1, if greater return 1
      */
     public int compareTo(TreeNode o) {

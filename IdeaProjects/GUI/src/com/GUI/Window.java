@@ -1,3 +1,5 @@
+package com.GUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -5,6 +7,7 @@ import java.awt.event.WindowListener;
 
 public class Window extends JFrame implements WindowListener {
     final static Dimension SIZE = new Dimension(240, 60);
+    final static Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     private static void createAndShowGui() {
         JFrame f = new JFrame();
@@ -20,12 +23,13 @@ public class Window extends JFrame implements WindowListener {
         cp.add(p);
 
         f.pack();
-        f.setLocationRelativeTo(null);
+        f.setLocation((int) (SCREENSIZE.getWidth() / 2 - SIZE.getWidth() / 2),
+                (int) (SCREENSIZE.getHeight() / 2 - SIZE.getHeight() / 2));
         f.setVisible(true);
     }
+
     @Override
     public void windowOpened(WindowEvent e) {
-
     }
 
     @Override
@@ -58,6 +62,17 @@ public class Window extends JFrame implements WindowListener {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         createAndShowGui();
     }
 }

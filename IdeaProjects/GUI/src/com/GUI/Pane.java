@@ -1,11 +1,16 @@
+package com.GUI;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.StringTokenizer;
 
-public class Pane extends JPanel implements ActionListener {
+public class Pane extends JPanel implements ActionListener, FocusListener {
     private final String ITEMS[] = {"<none>", "c", "s", "e", "r", "d", "xs", "xh", "xp"};
     private RecordManager rm;
+
+    private ResultFrame rf;
 
     private JPanel[][] jp;
 
@@ -18,12 +23,10 @@ public class Pane extends JPanel implements ActionListener {
     private int command;
     private String text;
 
-    private StringTokenizer st;
-
     public Pane() {
         command = -1;
         text = "";
-
+        rf = new ResultFrame(getParent());
         cb = new JComboBox<>(ITEMS);
         cb.addActionListener(this);
 
@@ -31,12 +34,14 @@ public class Pane extends JPanel implements ActionListener {
 
         jt = new JTextField(2);
         jt.addActionListener(this);
+        jt.addFocusListener(this);
 
         com = new JLabel("Commands");
         args = new JLabel("Args");
 
         jb = new JButton("Run");
         jb.addActionListener(this);
+
         setLayout(new GridLayout(2, 3));
 
         jp = new JPanel[2][3];
@@ -46,6 +51,7 @@ public class Pane extends JPanel implements ActionListener {
                 add(jp[i][j]);
             }
         }
+
         createUI();
     }
 
@@ -69,7 +75,6 @@ public class Pane extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getSource());
         if (e.getSource().equals(cb)) {
             if (cb.getSelectedItem().equals("<none>")) {
                 command = -1;
@@ -92,6 +97,7 @@ public class Pane extends JPanel implements ActionListener {
             } else if (cb.getSelectedItem().equals("xs")) {
                 command = 5;
                 reveal(false, false, true);
+                rf.append("xs\n\n");
             } else if (cb.getSelectedItem().equals("xh")) {
                 command = 6;
                 reveal(false, false, true);
@@ -102,8 +108,12 @@ public class Pane extends JPanel implements ActionListener {
         } else if (e.getSource().equals(jt)) {
             text = jt.getText();
         } else if (e.getSource().equals(jb)) {
+            StringTokenizer st;
+
             int key;
             String data;
+
+            boolean executed = false;
 
             switch (command) {
                 case 0:
@@ -111,47 +121,50 @@ public class Pane extends JPanel implements ActionListener {
                         displayCaption("Command requires args in form c k");
                         break;
                     }
-
+                    executed = true;
                     st = new StringTokenizer(text, " ");
 
                     rm.makeNew(Integer.parseInt(st.nextToken()));
+                    rf.append("New tree created with k value " + text);
                     break;
                 case 1:
                     if (text.equals("")) {
                         displayCaption("Command requires args in form s k d");
                         break;
                     }
-
+                    executed = true;
                     st = new StringTokenizer(text, " ");
 
                     key = Integer.parseInt(st.nextToken());
                     data = st.nextToken();
                     rm.store(new TreeNode(key, data));
+                    rf.append("Node successfully stored\n");
                     break;
                 case 2:
                     if (text.equals("")) {
                         displayCaption("Command requires args in form e k");
                         break;
                     }
-
+                    executed = true;
                     st = new StringTokenizer(text, " ");
 
                     key = Integer.parseInt(st.nextToken());
-                    System.out.println(rm.search(key));
+
+                    rf.append((rm.search(key)));
                     break;
                 case 3:
                     if (text.equals("")) {
                         displayCaption("Command requires args in form d k");
                         break;
                     }
-
+                    executed = true;
                     st = new StringTokenizer(text, " ");
 
                     key = Integer.parseInt(st.nextToken());
                     TreeNode find = rm.searchNode(key);
                     if (find != null) {
                         data = find.getData();
-                        System.out.print((data != null) ? data : "");
+                        rf.append((data != null) ? data : "");
                     }
                     break;
                 case 4:
@@ -159,29 +172,35 @@ public class Pane extends JPanel implements ActionListener {
                         displayCaption("Command requires args in form d k");
                         break;
                     }
-
+                    executed = true;
                     st = new StringTokenizer(text, " ");
 
                     key = Integer.parseInt(st.nextToken());
                     rm.delete(key);
                     break;
                 case 5:
-                    System.out.println(rm.size());
+                    executed = true;
+                    rf.append(rm.size());
                     break;
                 case 6:
-                    System.out.println(rm.height());
+                    executed = true;
+                    rf.append(rm.height());
                     break;
                 case 7:
-                    System.out.println(rm);
+                    executed = true;
+                    rf.append(rm.toString());
                     break;
-
             }
-            reveal(false, false, false);
-
+            if (executed) {
+                cb.setSelectedIndex(0);
+                command = -1;
+                reveal(false, false, false);
+            }
             repaint();
         }
 
     }
+
     private void reveal(boolean arg, boolean text, boolean button) {
         args.setVisible(arg);
         jt.setVisible(text);
@@ -193,12 +212,20 @@ public class Pane extends JPanel implements ActionListener {
         cf.setLocationRelativeTo(null);
     }
 
+    @Override
+    public void focusGained(FocusEvent e) {
+        //DO NOTHING
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        text = jt.getText();
+    }
+
     private class CaptionFrame extends JFrame implements WindowListener, WindowFocusListener, ActionListener {
         private JButton jb;
 
         public CaptionFrame(String caption, Container parent) {
-            super();
-
             JLabel jl = new JLabel(caption);
             jb = new JButton("Ok");
             jb.addActionListener(this);
@@ -259,15 +286,25 @@ public class Pane extends JPanel implements ActionListener {
     }
 
     private class ResultFrame extends JFrame implements ActionListener {
-        private JButton jb;
+        private final Dimension SIZE = new Dimension(500, 400);
+        private String text;
+        private JTextArea jta;
+        private String writeText;
 
-        public ResultFrame(String caption, Container parent) {
-            super();
-
+        public ResultFrame(Container parent) {
             JPanel jp = new JPanel();
             jp.setLayout(new BorderLayout());
+            text = "";
+            writeText = "";
+            jta = new JTextArea(15, 30);
+            jp.add(jta);
 
-            JTextArea jta = new JTextArea(15, 30);
+            Container c = getContentPane();
+            c.add(jp);
+
+            jp.setPreferredSize(SIZE);
+
+            setLocation((int) ((Window.SCREENSIZE.getWidth() * 3 / 4) - SIZE.getWidth() / 2), (int) (Window.SCREENSIZE.getHeight() / 2 - SIZE.getHeight() / 2));
 
             pack();
             setVisible(true);
@@ -275,9 +312,25 @@ public class Pane extends JPanel implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource().equals(jb)) {
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            }
+        }
+
+        public void append(String aString) {
+            text = aString;
+            writeText += text;
+            jta.setText(writeText);
+            text = "";
+        }
+
+        public void append(int aString) {
+            text += aString;
+            writeText += text;
+            jta.setText(writeText);
+            text = "";
+        }
+
+        public void delete() {
+            writeText = "";
+            jta.setText(writeText);
         }
     }
 }
