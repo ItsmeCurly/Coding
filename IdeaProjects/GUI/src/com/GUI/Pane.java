@@ -9,8 +9,6 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class Pane extends JPanel implements ActionListener, FocusListener {
-    private final Dimension SFSIZE = new Dimension(500, 400);
-    private final String ITEMS[] = {"<none>", "c", "s", "e", "r", "d", "xs", "xh", "xp"};
     private RecordManager rm;
 
     private StateFrame sf;
@@ -21,17 +19,18 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private JTextField jt;
     private JLabel com, args;
     private JButton jb;
-
     private int command;
     private String text;
 
-    public Pane() {
+    Pane() {
         command = -1;
         text = "";
 
-        sf = new StateFrame(new Point((int) (Window.SCREENSIZE.getWidth() * 3 / 4 - SFSIZE.getWidth() / 2),
-                (int) (Window.SCREENSIZE.getHeight() / 2 - SFSIZE.getHeight() / 2)));
+        Dimension sfSize = new Dimension(500, 400);
+        sf = new StateFrame(new Point((int) (Window.SCREENSIZE.getWidth() * 3 / 4 - sfSize.getWidth() / 2),
+                (int) (Window.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)));
 
+        String[] ITEMS = {"<none>", "c", "s", "e", "r", "d", "xs", "xh", "xp"};
         cb = new JComboBox<>(ITEMS);
         cb.addActionListener(this);
 
@@ -254,7 +253,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     }
 
     private void displayCaption(String caption) {
-        CaptionFrame cf = new CaptionFrame(caption, getParent());
+        new CaptionFrame(caption, getParent());
     }
 
     @Override
@@ -340,6 +339,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             setVisible(true);
         }
 
+        @SuppressWarnings("unused")
         void deleteConsole() {
             writeText = "";
             console.setText(writeText);
@@ -355,9 +355,9 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             writeText += text;
             console.setText(writeText);
             text = "";
-            System.out.println(console.getText());
         }
 
+        @SuppressWarnings("unused")
         void appendConsole(int aString) {
             appendConsole(String.valueOf(aString));
         }
