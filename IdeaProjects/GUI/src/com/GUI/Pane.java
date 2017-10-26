@@ -13,12 +13,10 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
 
     private StateFrame sf;
 
-    private JPanel[][] jp;
-
     private JComboBox<String> cb;
     private JTextField jt;
-    private JLabel com, args;
     private JButton jb;
+    private JLabel args;
     private int command;
     private String commText, argsText;
 
@@ -47,13 +45,13 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         jt.addActionListener(this);
         jt.addFocusListener(this);
 
-        com = new JLabel("Commands");
+        JLabel com = new JLabel("Commands");
         args = new JLabel("Args");
 
         jb = new JButton("Run");
         jb.addActionListener(this);
 
-        jp = new JPanel[2][3];
+        JPanel[][] jp = new JPanel[2][3];
         for (int i = 0; i < jp.length; i++) {
             for (int j = 0; j < jp[0].length; j++) {
                 jp[i][j] = new JPanel();

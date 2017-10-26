@@ -1,7 +1,7 @@
 package com.GUI;
 
 public class InvalidKValException extends Exception {
-    public InvalidKValException() {
+    InvalidKValException() {
     }
 
     public InvalidKValException(String message) {
