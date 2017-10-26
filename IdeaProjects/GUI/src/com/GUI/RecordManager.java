@@ -8,7 +8,6 @@ public class RecordManager {
     private KSearchTree kst;
 
     public RecordManager() {
-        this(0);
     }
 
     public RecordManager(int k) {
@@ -49,6 +48,6 @@ public class RecordManager {
 
     @Override
     public String toString() {
-        return kst.toString();
+        return (kst != null) ? kst.toString() : "No tree";
     }
 }

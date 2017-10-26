@@ -20,21 +20,28 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private JLabel com, args;
     private JButton jb;
     private int command;
-    private String text;
+    private String commText, argsText;
 
     Pane() {
         command = -1;
-        text = "";
+        commText = argsText = "";
 
         Dimension sfSize = new Dimension(500, 400);
         sf = new StateFrame(new Point((int) (Window.SCREENSIZE.getWidth() * 3 / 4 - sfSize.getWidth() / 2),
                 (int) (Window.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)));
 
+        rm = new RecordManager();
+
+        updateStateFrame();
+        createUI();
+    }
+
+    private void createUI() {
+        setLayout(new GridLayout(2, 3));
+
         String[] ITEMS = {"<none>", "c", "s", "e", "r", "d", "xs", "xh", "xp"};
         cb = new JComboBox<>(ITEMS);
         cb.addActionListener(this);
-
-        rm = new RecordManager();
 
         jt = new JTextField(2);
         jt.addActionListener(this);
@@ -46,8 +53,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         jb = new JButton("Run");
         jb.addActionListener(this);
 
-        setLayout(new GridLayout(2, 3));
-
         jp = new JPanel[2][3];
         for (int i = 0; i < jp.length; i++) {
             for (int j = 0; j < jp[0].length; j++) {
@@ -56,10 +61,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             }
         }
 
-        createUI();
-    }
-
-    private void createUI() {
         jp[0][0].add(com);
         jp[0][1].add(args);
 
@@ -91,31 +92,39 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                 reveal(false, false, false);
             } else if (Objects.equals(cb.getSelectedItem(), "c")) {
                 command = 0;
+                commText = "c";
                 reveal(true, true, true);
             } else if (Objects.equals(cb.getSelectedItem(), "s")) {
                 command = 1;
+                commText = "s";
                 reveal(true, true, true);
             } else if (Objects.equals(cb.getSelectedItem(), "e")) {
                 command = 2;
+                commText = "e";
                 reveal(true, true, true);
             } else if (Objects.equals(cb.getSelectedItem(), "r")) {
                 command = 3;
+                commText = "r";
                 reveal(true, true, true);
             } else if (Objects.equals(cb.getSelectedItem(), "d")) {
                 command = 4;
+                commText = "d";
                 reveal(true, true, true);
             } else if (Objects.equals(cb.getSelectedItem(), "xs")) {
                 command = 5;
+                commText = "xs";
                 reveal(false, false, true);
             } else if (Objects.equals(cb.getSelectedItem(), "xh")) {
                 command = 6;
+                commText = "xh";
                 reveal(false, false, true);
             } else if (Objects.equals(cb.getSelectedItem(), "xp")) {
                 command = 7;
+                commText = "xp";
                 reveal(false, false, true);
             }
         } else if (e.getSource().equals(jt)) {
-            text = jt.getText();
+            argsText = jt.getText();
         } else if (e.getSource().equals(jb)) {
             StringTokenizer st;
             int key;
@@ -125,8 +134,8 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             switch (command) {
                 case 0:
                     try {
-                        if (text.equals("")) text = "2";
-                        st = new StringTokenizer(text, " ");
+                        if (argsText.equals("")) argsText = "2";
+                        st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (key < 2) throw new InvalidKValException();
                     } catch (NoSuchElementException | NumberFormatException err) {
@@ -137,54 +146,72 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                         break;
                     }
                     executed = true;
+                    printCommand();
 
                     rm.makeNew(key);
-                    sf.appendConsole("New tree created with k value " + text + "\n\n");
+                    sf.appendConsole("\n");
                     updateStateFrame();
                     resetText();
                     break;
                 case 1:
                     try {
-                        st = new StringTokenizer(text, " ");
+                        st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         data = st.nextToken();
+                        if (rm.getKst() == null)
+                            throw new NullPointerException();
                     } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form s k d");
                         break;
+                    } catch (NullPointerException err) {
+                        displayCaption("Tree does not exist");
+                        break;
                     }
                     executed = true;
+                    printCommand();
 
                     rm.store(new TreeNode(key, data));
-                    sf.appendConsole("Node successfully stored\n\n");
+                    sf.appendConsole("\n");
                     updateStateFrame();
                     resetText();
                     break;
                 case 2:
                     try {
-                        st = new StringTokenizer(text, " ");
+                        st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
+                        if (rm.getKst() == null)
+                            throw new NullPointerException();
                     } catch (NoSuchElementException err) {
                         displayCaption("Command requires args in form e k");
                         break;
+                    } catch (NullPointerException err) {
+                        displayCaption("Tree does not exist");
+                        break;
                     }
                     executed = true;
-
+                    printCommand();
                     sf.appendConsole(rm.search(key) + "\n\n");
                     updateStateFrame();
                     resetText();
                     break;
                 case 3:
                     try {
-                        st = new StringTokenizer(text, " ");
+                        st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
+                        if (rm.getKst() == null)
+                            throw new NullPointerException();
                     } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form r k");
+                        break;
+                    } catch (NullPointerException err) {
+                        displayCaption("Tree does not exist");
                         break;
                     }
                     executed = true;
                     TreeNode find = rm.searchNode(key);
                     if (find != null) {
                         data = find.getData();
+                        printCommand();
                         sf.appendConsole((data != null) ? data + "\n\n" : "");
                     }
                     updateStateFrame();
@@ -192,36 +219,50 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 4:
                     try {
-                        st = new StringTokenizer(text, " ");
+                        st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
+                        if (rm.getKst() == null)
+                            throw new NullPointerException();
                     } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form d k");
                         break;
+                    } catch (NullPointerException err) {
+                        displayCaption("Tree does not exist");
+                        break;
                     }
-
                     executed = true;
 
-                    if (rm.delete(key))
-                        sf.appendConsole("Node successfully deleted\n\n");
-                    else sf.appendConsole("Node not deleted\n\n");
+                    printCommand();
+                    sf.appendConsole("\n");
+                    rm.delete(key);
+
                     updateStateFrame();
                     resetText();
                     break;
                 case 5:
                     executed = true;
-                    sf.appendConsole("Size: " + rm.size() + "\n\n");
+
+                    printCommand();
+                    sf.appendConsole(rm.size() + "\n\n");
+
                     updateStateFrame();
                     resetText();
                     break;
                 case 6:
                     executed = true;
-                    sf.appendConsole("Height: " + rm.height() + "\n\n");
+
+                    printCommand();
+                    sf.appendConsole(rm.height() + "\n\n");
+
                     updateStateFrame();
                     resetText();
                     break;
                 case 7:
                     executed = true;
+
+                    printCommand();
                     sf.appendConsole(rm.toString() + "\n\n");
+
                     updateStateFrame();
                     resetText();
                     break;
@@ -233,12 +274,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             }
             repaint();
         }
-
     }
 
     private void resetText() {
-        text = "";
-        jt.setText(text);
+        argsText = "";
+        jt.setText(argsText);
     }
 
     private void updateStateFrame() {
@@ -256,13 +296,17 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         new CaptionFrame(caption, getParent());
     }
 
+    private void printCommand() {
+        sf.appendConsole(commText + " " + argsText + "\n");
+    }
+
     @Override
     public void focusGained(FocusEvent e) {
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        text = jt.getText();
+        argsText = jt.getText();
     }
 
     private class CaptionFrame extends JFrame implements ActionListener {
@@ -282,8 +326,9 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             setLocationRelativeTo(parent);
-
             pack();
+
+            setLocation((int) (getLocation().getX() - getWidth() / 2), (int) (getLocation().getY() - getHeight() / 2));
             setVisible(true);
         }
 
@@ -334,7 +379,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     setExtendedState(JFrame.ICONIFIED);
                 }
             });
-
             pack();
             setVisible(true);
         }
