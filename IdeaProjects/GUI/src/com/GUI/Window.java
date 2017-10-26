@@ -6,7 +6,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class Window extends JFrame implements WindowListener {
-    final static Dimension SIZE = new Dimension(240, 60);
+    private final static Dimension SIZE = new Dimension(240, 60);
     final static Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     public Window() {
@@ -14,12 +14,7 @@ public class Window extends JFrame implements WindowListener {
     }
 
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        JFrame jf = new Window();
+        SwingUtilities.invokeLater(Window::new);
     }
 
     @Override

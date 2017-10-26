@@ -310,7 +310,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private class CaptionFrame extends JFrame implements ActionListener {
         private JButton jb;
 
-        CaptionFrame(String caption, Container parent) {
+        private CaptionFrame(String caption, Container parent) {
             setLayout(new BorderLayout());
             JLabel jl = new JLabel(caption);
             jb = new JButton("Ok");
@@ -347,7 +347,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         private JTextArea treeState;
         private String text, writeText, treeText;
 
-        StateFrame(Point loc) {
+        private StateFrame(Point loc) {
             JPanel jp = new JPanel(new GridLayout(1, 2));
             Border border = BorderFactory.createLineBorder(Color.black);
 
@@ -399,7 +399,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             text = "";
         }
 
-        @SuppressWarnings("unused")
         void appendConsole(int aString) {
             appendConsole(String.valueOf(aString));
         }
