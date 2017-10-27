@@ -1,4 +1,4 @@
-package com.GUI;
+package Gui;
 
 public class InvalidKValException extends Exception {
     InvalidKValException() {

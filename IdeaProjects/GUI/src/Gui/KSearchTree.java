@@ -1,4 +1,4 @@
-package com.GUI;
+package Gui;
 
 public class KSearchTree {
     private TreeNode root;  //the root of the tree

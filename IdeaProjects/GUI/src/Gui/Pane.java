@@ -1,4 +1,4 @@
-package com.GUI;
+package Gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -25,8 +25,8 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         commText = argsText = "";
 
         Dimension sfSize = new Dimension(500, 400);
-        sf = new StateFrame(new Point((int) (Window.SCREENSIZE.getWidth() * 3 / 4 - sfSize.getWidth() / 2),
-                (int) (Window.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)));
+        sf = new StateFrame(new Point((int) (Gui.SwingWindow.SCREENSIZE.getWidth() * 3 / 4 - sfSize.getWidth() / 2),
+                (int) (Gui.SwingWindow.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)));
 
         rm = new RecordManager();
 
