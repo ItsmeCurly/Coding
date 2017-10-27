@@ -3,9 +3,11 @@ package Clocks;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 public class SliderBasedClock extends AbstractClock implements ChangeListener {
     private JSlider js;
+    private JLabel jl;
 
     public SliderBasedClock() {
         super.time = new DateAndTime();
@@ -16,11 +18,18 @@ public class SliderBasedClock extends AbstractClock implements ChangeListener {
         js.setMajorTickSpacing(3600);
         js.setMinorTickSpacing(600);
         js.addChangeListener(this);
+
+        jl = new JLabel(time.getDateString());
+
+        setLayout(new BorderLayout());
+
+        add(js, "North");
+        add(jl, "South");
     }
 
     @Override
     public void displayTime() {
-
+        jl.setText(time.getDateString());
     }
 
     /**

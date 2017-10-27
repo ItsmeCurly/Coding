@@ -1,25 +1,15 @@
 package Clocks;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateAndTime {
-    static long startTime;
+    private static long startTime;
 
-    private static Date date;
-    private final String dateStart = "10/27/2017 03:36:21";
-    private SimpleDateFormat format;
+    private Date date;
 
     public DateAndTime() {
-        format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-        try {
-            date = format.parse(dateStart);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long startTime = date.getTime();
+        date = new Date();
+        startTime = date.getTime();
     }
 
     public static long getStartTime() {
@@ -27,7 +17,7 @@ public class DateAndTime {
     }
 
     public void updateTime(int spacing) {
-        date.setTime(getTime() + spacing);
+        date.setTime(date.getTime() + spacing);
     }
 
     public long getTime() {
@@ -35,10 +25,10 @@ public class DateAndTime {
     }
 
     public void setNewTime(int newTime) {
-        date.setTime(getTime() + newTime);
+        updateTime(newTime);
     }
 
-    public String getDate() {
-        return format.get2DigitYearStart().toString();
+    public String getDateString() {
+        return date.toString();
     }
 }

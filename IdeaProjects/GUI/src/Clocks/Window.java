@@ -1,6 +1,7 @@
 package Clocks;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Window extends JFrame {
 
@@ -14,10 +15,18 @@ public class Window extends JFrame {
 
     public void createAndShowGUI() {
         JPanel jp = new ClockGUI();
-//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        f.setResizable(false);
-//        f.setTitle("Records");
-        add(jp);
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setTitle("Clocks");
+
+        Container cp = getContentPane();
+
+        cp.add(jp);
+
+        pack();
+
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 }
