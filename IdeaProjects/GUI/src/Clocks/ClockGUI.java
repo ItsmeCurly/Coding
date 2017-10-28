@@ -22,6 +22,7 @@ public class ClockGUI extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
 
         timer = new Timer(DELAY, this);
+        timer.start();
 
         anClock = new AnalogClock();
         diClock = new DigitalClock();

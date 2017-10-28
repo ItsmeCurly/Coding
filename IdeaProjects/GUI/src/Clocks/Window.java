@@ -13,7 +13,7 @@ public class Window extends JFrame {
         SwingUtilities.invokeLater(Window::new);
     }
 
-    public void createAndShowGUI() {
+    private void createAndShowGUI() {
         JPanel jp = new ClockGUI();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

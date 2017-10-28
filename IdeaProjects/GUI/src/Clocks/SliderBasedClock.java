@@ -8,13 +8,15 @@ import java.awt.*;
 public class SliderBasedClock extends AbstractClock implements ChangeListener {
     private JSlider js;
     private JLabel jl;
+    private int selectedTimeValue;
 
     public SliderBasedClock() {
         super.time = new DateAndTime();
+        createAndShowGUI();
     }
 
-    public void createAndShowGUI() {
-        js = new JSlider(0, 86400, (int) (super.time.getTime() - DateAndTime.getStartTime()));
+    private void createAndShowGUI() {
+        js = new JSlider(0, 86400, (int) ((time.getTime() / 1000) % 86400));
         js.setMajorTickSpacing(3600);
         js.setMinorTickSpacing(600);
         js.addChangeListener(this);
@@ -39,6 +41,7 @@ public class SliderBasedClock extends AbstractClock implements ChangeListener {
      */
     @Override
     public void stateChanged(ChangeEvent e) {
-        time.setNewTime(js.getValue());
+        time.setNewTime(js.getValue() - selectedTimeValue);
+        selectedTimeValue = js.getValue() - selectedTimeValue;
     }
 }

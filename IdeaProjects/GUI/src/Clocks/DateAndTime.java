@@ -1,15 +1,18 @@
 package Clocks;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateAndTime {
     private static long startTime;
 
-    private Date date;
+    private static Calendar calendar;
+    private static Date date;
 
     public DateAndTime() {
-        date = new Date();
-        startTime = date.getTime();
+        calendar = Calendar.getInstance();
+        date = calendar.getTime();
+        startTime = calendar.getTime().getTime();
     }
 
     public static long getStartTime() {
@@ -18,6 +21,7 @@ public class DateAndTime {
 
     public void updateTime(int spacing) {
         date.setTime(date.getTime() + spacing);
+        calendar.setTime(date);
     }
 
     public long getTime() {
@@ -29,6 +33,6 @@ public class DateAndTime {
     }
 
     public String getDateString() {
-        return date.toString();
+        return calendar. ();
     }
 }
