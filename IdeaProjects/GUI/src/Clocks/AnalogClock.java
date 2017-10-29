@@ -14,6 +14,7 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
         super.time = time;
         createAndShowGUI();
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
     private void createAndShowGUI() {
@@ -94,6 +95,7 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
     @Override
     public void mouseClicked(MouseEvent e) {
 
+
     }
 
     /**
@@ -151,7 +153,10 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        int x = e.getX();
+        int y = e.getY();
+        System.out.println("X: " + x);
+        System.out.println("Y: " + y);
     }
 
     /**
