@@ -2,14 +2,10 @@ package Clocks;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class DigitalClock extends AbstractClock implements ActionListener {
+public class DigitalClock extends AbstractClock {
     private int todayTimeInMillis;
     private JTextArea jta;
     private NumberFormat fmt;
@@ -18,11 +14,7 @@ public class DigitalClock extends AbstractClock implements ActionListener {
     public DigitalClock(DateAndTime time) {
         super.time = time;
         createAndShowGUI();
-        try {
-            createFont();
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
+        createFont();
         fmt = new DecimalFormat("00");
         todayTimeInMillis = time.getTimeOfDay();
     }
@@ -32,22 +24,13 @@ public class DigitalClock extends AbstractClock implements ActionListener {
         jta = new JTextArea();
         jta.setBackground(new Color(238, 238, 238));
         jta.setForeground(Color.RED);
-        //jta.setFont(new Font("TimesRoman", Font.BOLD, 144));
-        setPreferredSize(new Dimension(640, 200));
+        jta.setPreferredSize(new Dimension(640, 200));
 
         add(jta);
     }
 
-    private void createFont() throws IOException, FontFormatException {
-        File fontFile = new File("digital-7.regular.ttf");
-
-        font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(font);
-        font.deriveFont(Font.BOLD, 144);
-        jta.setFont(font);
-
+    private void createFont() {
+        jta.setFont(new Font("Monospaced", Font.BOLD + Font.ITALIC, 128));
     }
 
     @Override
@@ -62,16 +45,6 @@ public class DigitalClock extends AbstractClock implements ActionListener {
     }
 
     private String getTimeString() {
-        return fmt.format(time.hour() % 12) + ":" + fmt.format(time.minute()) + ((time.hour() > 12) ? " AM" : " PM");
-    }
-
-    /**
-     * Invoked when an action occurs.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+        return fmt.format((time.hour() % 12 == 0) ? 12 : time.hour() % 12) + ":" + fmt.format(time.minute()) + ((time.hour() > 12) ? " PM" : " AM");
     }
 }
