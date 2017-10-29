@@ -2,6 +2,10 @@ package Gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.NoSuchElementException;
@@ -20,13 +24,23 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private int command;
     private String commText, argsText;
 
+    private Font f1;
+
+    private Color c1, c2;
+
     Pane() {
         command = -1;
         commText = argsText = "";
 
+        f1 = new Font("TimesRoman", Font.PLAIN, 12);
+
+        c1 = Color.RED;
+        c2 = Color.BLACK;
+
         Dimension sfSize = new Dimension(500, 400);
         sf = new StateFrame(new Point((int) (Gui.SwingWindow.SCREENSIZE.getWidth() * 3 / 4 - sfSize.getWidth() / 2),
-                (int) (Gui.SwingWindow.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)));
+                (int) (Gui.SwingWindow.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)),
+                f1);
 
         rm = new RecordManager();
 
@@ -144,10 +158,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                         break;
                     }
                     executed = true;
-                    printCommand();
-
                     rm.makeNew(key);
-                    sf.appendConsole("\n");
+
+                    printCommand();
+                    printOutput("\n");
+
                     updateStateFrame();
                     resetText();
                     break;
@@ -166,10 +181,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                         break;
                     }
                     executed = true;
-                    printCommand();
-
                     rm.store(new TreeNode(key, data));
-                    sf.appendConsole("\n");
+
+                    printCommand();
+                    printOutput("\n");
+
                     updateStateFrame();
                     resetText();
                     break;
@@ -187,8 +203,10 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                         break;
                     }
                     executed = true;
+
                     printCommand();
-                    sf.appendConsole(rm.search(key) + "\n\n");
+                    printOutput(rm.search(key) + "\n\n");
+
                     updateStateFrame();
                     resetText();
                     break;
@@ -210,7 +228,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     if (find != null) {
                         data = find.getData();
                         printCommand();
-                        sf.appendConsole((data != null) ? data + "\n\n" : "");
+                        printOutput((data != null) ? data + "\n\n" : "");
                     }
                     updateStateFrame();
                     resetText();
@@ -231,7 +249,8 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     executed = true;
 
                     printCommand();
-                    sf.appendConsole("\n");
+                    printOutput("\n");
+
                     rm.delete(key);
 
                     updateStateFrame();
@@ -241,7 +260,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     executed = true;
 
                     printCommand();
-                    sf.appendConsole(rm.size() + "\n\n");
+                    printOutput(rm.size() + "\n\n");
 
                     updateStateFrame();
                     resetText();
@@ -250,7 +269,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     executed = true;
 
                     printCommand();
-                    sf.appendConsole(rm.height() + "\n\n");
+                    printOutput(rm.height() + "\n\n");
 
                     updateStateFrame();
                     resetText();
@@ -259,7 +278,7 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     executed = true;
 
                     printCommand();
-                    sf.appendConsole(rm.toString() + "\n\n");
+                    printOutput(rm.toString() + "\n\n");
 
                     updateStateFrame();
                     resetText();
@@ -295,7 +314,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     }
 
     private void printCommand() {
-        sf.appendConsole(commText + " " + argsText + "\n");
+        sf.appendConsole(commText + " " + argsText + "\n", c1);
+    }
+
+    private void printOutput(String msg) {
+        sf.appendConsole(msg, c2);
     }
 
     @Override
@@ -342,19 +365,26 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
         }
     }
 
-    private class StateFrame extends JFrame {
-        private JTextArea console;
+    private class StateFrame extends JFrame implements WindowListener {
+        private JTextPane console;
         private JTextArea treeState;
         private String text, writeText, treeText;
+        private Font font;
 
-        private StateFrame(Point loc) {
+        private StateFrame(Point loc, Font font) {
             JPanel jp = new JPanel(new GridLayout(1, 2));
+            this.font = font;
+
             Border border = BorderFactory.createLineBorder(Color.black);
+            treeText = "TreeState: ";
 
-            text = writeText = "";
+            console = new JTextPane();
+            treeState = new JTextArea(treeText, 20, 15);
 
-            console = new JTextArea("Console: \n", 20, 30);
-            treeState = new JTextArea("Tree State: \n", 20, 30);
+            appendConsole("Console: \n", c2);
+
+            JScrollPane jsp1 = new JScrollPane(console);
+            JScrollPane jsp2 = new JScrollPane(treeState);
 
             console.setEditable(false);
             treeState.setEditable(false);
@@ -362,8 +392,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             console.setBorder(border);
             treeState.setBorder(border);
 
-            jp.add(console);
-            jp.add(treeState);
+            console.setPreferredSize(new Dimension(250, 150));
+            treeState.setPreferredSize(new Dimension(250, 150));
+
+            jp.add(jsp1);
+            jp.add(jsp2);
 
             Container c = getContentPane();
             c.add(jp);
@@ -372,40 +405,129 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             setLocation(loc);
 
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    setExtendedState(JFrame.ICONIFIED);
-                }
-            });
+            addWindowListener(this);
+
             pack();
             setVisible(true);
         }
 
-        @SuppressWarnings("unused")
-        void deleteConsole() {
-            writeText = "";
-            console.setText(writeText);
-        }
-
         void deleteState() {
-            treeText = "";
+            treeText = "TreeState: \n";
             treeState.setText(treeText);
         }
 
-        void appendConsole(String aString) {
-            text = aString;
-            writeText += text;
-            console.setText(writeText);
-            text = "";
+        void appendConsole(String aString, Color c) {
+            StyledDocument doc = console.getStyledDocument();
+
+            Style style = console.addStyle("ConsoleStyle1", null);
+
+            StyleConstants.setForeground(style, c);
+
+            try {
+                doc.insertString(doc.getLength(), aString, style);
+            } catch (BadLocationException err) {
+                err.printStackTrace();
+            }
         }
 
-        void appendConsole(int aString) {
-            appendConsole(String.valueOf(aString));
+        void appendConsole(int aString, Color c) {
+            appendConsole(String.valueOf(aString), c);
         }
 
         void setState(String aString) {
-            treeText = aString;
+            treeText = "TreeState: \n" + aString;
             treeState.setText(treeText);
+        }
+
+        void setColor(Color c) {
+            console.setForeground(c);
+        }
+
+        /**
+         * Invoked the first time a window is made visible.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void windowOpened(WindowEvent e) {
+            //DO NOTHING
+        }
+
+        /**
+         * Invoked when the user attempts to close the window
+         * from the window's system menu.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void windowClosing(WindowEvent e) {
+            setExtendedState(JFrame.ICONIFIED);
+        }
+
+        /**
+         * Invoked when a window has been closed as the result
+         * of calling dispose on the window.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void windowClosed(WindowEvent e) {
+            //DO NOTHING
+        }
+
+        /**
+         * Invoked when a window is changed from a normal to a
+         * minimized state. For many platforms, a minimized window
+         * is displayed as the icon specified in the window's
+         * iconImage property.
+         *
+         * @param e the event to be processed
+         * @see Frame#setIconImage
+         */
+        @Override
+        public void windowIconified(WindowEvent e) {
+            //DO NOTHING
+        }
+
+        /**
+         * Invoked when a window is changed from a minimized
+         * to a normal state.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            //DO NOTHING
+        }
+
+        /**
+         * Invoked when the Window is set to be the active Window. Only a Frame or
+         * a Dialog can be the active Window. The native windowing system may
+         * denote the active Window or its children with special decorations, such
+         * as a highlighted title bar. The active Window is always either the
+         * focused Window, or the first Frame or Dialog that is an owner of the
+         * focused Window.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void windowActivated(WindowEvent e) {
+            //DO NOTHING
+        }
+
+        /**
+         * Invoked when a Window is no longer the active Window. Only a Frame or a
+         * Dialog can be the active Window. The native windowing system may denote
+         * the active Window or its children with special decorations, such as a
+         * highlighted title bar. The active Window is always either the focused
+         * Window, or the first Frame or Dialog that is an owner of the focused
+         * Window.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            //DO NOTHING
         }
     }
 }

@@ -9,11 +9,10 @@ public abstract class AbstractClock extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     public void updateTime(int spacing) {
-        time.updateTime(spacing);
+        time.addToTime(spacing);
     }
 
     public abstract void displayTime();

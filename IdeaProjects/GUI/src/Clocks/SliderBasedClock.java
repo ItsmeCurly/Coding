@@ -8,25 +8,37 @@ import java.awt.*;
 public class SliderBasedClock extends AbstractClock implements ChangeListener {
     private JSlider js;
     private JLabel jl;
-    private int selectedTimeValue;
+    private long selectedTimeValue;
 
     public SliderBasedClock() {
         super.time = new DateAndTime();
         createAndShowGUI();
+        selectedTimeValue = js.getValue();
     }
 
     private void createAndShowGUI() {
-        js = new JSlider(0, 86400, (int) ((time.getTime() / 1000) % 86400));
-        js.setMajorTickSpacing(3600);
-        js.setMinorTickSpacing(600);
+        js = new JSlider(0, 86400000, (int) ((time.getTime() - 14400000) % 86400000));
+
+        js.setMajorTickSpacing(3600000);
+        js.setMinorTickSpacing(600000);
+        js.setPaintTicks(true);
         js.addChangeListener(this);
 
         jl = new JLabel(time.getDateString());
 
         setLayout(new BorderLayout());
 
-        add(js, "North");
+        add(js, "Center");
         add(jl, "South");
+
+        setPreferredSize(new Dimension(600, 200));
+    }
+
+    @Override
+    public void updateTime(int spacing) {
+        super.updateTime(spacing);
+        selectedTimeValue = selectedTimeValue + spacing;
+        js.setValue((int) selectedTimeValue);
     }
 
     @Override
@@ -40,8 +52,8 @@ public class SliderBasedClock extends AbstractClock implements ChangeListener {
      * @param e a ChangeEvent object
      */
     @Override
-    public void stateChanged(ChangeEvent e) {
-        time.setNewTime(js.getValue() - selectedTimeValue);
-        selectedTimeValue = js.getValue() - selectedTimeValue;
+    public synchronized void stateChanged(ChangeEvent e) {
+        time.addToTime(js.getValue() - selectedTimeValue);
+        selectedTimeValue = js.getValue();
     }
 }

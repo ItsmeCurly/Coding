@@ -19,20 +19,19 @@ public class DateAndTime {
         return startTime;
     }
 
-    public void updateTime(int spacing) {
-        date.setTime(date.getTime() + spacing);
-        calendar.setTime(date);
+    public synchronized void updateTime(long spacing) {
+        calendar.setTimeInMillis(calendar.getTimeInMillis() + spacing);
     }
 
     public long getTime() {
-        return date.getTime();
+        return calendar.getTimeInMillis();
     }
 
-    public void setNewTime(int newTime) {
+    public synchronized void addToTime(long newTime) {
         updateTime(newTime);
     }
 
     public String getDateString() {
-        return calendar. ();
+        return calendar.getTime().toString();
     }
 }

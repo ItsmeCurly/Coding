@@ -34,7 +34,7 @@ public class ClockGUI extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        anClock.updateTime(DELAY);
+        sbClock.updateTime(DELAY);
         repaint();
     }
 
