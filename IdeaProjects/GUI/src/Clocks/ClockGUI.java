@@ -1,6 +1,7 @@
 package Clocks;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,16 +21,23 @@ public class ClockGUI extends JPanel implements ActionListener {
     public void createAndShowGUI() {
         setLayout(new BorderLayout());
 
+        Border border = BorderFactory.createLineBorder(Color.black);
+
         Timer timer = new Timer(DELAY, this);
         timer.start();
         DateAndTime d_t = new DateAndTime();
+
         anClock = new AnalogClock(d_t);
         diClock = new DigitalClock(d_t);
         sbClock = new SliderBasedClock(d_t);
 
-        add(anClock, "West");
+        anClock.setBorder(border);
+        diClock.setBorder(border);
+        sbClock.setBorder(border);
+
+        add(sbClock, "North");
         add(diClock, "Center");
-        add(sbClock, "East");
+        add(anClock, "South");
     }
 
     public void actionPerformed(ActionEvent e) {
