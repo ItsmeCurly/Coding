@@ -16,4 +16,8 @@ public abstract class AbstractClock extends JPanel implements ActionListener {
     }
 
     public abstract void displayTime();
+
+    public DateAndTime getTime() {
+        return time;
+    }
 }

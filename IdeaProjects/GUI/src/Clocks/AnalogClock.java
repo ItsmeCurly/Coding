@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 public class AnalogClock extends AbstractClock implements ActionListener {
 
-    public AnalogClock() {
-        super.time = new DateAndTime();
+    public AnalogClock(DateAndTime time) {
+        super.time = time;
     }
 
     @Override

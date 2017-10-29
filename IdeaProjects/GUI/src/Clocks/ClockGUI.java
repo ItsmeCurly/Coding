@@ -6,13 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ClockGUI extends JPanel implements ActionListener {
-    private static final int DELAY = 1000 / 40;
+    private static final int UPDATESPERSECOND = 40;
+    private static final int DELAY = 1000 / UPDATESPERSECOND;
 
     private AnalogClock anClock;
     private DigitalClock diClock;
     private SliderBasedClock sbClock;
-
-    private Timer timer;
 
     public ClockGUI() {
         createAndShowGUI();
@@ -21,12 +20,12 @@ public class ClockGUI extends JPanel implements ActionListener {
     public void createAndShowGUI() {
         setLayout(new BorderLayout());
 
-        timer = new Timer(DELAY, this);
+        Timer timer = new Timer(DELAY, this);
         timer.start();
-
-        anClock = new AnalogClock();
-        diClock = new DigitalClock();
-        sbClock = new SliderBasedClock();
+        DateAndTime d_t = new DateAndTime();
+        anClock = new AnalogClock(d_t);
+        diClock = new DigitalClock(d_t);
+        sbClock = new SliderBasedClock(d_t);
 
         add(anClock, "West");
         add(diClock, "Center");

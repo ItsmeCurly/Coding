@@ -1,22 +1,15 @@
 package Clocks;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class DateAndTime {
-    private static long startTime;
+    static final int OFFSET = 14400000;
+    static final int MILLISINDAY = 86400000;
 
     private static Calendar calendar;
-    private static Date date;
 
     public DateAndTime() {
         calendar = Calendar.getInstance();
-        date = calendar.getTime();
-        startTime = calendar.getTime().getTime();
-    }
-
-    public static long getStartTime() {
-        return startTime;
     }
 
     public synchronized void updateTime(long spacing) {
@@ -31,7 +24,46 @@ public class DateAndTime {
         updateTime(newTime);
     }
 
+    /**
+     * Gets calendar.
+     *
+     * @return Value of calendar.
+     */
+    public static Calendar getCalendar() {
+        return calendar;
+    }
+
+    /**
+     * Sets new calendar.
+     *
+     * @param c New value of calendar.
+     */
+    public static void setCalendar(Calendar c) {
+        calendar = c;
+    }
+
+    public int getTimeOfDay() {
+        return (int) ((getTime() - DateAndTime.OFFSET) % DateAndTime.MILLISINDAY);
+    }
+
+    public int hour() {
+        return getTimeOfDay() / 3600000;
+    }
+
     public String getDateString() {
         return calendar.getTime().toString();
+    }
+
+    public int minute() {
+        return (getTimeOfDay() / 60000) % 60;
+    }
+
+    public int second() {
+        return (getTimeOfDay() / 1000) % 36000;
+    }
+
+    @Override
+    public String toString() {
+        return getDateString();
     }
 }
