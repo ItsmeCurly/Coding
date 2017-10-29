@@ -4,10 +4,13 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SliderBasedClock extends AbstractClock implements ChangeListener {
+public class SliderBasedClock extends AbstractClock implements ActionListener, ChangeListener {
     private JSlider js;
     private JLabel jl;
+    private JButton jb;
     private long selectedTimeValue;
 
     public SliderBasedClock(DateAndTime time) {
@@ -26,12 +29,29 @@ public class SliderBasedClock extends AbstractClock implements ChangeListener {
 
         jl = new JLabel(time.getDateString());
 
+        jb = new JButton("Reset Time");
+        jb.addActionListener(this);
+
         setLayout(new BorderLayout());
 
-        add(js, "Center");
-        add(jl, "South");
+        JPanel holder = new JPanel();
 
-        setPreferredSize(new Dimension(600, 200));
+        holder.add(jl);
+        holder.add(jb);
+
+        add(js, "Center");
+        add(holder, "South");
+
+        setPreferredSize(new Dimension(640, 200));
+    }
+
+    public void actionPerformed(ActionEvent evt) {
+        if (evt.getSource().equals(jb)) {
+            time.resetTimeToNormal();
+            int newTime = (int) ((time.getTime() - DateAndTime.OFFSET) % DateAndTime.MILLISINDAY);
+            selectedTimeValue = newTime;
+            js.setValue(newTime);
+        }
     }
 
     @Override

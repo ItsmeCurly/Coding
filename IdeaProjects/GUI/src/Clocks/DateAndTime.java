@@ -3,6 +3,7 @@ package Clocks;
 import java.util.Calendar;
 
 public class DateAndTime {
+
     static final int OFFSET = 14400000;
     static final int MILLISINDAY = 86400000;
 
@@ -46,20 +47,24 @@ public class DateAndTime {
         return (int) ((getTime() - DateAndTime.OFFSET) % DateAndTime.MILLISINDAY);
     }
 
-    public int hour() {
-        return getTimeOfDay() / 3600000;
+    public double hour() {
+        return getTimeOfDay() / 3600000.0;
     }
 
     public String getDateString() {
         return calendar.getTime().toString();
     }
 
-    public int minute() {
-        return (getTimeOfDay() / 60000) % 60;
+    public double minute() {
+        return (getTimeOfDay() / 60000.0) % 60;
     }
 
-    public int second() {
-        return (getTimeOfDay() / 1000) % 36000;
+    public double second() {
+        return (getTimeOfDay() / 1000.0) % 36000;
+    }
+
+    public void resetTimeToNormal() {
+        calendar = Calendar.getInstance();
     }
 
     @Override

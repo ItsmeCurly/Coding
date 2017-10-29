@@ -22,6 +22,7 @@ public class DigitalClock extends AbstractClock {
     private void createAndShowGUI() {
         setBackground(new Color(238, 238, 238));
         jta = new JTextArea();
+        jta.setEditable(false);
         jta.setBackground(new Color(238, 238, 238));
         jta.setForeground(Color.RED);
         jta.setPreferredSize(new Dimension(640, 200));
@@ -45,6 +46,6 @@ public class DigitalClock extends AbstractClock {
     }
 
     private String getTimeString() {
-        return fmt.format((time.hour() % 12 == 0) ? 12 : time.hour() % 12) + ":" + fmt.format(time.minute()) + ((time.hour() > 12) ? " PM" : " AM");
+        return fmt.format(((int) time.hour() % 12 == 0) ? 12 : (int) time.hour() % 12) + ":" + fmt.format((int) time.minute()) + (((int) time.hour() > 11) ? " PM" : " AM");
     }
 }
