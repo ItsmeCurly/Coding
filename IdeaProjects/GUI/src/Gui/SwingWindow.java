@@ -5,14 +5,28 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+/**
+ * The type Swing window.
+ */
 public class SwingWindow extends JFrame implements WindowListener {
     private final static Dimension SIZE = new Dimension(240, 60);
+    /**
+     * The constant SCREENSIZE.
+     */
     final static Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
+    /**
+     * Instantiates a new Swing window.
+     */
     public SwingWindow() {
         createAndShowGui();
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SwingWindow::new);
     }

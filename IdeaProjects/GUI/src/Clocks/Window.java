@@ -3,12 +3,23 @@ package Clocks;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The type Window.
+ */
 public class Window extends JFrame {
 
+    /**
+     * Instantiates a new Window.
+     */
     public Window() {
         createAndShowGUI();
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Window::new);
     }

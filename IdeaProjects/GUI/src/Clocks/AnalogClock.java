@@ -3,13 +3,27 @@ package Clocks;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The type Analog clock.
+ */
 public class AnalogClock extends AbstractClock implements ActionListener, MouseListener, MouseMotionListener {
     private final int CLOCKRADIUS = 250;
+    /**
+     * The Font.
+     */
     Font font;
+    /**
+     * The FontMetrics.
+     */
     FontMetrics fm;
     private int center_x;
     private int center_y;
 
+    /**
+     * Instantiates a new Analog clock.
+     *
+     * @param time the time
+     */
     public AnalogClock(DateAndTime time) {
         super.time = time;
         createAndShowGUI();

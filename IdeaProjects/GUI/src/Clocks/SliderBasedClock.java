@@ -7,12 +7,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Slider based clock.
+ */
 public class SliderBasedClock extends AbstractClock implements ActionListener, ChangeListener {
     private JSlider js;
     private JLabel jl;
     private JButton jb;
     private long selectedTimeValue;
 
+    /**
+     * Instantiates a new Slider based clock.
+     *
+     * @param time the time
+     */
     public SliderBasedClock(DateAndTime time) {
         super.time = time;
         createAndShowGUI();
@@ -42,7 +50,7 @@ public class SliderBasedClock extends AbstractClock implements ActionListener, C
         add(js, "Center");
         add(holder, "South");
 
-        setPreferredSize(new Dimension(640, 200));
+        setPreferredSize(new Dimension(640, 350));
     }
 
     public void actionPerformed(ActionEvent evt) {

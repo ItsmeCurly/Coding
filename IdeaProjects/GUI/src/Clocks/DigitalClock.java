@@ -5,12 +5,20 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+/**
+ * The type Digital clock.
+ */
 public class DigitalClock extends AbstractClock {
     private int todayTimeInMillis;
     private JTextArea jta;
     private NumberFormat fmt;
     private Font font;
 
+    /**
+     * Instantiates a new Digital clock.
+     *
+     * @param time the time
+     */
     public DigitalClock(DateAndTime time) {
         super.time = time;
         createAndShowGUI();
