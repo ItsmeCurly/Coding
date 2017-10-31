@@ -31,13 +31,13 @@ public class SliderBasedClock extends AbstractClock implements ActionListener, C
         js = new JSlider(0, DateAndTime.MILLISINDAY, (int) ((time.getTime() - DateAndTime.OFFSET) % DateAndTime.MILLISINDAY));
 
         js.setMajorTickSpacing(3600000);
-        js.setMinorTickSpacing(600000);
+        js.setMinorTickSpacing(1800000);
         js.setPaintTicks(true);
         js.addChangeListener(this);
 
         jl = new JLabel(time.getDateString());
 
-        jb = new JButton("Reset Time");
+        jb = new JButton("Current Time");
         jb.addActionListener(this);
 
         setLayout(new BorderLayout());

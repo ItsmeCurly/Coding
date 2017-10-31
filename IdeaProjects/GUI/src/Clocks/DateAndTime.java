@@ -112,7 +112,7 @@ public class DateAndTime {
      * @return the seconds in the day
      */
     public double second() {
-        return (getTimeOfDay() / 1000.0) % 36000;
+        return (getTimeOfDay() / 1000.0) % 60;
     }
 
     /**
