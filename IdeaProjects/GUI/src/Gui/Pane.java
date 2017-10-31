@@ -2,10 +2,7 @@ package Gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.NoSuchElementException;
@@ -24,23 +21,13 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private int command;
     private String commText, argsText;
 
-    private Font f1;
-
-    private Color c1, c2;
-
     Pane() {
         command = -1;
         commText = argsText = "";
 
-        f1 = new Font("TimesRoman", Font.PLAIN, 12);
-
-        c1 = Color.RED;
-        c2 = Color.BLACK;
-
         Dimension sfSize = new Dimension(500, 400);
         sf = new StateFrame(new Point((int) (Gui.SwingWindow.SCREENSIZE.getWidth() * 3 / 4 - sfSize.getWidth() / 2),
-                (int) (Gui.SwingWindow.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)),
-                f1);
+                (int) (Gui.SwingWindow.SCREENSIZE.getHeight() / 2 - sfSize.getHeight() / 2)));
 
         rm = new RecordManager();
 
@@ -146,11 +133,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             switch (command) {
                 case 0:
                     try {
-                        if (argsText.equals("")) argsText = "2";
+                        if (argsText.trim().length() != "k".length()) throw new InvalidArgumentException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (key < 2) throw new InvalidKValException();
-                    } catch (NoSuchElementException | NumberFormatException err) {
+                    } catch (NoSuchElementException | NumberFormatException | InvalidArgumentException err) {
                         displayCaption("Command requires args in form c k");
                         break;
                     } catch (InvalidKValException err) {
@@ -168,12 +155,13 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 1:
                     try {
+                        if (argsText.trim().length() != "k d".length()) throw new InvalidArgumentException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         data = st.nextToken();
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | NumberFormatException err) {
+                    } catch (NoSuchElementException | NumberFormatException | InvalidArgumentException err) {
                         displayCaption("Command requires args in form s k d");
                         break;
                     } catch (NullPointerException err) {
@@ -191,11 +179,12 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 2:
                     try {
+                        if (argsText.trim().length() != "k".length()) throw new InvalidArgumentException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException err) {
+                    } catch (NoSuchElementException | InvalidArgumentException err) {
                         displayCaption("Command requires args in form e k");
                         break;
                     } catch (NullPointerException err) {
@@ -212,11 +201,12 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 3:
                     try {
+                        if (argsText.trim().length() != "k".length()) throw new InvalidArgumentException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | NumberFormatException err) {
+                    } catch (NoSuchElementException | NumberFormatException | InvalidArgumentException err) {
                         displayCaption("Command requires args in form r k");
                         break;
                     } catch (NullPointerException err) {
@@ -235,11 +225,12 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 4:
                     try {
+                        if (argsText.trim().length() != "k".length()) throw new InvalidArgumentException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | NumberFormatException err) {
+                    } catch (NoSuchElementException | NumberFormatException | InvalidArgumentException err) {
                         displayCaption("Command requires args in form d k");
                         break;
                     } catch (NullPointerException err) {
@@ -299,7 +290,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     }
 
     private void updateStateFrame() {
-        sf.deleteState();
         sf.setState(rm.toString());
     }
 
@@ -314,15 +304,16 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     }
 
     private void printCommand() {
-        sf.appendConsole(commText + " " + argsText + "\n", c1);
+        sf.appendConsole(commText + " " + argsText + "\n", 0);
     }
 
     private void printOutput(String msg) {
-        sf.appendConsole(msg, c2);
+        sf.appendConsole(msg, 1);
     }
 
     @Override
     public void focusGained(FocusEvent e) {
+        //DO NOTHING
     }
 
     @Override
@@ -368,20 +359,25 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
     private class StateFrame extends JFrame implements WindowListener {
         private JTextPane console;
         private JTextArea treeState;
-        private String text, writeText, treeText;
-        private Font font;
+        private String treeText;
+        private StyledDocument doc;
 
-        private StateFrame(Point loc, Font font) {
+        private StateFrame(Point loc) {
+            createAndShowGUI();
+            setLocation(loc);
+        }
+
+        private void createAndShowGUI() {
             JPanel jp = new JPanel(new GridLayout(1, 2));
-            this.font = font;
 
             Border border = BorderFactory.createLineBorder(Color.black);
             treeText = "TreeState: ";
 
             console = new JTextPane();
             treeState = new JTextArea(treeText, 20, 15);
+            createStyles();
 
-            appendConsole("Console: \n", c2);
+            appendConsole("Console: \n", 0);
 
             JScrollPane jsp1 = new JScrollPane(console);
             JScrollPane jsp2 = new JScrollPane(treeState);
@@ -402,7 +398,6 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             c.add(jp);
 
             setResizable(false);
-            setLocation(loc);
 
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             addWindowListener(this);
@@ -411,27 +406,35 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             setVisible(true);
         }
 
-        void deleteState() {
-            treeText = "TreeState: \n";
-            treeState.setText(treeText);
+        private void createStyles() {
+            doc = console.getStyledDocument();
+
+            Style def = StyleContext.getDefaultStyleContext().
+                    getStyle(StyleContext.DEFAULT_STYLE);
+
+            Style regular = doc.addStyle("regular", def);
+            StyleConstants.setFontFamily(def, "SansSerif");
+
+            Style style = doc.addStyle("command", regular);
+            StyleConstants.setFontSize(style, 14);
+            StyleConstants.setForeground(style, Color.BLACK);
+
+            style = doc.addStyle("output", regular);
+            StyleConstants.setFontSize(style, 18);
+            StyleConstants.setFontFamily(style, "Monospaced");
+            StyleConstants.setForeground(style, Color.RED);
         }
 
-        void appendConsole(String aString, Color c) {
-            StyledDocument doc = console.getStyledDocument();
-
-            Style style = console.addStyle("ConsoleStyle1", null);
-
-            StyleConstants.setForeground(style, c);
-
+        void appendConsole(String aString, int type) {
             try {
-                doc.insertString(doc.getLength(), aString, style);
+                doc.insertString(doc.getLength(), aString, (type == 0) ? doc.getStyle("command") : doc.getStyle("output"));
             } catch (BadLocationException err) {
                 err.printStackTrace();
             }
         }
 
-        void appendConsole(int aString, Color c) {
-            appendConsole(String.valueOf(aString), c);
+        void appendConsole(int aString, int type) {
+            appendConsole(String.valueOf(aString), type);
         }
 
         void setState(String aString) {

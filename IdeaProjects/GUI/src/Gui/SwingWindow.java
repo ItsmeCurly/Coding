@@ -69,18 +69,21 @@ public class SwingWindow extends JFrame implements WindowListener {
 
     @Override
     public void windowDeiconified(WindowEvent e) {
+        //DO NOTHING
     }
 
     @Override
     public void windowActivated(WindowEvent e) {
+        //DO NOTHING
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+        //DO NOTHING
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-
+        //DO NOTHING
     }
 }
