@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2b49a968-60dc-43fb-8d64-133f2725beb7" name="Default" comment="Coding update">
+    <list default="true" id="2b49a968-60dc-43fb-8d64-133f2725beb7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GUI/Clocks/AnalogClock.class" afterPath="$PROJECT_DIR$/out/production/GUI/Clocks/AnalogClock.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GUI/Clocks/DateAndTime.class" afterPath="$PROJECT_DIR$/out/production/GUI/Clocks/DateAndTime.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GUI/Clocks/SliderBasedClock.class" afterPath="$PROJECT_DIR$/out/production/GUI/Clocks/SliderBasedClock.class" />
@@ -61,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Pane.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Pane.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Gui/Pane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1889">
-              <caret line="232" column="102" lean-forward="false" selection-start-line="232" selection-start-column="102" selection-end-line="232" selection-end-column="102" />
+            <state relative-caret-position="-3177">
+              <caret line="144" column="30" lean-forward="true" selection-start-line="144" selection-start-column="30" selection-end-line="144" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1989#1990#0" expanded="true" />
@@ -91,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InvalidArgsException.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InvalidArgsException.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Gui/InvalidArgsException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="306">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="e#152#153#0" expanded="true" />
                 <element signature="e#182#183#0" expanded="true" />
@@ -789,7 +789,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509403716132</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Coding update">
+      <created>1509475722992</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1509475722992</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1476,10 +1483,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Gui/InvalidArgsException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#152#153#0" expanded="true" />
+            <element signature="e#182#183#0" expanded="true" />
+            <element signature="e#234#235#0" expanded="true" />
+            <element signature="e#262#263#0" expanded="true" />
+            <element signature="e#330#331#0" expanded="true" />
+            <element signature="e#367#368#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Gui/Pane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1889">
-          <caret line="232" column="102" lean-forward="false" selection-start-line="232" selection-start-column="102" selection-end-line="232" selection-end-column="102" />
+        <state relative-caret-position="-3177">
+          <caret line="144" column="30" lean-forward="true" selection-start-line="144" selection-start-column="30" selection-end-line="144" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1989#1990#0" expanded="true" />
@@ -1500,21 +1522,6 @@
             <marker date="1509475703215" expanded="false" signature="14991:15001" ph=" }" />
             <marker date="1509475703215" expanded="false" signature="15499:15514" ph=" { " />
             <marker date="1509475703215" expanded="false" signature="15549:15559" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Gui/InvalidArgsException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding>
-            <element signature="e#152#153#0" expanded="true" />
-            <element signature="e#182#183#0" expanded="true" />
-            <element signature="e#234#235#0" expanded="true" />
-            <element signature="e#262#263#0" expanded="true" />
-            <element signature="e#330#331#0" expanded="true" />
-            <element signature="e#367#368#0" expanded="true" />
           </folding>
         </state>
       </provider>
