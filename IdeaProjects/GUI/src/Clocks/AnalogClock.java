@@ -7,6 +7,8 @@ import java.awt.event.*;
  * The type Analog clock.
  */
 public class AnalogClock extends AbstractClock implements ActionListener, MouseListener, MouseMotionListener {
+    private boolean secondsHandHeld, minutesHandHeld, hoursHandHeld;
+
     private final int CLOCKRADIUS = 250;
     /**
      * The Font.
@@ -32,7 +34,7 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
     }
 
     private void createAndShowGUI() {
-        setPreferredSize(new Dimension(640, 550));
+        setPreferredSize(new Dimension(550, 550));
 
         center_x = (int) getPreferredSize().getWidth() / 2;
         center_y = (int) getPreferredSize().getHeight() / 2;
@@ -51,6 +53,39 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
     private double getSecondDeg() {
         return (int) time.second() * 6 - 90;
     }
+
+//    private double getHoursWithDeg() {
+//        //TODO
+//        return 0.0;
+//    }
+//    private double getMinutesWithDeg() {
+//        //TODO
+//        return 0.0;
+//    }
+//    private double getSecondsWithDeg() {
+//        //TODO
+//        return 0.0;
+//    }
+//
+//    private boolean withinRange(double toBeChecked, double actual, int variance) {
+//        return ((toBeChecked <= (actual + variance)) && (toBeChecked >= (actual - variance)));
+//    }
+//
+//    private boolean hoursHandClickedWithinRange(double clickDegOnClock) {
+//        //System.out.println(getHourDeg());
+//        return withinRange(clickDegOnClock, getHourDeg(), 2);
+//    }
+//
+//    private boolean minutesHandClickedWithinRange(double clickDegOnClock) {
+//        //System.out.println(getMinuteDeg());
+//
+//        return withinRange(clickDegOnClock, getMinuteDeg(), 2);
+//    }
+//
+//    private boolean secondsHandClickedWithinRange(double clickDegOnClock) {
+//        //System.out.println(getSecondDeg());
+//        return withinRange(clickDegOnClock, getSecondDeg(), 2);
+//    }
 
     @Override
     public void displayTime() {
@@ -94,9 +129,9 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
         fm = g2.getFontMetrics();
 
         g2.drawString("12", center_x - fm.stringWidth("12") / 2, 60 + fm.getAscent() / 2);
-        g2.drawString("3", 525 - fm.stringWidth("3") / 2, center_y - 10 + fm.getAscent() / 2);
+        g2.drawString("3", 485 - fm.stringWidth("3") / 2, center_y - 10 + fm.getAscent() / 2);
         g2.drawString("6", center_x - fm.stringWidth("6") / 2, 475 + fm.getAscent() / 2);
-        g2.drawString("9", 115 - fm.stringWidth("9") / 2, center_y - 10 + fm.getAscent() / 2);
+        g2.drawString("9", 65 - fm.stringWidth("9") / 2, center_y - 10 + fm.getAscent() / 2);
 
     }
 
@@ -109,7 +144,6 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
     @Override
     public void mouseClicked(MouseEvent e) {
 
-
     }
 
     /**
@@ -119,7 +153,21 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
+//        int quadrant = 0;
+//        double graphical_X = e.getX() - CLOCKRADIUS - 25;
+//        double graphical_Y = e.getY() - CLOCKRADIUS - 25;
+//
+//        double clickDeg = -Math.tan(Math.atan(graphical_Y/graphical_X));
+//        double hourDeg = Math.tan(Math.toRadians(getHourDeg()));
+//        System.out.println("Deg " + clickDeg);
+//        System.out.println("HDeg " + hourDeg);
+//
+//        if(hoursHandClickedWithinRange(clickDeg))
+//            hoursHandHeld = true;
+//        else if(minutesHandClickedWithinRange(clickDeg))
+//            minutesHandHeld = true;
+//        else if(secondsHandClickedWithinRange(clickDeg))
+//            secondsHandHeld = true;
     }
 
     /**
@@ -129,7 +177,8 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if (hoursHandHeld || minutesHandHeld || secondsHandHeld)
+            hoursHandHeld = minutesHandHeld = secondsHandHeld = false;
     }
 
     /**
@@ -139,7 +188,7 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        //DO NOTHING
     }
 
     /**
@@ -149,7 +198,7 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mouseExited(MouseEvent e) {
-
+        //DO NOTHING
     }
 
     /**
@@ -167,12 +216,12 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        System.out.println("X: " + x);
-        System.out.println("Y: " + y);
+//        int x = e.getX();
+//        int y = e.getY();
+//        if (hoursHandHeld) System.out.println("hour");
+//        if (minutesHandHeld) System.out.println("minute");
+//        if (secondsHandHeld) System.out.println("second");
     }
-
     /**
      * Invoked when the mouse cursor has been moved onto a component
      * but no buttons have been pushed.
@@ -181,6 +230,6 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        //DO NOTHING
     }
 }
