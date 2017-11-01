@@ -9,11 +9,11 @@ import java.awt.event.WindowListener;
  * The type Swing window.
  */
 public class SwingWindow extends JFrame implements WindowListener {
+    private final static Dimension SIZE = new Dimension(240, 60);
     /**
      * The constant SCREENSIZE.
      */
     final static Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    private final static Dimension SIZE = new Dimension(240, 60);
 
     /**
      * Instantiates a new Swing window.
