@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2b49a968-60dc-43fb-8d64-133f2725beb7" name="Default" comment="Coding update">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../JarHomework4/.idea/artifacts/JarHomework4_jar.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../JarHomework1/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../JarHomework4/.idea/artifacts/JarHomework1_jar.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../JarHomework4/src/Gui/KSearchTree.java" afterPath="$PROJECT_DIR$/../JarHomework4/src/Gui/KSearchTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../JarHomework4/src/Gui/SwingWindow.java" afterPath="$PROJECT_DIR$/../JarHomework4/src/Gui/SwingWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NateHomework/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../NateHomework/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="2b49a968-60dc-43fb-8d64-133f2725beb7" name="Default" comment="Coding update" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="../testingGUI/testingGUI.iml" />
     <ignored path="../testingGUI/.idea/misc.xml" />
@@ -462,7 +454,7 @@
       <workItem from="1509341791380" duration="3278000" />
       <workItem from="1509496418303" duration="1022000" />
       <workItem from="1509497506702" duration="79000" />
-      <workItem from="1509497977525" duration="92000" />
+      <workItem from="1509497977525" duration="152000" />
     </task>
     <task id="LOCAL-00001" summary="Coding update">
       <created>1508569803135</created>
@@ -622,7 +614,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5931000" />
+    <option name="totallyTimeSpent" value="5991000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="960" y="0" width="960" height="1030" extended-state="1" />
