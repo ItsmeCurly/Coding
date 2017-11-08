@@ -32,7 +32,7 @@ public class DigitalClock extends AbstractClock {
         jta = new JTextArea();
         jta.setEditable(false);
         jta.setBackground(new Color(238, 238, 238));
-        jta.setForeground(Color.RED);
+        jta.setForeground(new Color(0, 0, 255));
         jta.setPreferredSize(new Dimension(640, 200));
 
         add(jta);

@@ -51,7 +51,7 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
     }
 
     private double getSecondDeg() {
-        return (int) time.second() * 6 - 90;
+        return time.second() * 6 - 90;
     }
 
 //    private double getHoursWithDeg() {
