@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define null NULL;
+
 //prototypes
 
 int chToI(char *, int, int);
@@ -64,7 +66,7 @@ void OP99(bool *);
 
 //structs
 struct PCB {
-  struct PCB *Next_PCB;
+  struct PCB *Next_PCB, *Last_PCB;
   int PID;
   int ACC;
   int R0, R1, R2, R3;
@@ -80,7 +82,6 @@ int DEFAULTIC = 5;
 //main function
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
-
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -88,19 +89,54 @@ int main(int argc, char * argv[]) {
 
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
+
   ptr -> PID = 0;
   ptr -> BAR = 0;
   ptr -> LR = 99;
+  ptr -> EAR = ptr -> BAR;
+
+  ptr -> ACC = 0;
+
+  ptr -> R0 = 0;
+  ptr -> R1 = 0;
+  ptr -> R2 = 0;
+  ptr -> R3 = 0;
+
+  ptr -> P0 = 0;
+  ptr -> P1 = 0;
+  ptr -> P2 = 0;
+  ptr -> P3 = 0;
+
+  ptr -> PSW[0] = 'F';
+  ptr -> PSW[1] = 'F';
+
   ptr -> IC = DEFAULTIC;
 
   tmp = ptr;
-
-  for(int k = 1; k < 10; k++) {
+  for(int k = 1; k < argc - 1; k++) {
     tmp -> Next_PCB = (struct PCB *) malloc(sizeof(struct PCB));
     tmp -> Next_PCB -> Next_PCB = NULL;
+    tmp -> Next_PCB -> Last_PCB = tmp;
     tmp -> Next_PCB -> PID = k;
     tmp -> Next_PCB -> BAR = 0 + k * 100;
     tmp -> Next_PCB -> LR = 99 + k * 100;
+    tmp -> Next_PCB -> EAR = tmp -> Next_PCB -> BAR;
+
+    tmp -> Next_PCB -> ACC = 0;
+
+    tmp -> Next_PCB -> R0 = 0;
+    tmp -> Next_PCB -> R1 = 0;
+    tmp -> Next_PCB -> R2 = 0;
+    tmp -> Next_PCB -> R3 = 0;
+
+    tmp -> Next_PCB -> P0 = 0;
+    tmp -> Next_PCB -> P1 = 0;
+    tmp -> Next_PCB -> P2 = 0;
+    tmp -> Next_PCB -> P3 = 0;
+
+    tmp -> Next_PCB -> PSW[0] = 'F';
+    tmp -> Next_PCB -> PSW[1] = 'F';
+
     tmp -> Next_PCB -> IC = DEFAULTIC;
     tmp = tmp -> Next_PCB;
   }
@@ -111,7 +147,6 @@ int main(int argc, char * argv[]) {
 
   char memory[1000][6];  //main memory
   char PSW[2] = {'F', 'F'};  //true false status
-  int PC = 0; //program counter
   int ACC = 0; //accumulator
   int R0 = 0, R1 = 0, R2 = 0, R3 = 0; //registers
   int * Rg[4] = {&R0, &R1, &R2, &R3};
@@ -133,7 +168,7 @@ int main(int argc, char * argv[]) {
     for(;j<6;j++)
       memory[i][j] = 'Z';
   } //instantiate memory to '99ZZZZ'
-  printf("Loading Process\n");
+  printf("Loading Processes\n");
   //get opcodes from file
   for(int l = 1; l < argc; l++) {
     FILE *fp;
@@ -147,6 +182,7 @@ int main(int argc, char * argv[]) {
     while(1) {
       if(program_line > 99) {
         printfError('s'); //segmentation fault - memory too far
+        printf("1\n");
         continue;
       }
 
@@ -175,16 +211,43 @@ int main(int argc, char * argv[]) {
     fclose(fp);
   }
 
+
   struct PCB * currentPCB = ptr;
 
-  for(int i = 1; i < argc; i++) {
-    int EA;
-    while(1) {  //OS loop
-      EA = PC + currentPCB -> BAR;
+  int EA;
+  bool leave = false;
+
+  int PC = 0; //program counter
+  while(1) {
+
+    //GET NEXTPCB VARS
+    PC = 0;
+
+    ACC = currentPCB -> ACC;
+
+    R0 = currentPCB -> R0;
+    R1 = currentPCB -> R1;
+    R2 = currentPCB -> R2;
+    R3 = currentPCB -> R3;
+
+    P0 = currentPCB -> P0;
+    P1 = currentPCB -> P1;
+    P2 = currentPCB -> P2;
+    P3 = currentPCB -> P3;
+
+    PSW[0] = currentPCB -> PSW[0];
+    PSW[1] = currentPCB -> PSW[1];
+    //END GET NEXTPCB VARS
+
+    printf("Current Process PID: %d\n\n", currentPCB -> PID);
+
+    while(PC < currentPCB -> IC) {  //OS loop
+
+      EA = currentPCB -> EAR + PC;
       for(int i = 0; i < 6; i++)
         IR[i] = memory[EA][i];
 
-      bool leave = false; //to break while without exit(1)
+      leave = false; //to break while without exit(1)
       int opcode = chToI(IR, 0, 1); //get opcode
       switch(opcode) {  //compute opcode
         case 0: OP0(IR, Pt); PC++; break;
@@ -264,44 +327,50 @@ int main(int argc, char * argv[]) {
         default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
       }
       printf("\n");
-
-
       if(leave) {
         printf("Terminating process\n");
+        if(currentPCB -> Last_PCB != NULL)
+          currentPCB -> Last_PCB -> Next_PCB = currentPCB -> Next_PCB;
+        else //currentPCB is ptr
+          ptr = currentPCB -> Next_PCB;
+
+        if(currentPCB -> Next_PCB != NULL)
+          currentPCB -> Next_PCB -> Last_PCB = currentPCB -> Last_PCB;
+
         break;
       }
+      printRegisters(Rg);
     }
 
     //program is finished, context switch
-    currentPCB -> ACC = ACC;
-    currentPCB -> R0 = R0;
-    currentPCB -> R1 = R1;
-    currentPCB -> R2 = R2;
-    currentPCB -> R3 = R3;
-    currentPCB -> P0 = P0;
-    currentPCB -> P1 = P1;
-    currentPCB -> P2 = P2;
-    currentPCB -> P3 = P3;
+    //STORE IF NOT TERMINATED
+    if(!leave) {
+      printf("Switching processes\n\n");
 
-    for(int i = 0; i < 2; i++)
-      currentPCB -> PSW[i] = PSW[i];
+      currentPCB -> ACC = ACC;
 
-    PC = 0;
-    ACC = 0;
-    R0 = 0;
-    R1 = 0;
-    R2 = 0;
-    R3 = 0;
-    P0 = 0;
-    P1 = 0;
-    P2 = 0;
-    P3 = 0;
-    PSW[0] = 'F';
-    PSW[1] = 'F';
+      currentPCB -> R0 = R0;
+      currentPCB -> R1 = R1;
+      currentPCB -> R2 = R2;
+      currentPCB -> R3 = R3;
 
-    currentPCB = currentPCB -> Next_PCB;
+      currentPCB -> P0 = P0;
+      currentPCB -> P1 = P1;
+      currentPCB -> P2 = P2;
+      currentPCB -> P3 = P3;
+
+      currentPCB -> EAR = currentPCB -> EAR + PC;
+
+      currentPCB -> PSW[0] = PSW[0];
+      currentPCB -> PSW[1] = PSW[1];
+    }
+    //END STORE
+
+
+    if(currentPCB -> Next_PCB != NULL) currentPCB = currentPCB -> Next_PCB;
+    else if(ptr != NULL) currentPCB = ptr;
+    else break;
     //end context switch
-
   }
   //printMemory(memory);
   //printRegisters(Rg);
@@ -314,7 +383,7 @@ void printfError(char error) {
   switch(error) {
     case 's': printf("Seg fault(core dumped)\n"); break;
     case 'n': printf("Null pointer exception\n"); break;
-    case 'f': printf("File not found exception\n"); break;
+    case 'f': printf("F not found exception\n"); break;
     case 'o': printf("Incorrect operand supplied to opcode\n"); break;
     default: printf("Unknown error occurred\n"); break;
   }
