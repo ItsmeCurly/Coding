@@ -120,7 +120,7 @@ int main(int argc, char * argv[]) {
     tmp -> Next_PCB -> PID = k;
     tmp -> Next_PCB -> BAR = 0 + k * 100;
     tmp -> Next_PCB -> LR = 99 + k * 100;
-    tmp -> Next_PCB -> EAR = tmp -> Next_PCB -> BAR;
+    tmp -> Next_PCB -> EAR = 0;
 
     tmp -> Next_PCB -> ACC = 0;
 
@@ -218,10 +218,13 @@ int main(int argc, char * argv[]) {
   bool leave = false;
 
   int PC = 0; //program counter
-  while(1) {
+  int IC = 0;
+  while(1) { //OS loop
 
     //GET NEXTPCB VARS
-    PC = 0;
+    PC = currentPCB -> EAR;
+    //printf("%d\n", PC);
+    IC = 0;
 
     ACC = currentPCB -> ACC;
 
@@ -241,105 +244,108 @@ int main(int argc, char * argv[]) {
 
     printf("Current Process PID: %d\n\n", currentPCB -> PID);
 
-    while(PC < currentPCB -> IC) {  //OS loop
+    while(IC < currentPCB -> IC) {
+      EA = currentPCB -> BAR + PC;
 
-      EA = currentPCB -> EAR + PC;
+      // printf("%d\n", PC);
+      // printf("%d\n", IC);
+      // printf("%d\n", currentPCB -> IC);
       for(int i = 0; i < 6; i++)
         IR[i] = memory[EA][i];
 
       leave = false; //to break while without exit(1)
       int opcode = chToI(IR, 0, 1); //get opcode
       switch(opcode) {  //compute opcode
-        case 0: OP0(IR, Pt); PC++; break;
+        case 0: OP0(IR, Pt); PC++; IC++; break;
 
-        case 1: OP1(IR, Pt); PC++; break;
+        case 1: OP1(IR, Pt); PC++; IC++; break;
 
-        case 2: OP2(IR, Pt); PC++; break;
+        case 2: OP2(IR, Pt); PC++; IC++; break;
 
-        case 3: OP3(IR, &ACC); PC++; break;
+        case 3: OP3(IR, &ACC); PC++; IC++; break;
 
-        case 4: OP4(IR, memory, &ACC, Pt); PC++; break;
+        case 4: OP4(IR, memory, &ACC, Pt); PC++; IC++; break;
 
-        case 5: OP5(IR, memory, &ACC); PC++; break;
+        case 5: OP5(IR, memory, &ACC); PC++; IC++; break;
 
-        case 6: OP6(IR, memory, &ACC, Pt); PC++; break;
+        case 6: OP6(IR, memory, &ACC, Pt); PC++; IC++; break;
 
-        case 7: OP7(IR, memory, &ACC); PC++; break;
+        case 7: OP7(IR, memory, &ACC); PC++; IC++; break;
 
-        case 8: OP8(IR, memory, Rg, Pt); PC++; break;
+        case 8: OP8(IR, memory, Rg, Pt); PC++; IC++; break;
 
-        case 9: OP9(IR, memory, Rg); PC++; break;
+        case 9: OP9(IR, memory, Rg); PC++; IC++; break;
 
-        case 10: OP10(IR, memory, Rg, Pt); PC++; break;
+        case 10: OP10(IR, memory, Rg, Pt); PC++; IC++; break;
 
-        case 11: OP11(IR, memory, Rg); PC++; break;
+        case 11: OP11(IR, memory, Rg); PC++; IC++; break;
 
-        case 12: OP12(IR, &R0); PC++; break;
+        case 12: OP12(IR, &R0); PC++; IC++; break;
 
-        case 13: OP13(IR, Rg); PC++; break;
+        case 13: OP13(IR, Rg); PC++; IC++; break;
 
-        case 14: OP14(IR, &ACC, Rg); PC++; break;
+        case 14: OP14(IR, &ACC, Rg); PC++; IC++; break;
 
-        case 15: OP15(IR, &ACC, Rg); PC++; break;
+        case 15: OP15(IR, &ACC, Rg); PC++; IC++; break;
 
-        case 16: OP16(IR, &ACC); PC++; break;
+        case 16: OP16(IR, &ACC); PC++; IC++; break;
 
-        case 17: OP17(IR, &ACC); PC++; break;
+        case 17: OP17(IR, &ACC); PC++; IC++; break;
 
-        case 18: OP18(IR, &ACC, Rg); PC++; break;
+        case 18: OP18(IR, &ACC, Rg); PC++; IC++; break;
 
-        case 19: OP19(IR, &ACC, Rg); PC++; break;
+        case 19: OP19(IR, &ACC, Rg); PC++; IC++; break;
 
-        case 20: OP20(IR, memory, &ACC, Pt); PC++; break;
+        case 20: OP20(IR, memory, &ACC, Pt); PC++; IC++; break;
 
-        case 21: OP21(IR, memory, &ACC); PC++; break;
+        case 21: OP21(IR, memory, &ACC); PC++; IC++; break;
 
-        case 22: OP22(IR, memory, &ACC, Pt); PC++; break;
+        case 22: OP22(IR, memory, &ACC, Pt); PC++; IC++; break;
 
-        case 23: OP23(IR, memory, &ACC); PC++; break;
+        case 23: OP23(IR, memory, &ACC); PC++; IC++; break;
 
-        case 24: OP24(IR, memory, PSW, &ACC, Pt); PC++; break;
+        case 24: OP24(IR, memory, PSW, &ACC, Pt); PC++; IC++; break;
 
-        case 25: OP25(IR, memory, PSW, &ACC, Pt); PC++; break;
+        case 25: OP25(IR, memory, PSW, &ACC, Pt); PC++; IC++; break;
 
-        case 26: OP26(IR, memory, PSW, &ACC, Pt); PC++; break;
+        case 26: OP26(IR, memory, PSW, &ACC, Pt); PC++; IC++; break;
 
-        case 27: OP27(IR, PSW, &ACC); PC++; break;
+        case 27: OP27(IR, PSW, &ACC); PC++; IC++; break;
 
-        case 28: OP28(IR, PSW, &ACC); PC++; break;
+        case 28: OP28(IR, PSW, &ACC); PC++; IC++; break;
 
-        case 29: OP29(IR, PSW, &ACC); PC++; break;
+        case 29: OP29(IR, PSW, &ACC); PC++; IC++; break;
 
-        case 30: OP30(IR, PSW, &ACC, Rg); PC++; break;
+        case 30: OP30(IR, PSW, &ACC, Rg); PC++; IC++; break;
 
-        case 31: OP31(IR, PSW, &ACC, Rg); PC++; break;
+        case 31: OP31(IR, PSW, &ACC, Rg); PC++; IC++; break;
 
-        case 32: OP32(IR, PSW, &ACC, Rg); PC++; break;
+        case 32: OP32(IR, PSW, &ACC, Rg); PC++; IC++; break;
 
-        case 33: OP33(IR, PSW, &PC); PC++; break;
+        case 33: OP33(IR, PSW, &PC); PC++; IC++; break;
 
-        case 34: OP34(IR, PSW, &PC); PC++; break;
+        case 34: OP34(IR, PSW, &PC); PC++; IC++; break;
 
-        case 35: OP35(IR, &PC); PC++; break;
+        case 35: OP35(IR, &PC); PC++; IC++; break;
 
-        case 99: OP99(&leave); PC++; break;
+        case 99: OP99(&leave); PC++; IC++; break;
 
-        default: printf("Unrecognized Opcode: %d\n", opcode); PC++; break; //decided to let the program continue running
+        default: printf("Unrecognized Opcode: %d\n", opcode); PC++; IC++; break; //decided to let the program continue running
       }
       printf("\n");
       if(leave) {
-        printf("Terminating process\n");
+        printAccumulator(ACC);
+        printf("Terminating process PID: %d\n\n", currentPCB -> PID);
         if(currentPCB -> Last_PCB != NULL)
           currentPCB -> Last_PCB -> Next_PCB = currentPCB -> Next_PCB;
         else //currentPCB is ptr
           ptr = currentPCB -> Next_PCB;
-
         if(currentPCB -> Next_PCB != NULL)
           currentPCB -> Next_PCB -> Last_PCB = currentPCB -> Last_PCB;
 
         break;
       }
-      printRegisters(Rg);
+      //printRegisters(Rg);
     }
 
     //program is finished, context switch
@@ -359,7 +365,7 @@ int main(int argc, char * argv[]) {
       currentPCB -> P2 = P2;
       currentPCB -> P3 = P3;
 
-      currentPCB -> EAR = currentPCB -> EAR + PC;
+      currentPCB -> EAR = PC;
 
       currentPCB -> PSW[0] = PSW[0];
       currentPCB -> PSW[1] = PSW[1];
