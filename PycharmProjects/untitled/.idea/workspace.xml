@@ -2,82 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6aeb7feb-9f51-409d-9058-7128e1ff03a8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/.idea/artifacts/COS226Ktrees_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/artifacts/maxContigSubseqSum_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/src/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled/untitled.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/.idea/description.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/.idea/project-template.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/src/com/company/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled1/untitled1.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/.idea/description.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/.idea/project-template.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/src/com/company/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/untitled2/untitled2.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/production/Coding/results.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/src/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/Makefile.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/out/production/JarHomework4/README.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/out/production/JarHomework4/makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/AbstractClock.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/AnalogClock.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/ClockGUI.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/DateAndTime.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/DigitalClock.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/SliderBasedClock.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/production/JarHomework4EC/Clocks/Window.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/production/Coding/README" afterPath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/README" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/src/Makefile.txt" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/Makefile.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/src/README.md" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/InvalidArgsException.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/InvalidArgsException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/InvalidKValException.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/InvalidKValException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/KSearchTree.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/KSearchTree.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/Pane.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Pane.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/RecordManager.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/RecordManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/SwingWindow.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/SwingWindow.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/Gui/TreeNode.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/TreeNode.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/README.txt" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/README.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/src/makefile" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/makefile" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/AbstractClock.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/AbstractClock.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/AnalogClock.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/AnalogClock.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/ClockGUI.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/ClockGUI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/DateAndTime.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/DateAndTime.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/DigitalClock.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/DigitalClock.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/SliderBasedClock.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/SliderBasedClock.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Clocks/Window.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/Window.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/README.txt" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/README.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/src/makefile" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/artifacts/CoalescedHashSet_jar/CoalescedHashSet.jar" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/artifacts/CoalescedHashSet_jar/CoalescedHashSet.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet$1.class" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet$HashEntry.class" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet$HashEntry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet$HashSetIterator.class" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet$HashSetIterator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet.class" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/HashSet.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/TestClass.class" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/out/production/CoalescedHashSet/TestClass.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/out/artifacts/JarHomework4_jar/JarHomework4.jar" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/out/artifacts/JarHomework4_jar/JarHomework4.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/artifacts/JarHomework4EC_jar/JarHomework4EC.jar" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/out/artifacts/JarHomework4EC_jar/JarHomework4EC.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/.idea/misc.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/COS226Ktrees/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/.idea/artifacts/CoalescedHashSet_jar.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/.idea/artifacts/CoalescedHashSet_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/.idea/misc.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/CoalescedHashSet/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4EC/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/misc.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/COS125Project.iml" afterPath="$PROJECT_DIR$/.idea/COS125Project.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -94,7 +19,7 @@
       <file leaf-file-name="PythonGame.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PythonGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1407">
+            <state relative-caret-position="748">
               <caret line="91" column="37" lean-forward="false" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
               <folding>
                 <element signature="e#37#46#0" expanded="true" />
@@ -186,7 +111,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -198,12 +122,18 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="C:/Python27/python.exe" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bonnie\Coding\PycharmProjects" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -414,7 +344,7 @@
   <component name="ToolWindowManager">
     <frame x="260" y="20" width="1400" height="990" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496382" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496382" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -485,10 +415,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PythonGame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#37#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pythong.py" />
     <entry file="file://$PROJECT_DIR$/PythonGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1407">
+        <state relative-caret-position="748">
           <caret line="91" column="37" lean-forward="false" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
           <folding>
             <element signature="e#37#46#0" expanded="true" />
