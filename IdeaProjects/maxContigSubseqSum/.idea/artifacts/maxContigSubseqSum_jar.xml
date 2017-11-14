@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="maxContigSubseqSum:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/maxContigSubseqSum_jar</output-path>
+    <root id="archive" name="maxContigSubseqSum.jar">
+      <element id="module-output" name="maxContigSubseqSum" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+    </root>
+  </artifact>
+</component>
