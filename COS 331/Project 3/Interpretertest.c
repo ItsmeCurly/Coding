@@ -97,7 +97,7 @@ int main(int argc, char * argv[]) {
     printf("Too many programs\n");
     exit(1);
   }
-  int IC = argv[1];
+  int aIC = argv[1];
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
 
@@ -121,7 +121,7 @@ int main(int argc, char * argv[]) {
   ptr -> PSW[0] = 'F';
   ptr -> PSW[1] = 'F';
 
-  ptr -> IC = IC;
+  ptr -> IC = aIC;
 
   tmp = ptr;
   for(int k = 1; k < argc - 1; k++) {
@@ -148,7 +148,7 @@ int main(int argc, char * argv[]) {
     tmp -> Next_PCB -> PSW[0] = 'F';
     tmp -> Next_PCB -> PSW[1] = 'F';
 
-    tmp -> Next_PCB -> IC = IC;
+    tmp -> Next_PCB -> IC = aIC;
     tmp = tmp -> Next_PCB;
   }
 
@@ -169,7 +169,6 @@ int main(int argc, char * argv[]) {
   char ch;
   int t = 0;
   int program_line = 0;
-
 
   //reset all variables for certain process within argv
   for(int i = 0; i < 1000; i++) {
@@ -338,6 +337,12 @@ int main(int argc, char * argv[]) {
         case 34: OP34(IR, PSW, &PC); PC++; IC++; break;
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
+
+        case 36: OP36(IR, Rg); PC++; IC++; break;
+
+        case 37: OP37(IR); PC++; IC++; break;
+
+        case 38: OP38(); PC++; IC++; break;
 
         case 99: OP99(&leave); PC++; IC++; break;
 
@@ -925,7 +930,7 @@ void OP35(char * IR, int *PC) {
   }
   *PC = parseOp1(IR) - 1;
 }
-void OP36(char * IR, int ** Rg) {
+void OP36(char * IR, int ** Rg, int * PC, int * IC) {
   int * reg1 = Rg[parseOp1Reg];
   int * reg2 = Rg[parseOp2Reg];
 
@@ -934,7 +939,9 @@ void OP37(char * IR, int * ACC) {
   *ACC = parseOp1%parseOp2;
 }
 
-void OP38()
+void OP38(int PID) {
+  printf("%d", PID);
+}
 //does not leave immediately, rather sets a boolean to false to not stop entire program and go to next process
 void OP99(bool *leave) {
   printf("Opcode 99: Halt");
