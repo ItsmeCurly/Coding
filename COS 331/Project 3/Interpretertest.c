@@ -62,9 +62,9 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
-void OP36(char *, int *);
+void OP36(char *, int **, int *, int *);
 void OP37(char *, int *);
-void OP38(char *, int *);
+void OP38(int);
 void OP99(bool *);
 
 //structs
@@ -80,8 +80,8 @@ struct PCB {
 };
 
 struct Semaphore {
-
-}
+  int count;
+};
 
 //global variables
 int DEFAULTIC = 5;
@@ -89,6 +89,8 @@ int DEFAULTIC = 5;
 //main function
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
+  struct Semaphore *sem1 = {1}, *sem2 = {1}, *sem3 = {1}, *sem4 = {1}, *sem5 = {1};
+  struct Semaphore ** sem[5] = {&sem1, &sem2, &sem3, &sem4, &sem5};
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -97,7 +99,7 @@ int main(int argc, char * argv[]) {
     printf("Too many programs\n");
     exit(1);
   }
-  int aIC = argv[1];
+  int aIC = atoi(argv[1]);
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
 
@@ -338,11 +340,11 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
 
-        case 36: OP36(IR, Rg); PC++; IC++; break;
+        case 36: OP36(IR, Rg, semm &PC, &IC, aIC); PC++; IC++; break;
 
-        case 37: OP37(IR); PC++; IC++; break;
+        case 37: OP37(IR, &ACC); PC++; IC++; break;
 
-        case 38: OP38(); PC++; IC++; break;
+        case 38: OP38(currentPCB->PID); PC++; IC++; break;
 
         case 99: OP99(&leave); PC++; IC++; break;
 
@@ -930,13 +932,27 @@ void OP35(char * IR, int *PC) {
   }
   *PC = parseOp1(IR) - 1;
 }
-void OP36(char * IR, int ** Rg, int * PC, int * IC) {
-  int * reg1 = Rg[parseOp1Reg];
-  int * reg2 = Rg[parseOp2Reg];
-
+void OP36(char * IR, int ** Rg, struct Semaphore ** sems, int * PC, int * IC, int aIC) {
+  int * reg1 = Rg[parseOp1Reg(IR)];
+  int * reg2 = Rg[parseOp2Reg(IR)];
+  int count = sems[*reg2] -> count;
+  switch(*reg1) {
+    case 0:
+      if(count > 0) sems[*reg2] -> count = count - 1;
+      else {
+        *PC = *PC - 1;
+        *IC = aIC;
+      }
+      break;
+    case 1:
+      sems[*reg2] -> count = count + 1;
+      break;
+    default: printfError('o');
+    break;
+  }
 }
 void OP37(char * IR, int * ACC) {
-  *ACC = parseOp1%parseOp2;
+  *ACC = parseOp1(IR)%parseOp2(IR);
 }
 
 void OP38(int PID) {
