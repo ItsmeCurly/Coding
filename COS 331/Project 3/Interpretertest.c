@@ -7,6 +7,21 @@
 
 #define null NULL;
 
+//structs
+struct PCB {
+  struct PCB *Next_PCB, *Last_PCB;
+  int PID;
+  int ACC;
+  int R0, R1, R2, R3;
+  short int P0, P1, P2, P3;
+  char PSW[2];
+  int BAR, EAR, LR;
+  int IC; //timeslice
+};
+
+struct Semaphore {
+  int count;
+};
 //prototypes
 
 int chToI(char *, int, int);
@@ -62,26 +77,13 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
-void OP36(char *, int **, int *, int *);
+void OP36(char *, int **, struct Semaphore **, int *, int *, int);
 void OP37(char *, int *);
 void OP38(int);
 void OP99(bool *);
 
 //structs
-struct PCB {
-  struct PCB *Next_PCB, *Last_PCB;
-  int PID;
-  int ACC;
-  int R0, R1, R2, R3;
-  short int P0, P1, P2, P3;
-  char PSW[2];
-  int BAR, EAR, LR;
-  int IC; //timeslice
-};
 
-struct Semaphore {
-  int count;
-};
 
 //global variables
 int DEFAULTIC = 5;
@@ -89,8 +91,8 @@ int DEFAULTIC = 5;
 //main function
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
-  struct Semaphore *sem1 = {1}, *sem2 = {1}, *sem3 = {1}, *sem4 = {1}, *sem5 = {1};
-  struct Semaphore ** sem[5] = {&sem1, &sem2, &sem3, &sem4, &sem5};
+  struct Semaphore sem1 = {1}, sem2 = {1}, sem3 = {1}, sem4 = {1}, sem5 = {1};
+  struct Semaphore * sem[5] = {&sem1, &sem2, &sem3, &sem4, &sem5};
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -340,7 +342,7 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
 
-        case 36: OP36(IR, Rg, semm &PC, &IC, aIC); PC++; IC++; break;
+        case 36: OP36(IR, Rg, sem, &PC, &IC, aIC); PC++; IC++; break;
 
         case 37: OP37(IR, &ACC); PC++; IC++; break;
 
