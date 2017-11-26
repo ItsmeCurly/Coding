@@ -7,6 +7,7 @@
 
 #define null NULL;
 
+int default_parameters = 2;
 //structs
 struct PCB {
   struct PCB *Next_PCB, *Last_PCB;
@@ -102,6 +103,7 @@ int main(int argc, char * argv[]) {
     exit(1);
   }
   int aIC = atoi(argv[1]);
+
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
 
@@ -217,7 +219,7 @@ int main(int argc, char * argv[]) {
       }
       t=0;
       for(int k = 0; k<6; k++) {
-        memory[program_line + (l-1) * 100][k] = input_line[k];
+        memory[program_line + (l-default_parameters) * 100][k] = input_line[k];
       }
       if(ch == EOF) break;
       program_line++;
@@ -357,8 +359,10 @@ int main(int argc, char * argv[]) {
         printf("Terminating process PID: %d\n\n", currentPCB -> PID);
         if(currentPCB -> Last_PCB != NULL)
           currentPCB -> Last_PCB -> Next_PCB = currentPCB -> Next_PCB;
-        else //currentPCB is ptr
+        else {
           ptr = currentPCB -> Next_PCB;
+        }//currentPCB is ptr
+
         if(currentPCB -> Next_PCB != NULL)
           currentPCB -> Next_PCB -> Last_PCB = currentPCB -> Last_PCB;
 
@@ -368,6 +372,8 @@ int main(int argc, char * argv[]) {
 
     //program is finished, context switch
     //STORE IF NOT TERMINATED
+
+    // exit(1);
     if(!leave) {
       printf("Switching processes\n\n");
 
@@ -486,7 +492,7 @@ void printPointers(short int ** Pt) {
   printf("\n");
 }
 void printAccumulator(int ACC) {
-  printf("%d ", ACC);
+  printf("ACC: %d ", ACC);
   printf("\n");
 }
 void printPSW(char * PSW) {
@@ -838,7 +844,6 @@ void OP27(char * IR, char * PSW, int *ACC) {
     printfError('o');
     return;
   }
-
   int temp = parseOp1_2(IR);
   if(*ACC > temp) PSW[0] = 'T';
   else PSW[0] = 'F';
@@ -935,6 +940,18 @@ void OP35(char * IR, int *PC) {
   *PC = parseOp1(IR) - 1;
 }
 void OP36(char * IR, int ** Rg, struct Semaphore ** sems, int * PC, int * IC, int aIC) {
+  printf("Opcode 36: System Command\n");
+  printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(IR[4] != 'R' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+
   int * reg1 = Rg[parseOp1Reg(IR)];
   int * reg2 = Rg[parseOp2Reg(IR)];
   int count = sems[*reg2] -> count;
@@ -954,11 +971,15 @@ void OP36(char * IR, int ** Rg, struct Semaphore ** sems, int * PC, int * IC, in
   }
 }
 void OP37(char * IR, int * ACC) {
+  printf("Opcode 37: Modulus\n");
+  printIR(IR);
+
   *ACC = parseOp1(IR)%parseOp2(IR);
 }
 
 void OP38(int PID) {
-  printf("%d", PID);
+  printf("Opcode 38: NOP\n");
+  printf("PID: %d\n", PID);
 }
 //does not leave immediately, rather sets a boolean to false to not stop entire program and go to next process
 void OP99(bool *leave) {
