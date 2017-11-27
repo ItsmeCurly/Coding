@@ -92,8 +92,8 @@ int DEFAULTIC = 5;
 //main function
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
-  struct Semaphore sem1 = {1}, sem2 = {1}, sem3 = {1}, sem4 = {1}, sem5 = {1};
-  struct Semaphore * sem[5] = {&sem1, &sem2, &sem3, &sem4, &sem5};
+  struct Semaphore sem0 = {1}, sem1 = {1}, sem2 = {1}, sem3 = {1}, sem4 = {1};
+  struct Semaphore * sem[5] = {&sem0, &sem1, &sem2, &sem3, &sem4};
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -130,7 +130,7 @@ int main(int argc, char * argv[]) {
   ptr -> IC = aIC;
 
   tmp = ptr;
-  for(int k = 1; k < argc - 1; k++) {
+  for(int k = 1; k < argc - default_parameters; k++) {
     tmp -> Next_PCB = (struct PCB *) malloc(sizeof(struct PCB));
     tmp -> Next_PCB -> Next_PCB = NULL;
     tmp -> Next_PCB -> Last_PCB = tmp;
