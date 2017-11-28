@@ -62,6 +62,9 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
+void OP36(char *, int *);
+void OP37(char *, int *);
+void OP38(char *, int *);
 void OP99(bool *);
 
 //structs
@@ -75,6 +78,10 @@ struct PCB {
   int BAR, EAR, LR;
   int IC; //timeslice
 };
+
+struct Semaphore {
+
+}
 
 //global variables
 int DEFAULTIC = 5;
@@ -90,7 +97,7 @@ int main(int argc, char * argv[]) {
     printf("Too many programs\n");
     exit(1);
   }
-
+  int IC = argv[1];
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
 
@@ -114,7 +121,7 @@ int main(int argc, char * argv[]) {
   ptr -> PSW[0] = 'F';
   ptr -> PSW[1] = 'F';
 
-  ptr -> IC = DEFAULTIC;
+  ptr -> IC = IC;
 
   tmp = ptr;
   for(int k = 1; k < argc - 1; k++) {
@@ -141,7 +148,7 @@ int main(int argc, char * argv[]) {
     tmp -> Next_PCB -> PSW[0] = 'F';
     tmp -> Next_PCB -> PSW[1] = 'F';
 
-    tmp -> Next_PCB -> IC = DEFAULTIC;
+    tmp -> Next_PCB -> IC = IC;
     tmp = tmp -> Next_PCB;
   }
 
@@ -174,7 +181,7 @@ int main(int argc, char * argv[]) {
   } //instantiate memory to '99ZZZZ'
   printf("Loading Processes\n");
   //get opcodes from file
-  for(int l = 1; l < argc; l++) {
+  for(int l = 2; l < argc; l++) {
     FILE *fp;
     fp = fopen(argv[l], "r");
     if(!fp) {
@@ -917,6 +924,18 @@ void OP35(char * IR, int *PC) {
     return;
   }
   *PC = parseOp1(IR) - 1;
+}
+void OP36(char * IR, int ** Rg) {
+  int * reg1 = Rg[parseOp1Reg];
+  int * reg2 = Rg[parseOp2Reg];
+
+}
+void OP37(char * IR, int * ACC) {
+  *ACC = parseOp1%parseOp2;
+}
+
+void OP38() {
+  //DO NOTHING
 }
 //does not leave immediately, rather sets a boolean to false to not stop entire program and go to next process
 void OP99(bool *leave) {

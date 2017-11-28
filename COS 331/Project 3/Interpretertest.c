@@ -7,6 +7,22 @@
 
 #define null NULL;
 
+int default_parameters = 2;
+//structs
+struct PCB {
+  struct PCB *Next_PCB, *Last_PCB;
+  int PID;
+  int ACC;
+  int R0, R1, R2, R3;
+  short int P0, P1, P2, P3;
+  char PSW[2];
+  int BAR, EAR, LR;
+  int IC; //timeslice
+};
+
+struct Semaphore {
+  int count;
+};
 //prototypes
 
 int chToI(char *, int, int);
@@ -62,19 +78,13 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
+void OP36(char *, int **, struct Semaphore **, int *, int *, int);
+void OP37(char *, int *);
+void OP38(int);
 void OP99(bool *);
 
 //structs
-struct PCB {
-  struct PCB *Next_PCB, *Last_PCB;
-  int PID;
-  int ACC;
-  int R0, R1, R2, R3;
-  short int P0, P1, P2, P3;
-  char PSW[2];
-  int BAR, EAR, LR;
-  int IC; //timeslice
-};
+
 
 //global variables
 int DEFAULTIC = 5;
@@ -82,10 +92,17 @@ int DEFAULTIC = 5;
 //main function
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
+  struct Semaphore sem0 = {1}, sem1 = {1}, sem2 = {1}, sem3 = {1}, sem4 = {1};
+  struct Semaphore * sem[5] = {&sem0, &sem1, &sem2, &sem3, &sem4};
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
   }
+  else if(argc > 11) {
+    printf("Too many programs\n");
+    exit(1);
+  }
+  int aIC = atoi(argv[1]);
 
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
   ptr -> Next_PCB = NULL;
@@ -110,10 +127,10 @@ int main(int argc, char * argv[]) {
   ptr -> PSW[0] = 'F';
   ptr -> PSW[1] = 'F';
 
-  ptr -> IC = DEFAULTIC;
+  ptr -> IC = aIC;
 
   tmp = ptr;
-  for(int k = 1; k < argc - 1; k++) {
+  for(int k = 1; k < argc - default_parameters; k++) {
     tmp -> Next_PCB = (struct PCB *) malloc(sizeof(struct PCB));
     tmp -> Next_PCB -> Next_PCB = NULL;
     tmp -> Next_PCB -> Last_PCB = tmp;
@@ -137,7 +154,7 @@ int main(int argc, char * argv[]) {
     tmp -> Next_PCB -> PSW[0] = 'F';
     tmp -> Next_PCB -> PSW[1] = 'F';
 
-    tmp -> Next_PCB -> IC = DEFAULTIC;
+    tmp -> Next_PCB -> IC = aIC;
     tmp = tmp -> Next_PCB;
   }
 
@@ -159,7 +176,6 @@ int main(int argc, char * argv[]) {
   int t = 0;
   int program_line = 0;
 
-
   //reset all variables for certain process within argv
   for(int i = 0; i < 1000; i++) {
     int j = 0;
@@ -170,7 +186,7 @@ int main(int argc, char * argv[]) {
   } //instantiate memory to '99ZZZZ'
   printf("Loading Processes\n");
   //get opcodes from file
-  for(int l = 1; l < argc; l++) {
+  for(int l = 2; l < argc; l++) {
     FILE *fp;
     fp = fopen(argv[l], "r");
     if(!fp) {
@@ -203,7 +219,7 @@ int main(int argc, char * argv[]) {
       }
       t=0;
       for(int k = 0; k<6; k++) {
-        memory[program_line + (l-1) * 100][k] = input_line[k];
+        memory[program_line + (l-default_parameters) * 100][k] = input_line[k];
       }
       if(ch == EOF) break;
       program_line++;
@@ -328,28 +344,36 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
 
+        case 36: OP36(IR, Rg, sem, &PC, &IC, aIC); PC++; IC++; break;
+
+        case 37: OP37(IR, &ACC); PC++; IC++; break;
+
+        case 38: OP38(currentPCB->PID); PC++; IC++; break;
+
         case 99: OP99(&leave); PC++; IC++; break;
 
         default: printf("Unrecognized Opcode: %d\n", opcode); PC++; IC++; break; //decided to let the program continue running
       }
       printf("\n");
       if(leave) {
-        printAccumulator(ACC);
         printf("Terminating process PID: %d\n\n", currentPCB -> PID);
         if(currentPCB -> Last_PCB != NULL)
           currentPCB -> Last_PCB -> Next_PCB = currentPCB -> Next_PCB;
-        else //currentPCB is ptr
+        else {
           ptr = currentPCB -> Next_PCB;
+        }//currentPCB is ptr
+
         if(currentPCB -> Next_PCB != NULL)
           currentPCB -> Next_PCB -> Last_PCB = currentPCB -> Last_PCB;
 
         break;
       }
-      //printRegisters(Rg);
     }
 
     //program is finished, context switch
     //STORE IF NOT TERMINATED
+
+    // exit(1);
     if(!leave) {
       printf("Switching processes\n\n");
 
@@ -468,7 +492,7 @@ void printPointers(short int ** Pt) {
   printf("\n");
 }
 void printAccumulator(int ACC) {
-  printf("%d ", ACC);
+  printf("ACC: %d ", ACC);
   printf("\n");
 }
 void printPSW(char * PSW) {
@@ -820,7 +844,6 @@ void OP27(char * IR, char * PSW, int *ACC) {
     printfError('o');
     return;
   }
-
   int temp = parseOp1_2(IR);
   if(*ACC > temp) PSW[0] = 'T';
   else PSW[0] = 'F';
@@ -915,6 +938,48 @@ void OP35(char * IR, int *PC) {
     return;
   }
   *PC = parseOp1(IR) - 1;
+}
+void OP36(char * IR, int ** Rg, struct Semaphore ** sems, int * PC, int * IC, int aIC) {
+  printf("Opcode 36: System Command\n");
+  printIR(IR);
+
+  if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+  if(IR[4] != 'R' || !((int)IR[5] - 48 >= 0 && (int)IR[5] - 48 <= 3)) {
+    printfError('o');
+    return;
+  }
+
+  int * reg1 = Rg[parseOp1Reg(IR)];
+  int * reg2 = Rg[parseOp2Reg(IR)];
+  int count = sems[*reg2] -> count;
+  switch(*reg1) {
+    case 0:
+      if(count > 0) sems[*reg2] -> count = count - 1;
+      else {
+        *PC = *PC - 1;
+        *IC = aIC;
+      }
+      break;
+    case 1:
+      sems[*reg2] -> count = count + 1;
+      break;
+    default: printfError('o');
+    break;
+  }
+}
+void OP37(char * IR, int * ACC) {
+  printf("Opcode 37: Modulus\n");
+  printIR(IR);
+
+  *ACC = parseOp1(IR)%parseOp2(IR);
+}
+
+void OP38(int PID) {
+  printf("Opcode 38: NOP\n");
+  printf("PID: %d\n", PID);
 }
 //does not leave immediately, rather sets a boolean to false to not stop entire program and go to next process
 void OP99(bool *leave) {
