@@ -13,11 +13,11 @@ public class AnalogClock extends AbstractClock implements ActionListener, MouseL
     /**
      * The Font.
      */
-    Font font;
+    private Font font;
     /**
      * The FontMetrics.
      */
-    FontMetrics fm;
+    private FontMetrics fm;
     private int center_x;
     private int center_y;
 

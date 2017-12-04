@@ -133,11 +133,10 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
             switch (command) {
                 case 0:
                     try {
-                        if (argsText.trim().length() != "k".length()) throw new InvalidArgsException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (key < 2) throw new InvalidKValException();
-                    } catch (NoSuchElementException | NumberFormatException | InvalidArgsException err) {
+                    } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form c k");
                         break;
                     } catch (InvalidKValException err) {
@@ -155,13 +154,12 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 1:
                     try {
-                        if (argsText.trim().length() != "k d".length()) throw new InvalidArgsException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         data = st.nextToken();
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | NumberFormatException | InvalidArgsException err) {
+                    } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form s k d");
                         break;
                     } catch (NullPointerException err) {
@@ -179,12 +177,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 2:
                     try {
-                        if (argsText.trim().length() != "k".length()) throw new InvalidArgsException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | InvalidArgsException err) {
+                    } catch (NoSuchElementException err) {
                         displayCaption("Command requires args in form e k");
                         break;
                     } catch (NullPointerException err) {
@@ -201,12 +198,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 3:
                     try {
-                        if (argsText.trim().length() != "k".length()) throw new InvalidArgsException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | NumberFormatException | InvalidArgsException err) {
+                    } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form r k");
                         break;
                     } catch (NullPointerException err) {
@@ -225,12 +221,11 @@ public class Pane extends JPanel implements ActionListener, FocusListener {
                     break;
                 case 4:
                     try {
-                        if (argsText.trim().length() != "k".length()) throw new InvalidArgsException();
                         st = new StringTokenizer(argsText, " ");
                         key = Integer.parseInt(st.nextToken());
                         if (rm.getKst() == null)
                             throw new NullPointerException();
-                    } catch (NoSuchElementException | NumberFormatException | InvalidArgsException err) {
+                    } catch (NoSuchElementException | NumberFormatException err) {
                         displayCaption("Command requires args in form d k");
                         break;
                     } catch (NullPointerException err) {

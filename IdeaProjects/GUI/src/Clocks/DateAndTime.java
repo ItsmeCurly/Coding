@@ -85,7 +85,7 @@ public class DateAndTime {
      * @return the hours in the day
      */
     public double hour() {
-        return getTimeOfDay() / 3600000.0;
+        return (getTimeOfDay() - 3600000.0) / 3600000.0;
     }
 
     /**
