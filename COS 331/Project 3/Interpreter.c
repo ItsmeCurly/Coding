@@ -8,6 +8,7 @@
 #define null NULL;
 
 int default_parameters = 2;
+
 //structs
 struct PCB {
   struct PCB *Next_PCB, *Last_PCB;
@@ -78,13 +79,10 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
-void OP36(char *, int **, struct Semaphore **, int *, int *, int);
+void OP36(char *, int **, struct Semaphore **, int *, int *, int, struct PCB *);
 void OP37(char *, int *);
 void OP38(int);
 void OP99(bool *);
-
-//structs
-
 
 //global variables
 int DEFAULTIC = 5;
@@ -92,8 +90,9 @@ int DEFAULTIC = 5;
 //main function
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
-  struct Semaphore sem0 = {1}, sem1 = {1}, sem2 = {1}, sem3 = {1}, sem4 = {1};
-  struct Semaphore * sem[5] = {&sem0, &sem1, &sem2, &sem3, &sem4};
+  struct Semaphore *sem0, *sem1, *sem2, *sem3, *sem4;
+  struct Semaphore *doormanSemaphore;
+  struct Semaphore * sem[5] = {sem0, sem1, sem2, sem3, sem4};
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -102,6 +101,7 @@ int main(int argc, char * argv[]) {
     printf("Too many programs\n");
     exit(1);
   }
+  struct PCB * Sem_Queue;
   int aIC = atoi(argv[1]);
 
   ptr = (struct PCB *) malloc(sizeof(struct PCB));
@@ -157,6 +157,21 @@ int main(int argc, char * argv[]) {
     tmp -> Next_PCB -> IC = aIC;
     tmp = tmp -> Next_PCB;
   }
+
+  sem0 = (struct Semaphore *) malloc(sizeof(struct Semaphore));
+  sem1 = (struct Semaphore *) malloc(sizeof(struct Semaphore));
+  sem2 = (struct Semaphore *) malloc(sizeof(struct Semaphore));
+  sem3 = (struct Semaphore *) malloc(sizeof(struct Semaphore));
+  sem4 = (struct Semaphore *) malloc(sizeof(struct Semaphore));
+  doormanSemaphore = (struct Semaphore *) malloc(sizeof(struct Semaphore));
+
+  sem0 -> count = 1;
+  sem1 -> count = 1;
+  sem2 -> count = 1;
+  sem3 -> count = 1;
+  sem4 -> count = 1;
+
+  doormanSemaphore -> count = 4;
 
   //initialize and declare
 
@@ -344,7 +359,7 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
 
-        case 36: OP36(IR, Rg, sem, &PC, &IC, aIC); PC++; IC++; break;
+        case 36: OP36(IR, Rg, sem, &PC, &IC, aIC, currentPCB); PC++; IC++; break;
 
         case 37: OP37(IR, &ACC); PC++; IC++; break;
 
@@ -939,7 +954,7 @@ void OP35(char * IR, int *PC) {
   }
   *PC = parseOp1(IR) - 1;
 }
-void OP36(char * IR, int ** Rg, struct Semaphore ** sems, int * PC, int * IC, int aIC) {
+void OP36(char * IR, int ** Rg, struct Semaphore ** sems, struct Semaphore * doorman, int * PC, int * IC, int aIC, struct PCB *currentPCB) {
   printf("Opcode 36: System Command\n");
   printIR(IR);
 
@@ -954,20 +969,36 @@ void OP36(char * IR, int ** Rg, struct Semaphore ** sems, int * PC, int * IC, in
 
   int * reg1 = Rg[parseOp1Reg(IR)];
   int * reg2 = Rg[parseOp2Reg(IR)];
-  int count = sems[*reg2] -> count;
   switch(*reg1) {
     case 0:
-      if(count > 0) sems[*reg2] -> count = count - 1;
+      if(*reg2 == 10) {
+        if(doorman -> count > 0) doorman -> count = doorman -> count - 1;
+        else {
+          *PC = *PC - 1;
+          *IC = aIC;
+        }
+      }
       else {
-        *PC = *PC - 1;
-        *IC = aIC;
+        if(sems[*reg2] -> count > 0) sems[*reg2] -> count = sems[*reg2] -> count - 1;
+        else {
+          *PC = *PC - 1;
+          *IC = aIC;
+        }
       }
       break;
     case 1:
-      sems[*reg2] -> count = count + 1;
+      if(*reg2 == 10) {
+        doorman -> count = doorman -> count + 1;
+        break;
+      }
+      sems[*reg2] -> count = sems[*reg2] -> count + 1;
       break;
-    default: printfError('o');
-    break;
+    case 2:
+      *Rg[*reg2] = currentPCB -> PID;
+      break;
+    default:
+      printfError('o');
+      break;
   }
 }
 void OP37(char * IR, int * ACC) {
