@@ -1,7 +1,0 @@
-#COS226 KTrees
-The K search tree, in class KSearchTree, is composed of a root and a k value. The root references its sibling in the 
-chain of the trees, and also its child(the tree is implemented as a linked-list, as it works to allow the tree to be 
-O(H).The RecordManager class is a pass-through class that allows for recreation of the KSearchTree from the ground 
-up, and the main class is the runner class for the set of classes. In the main class there is a while loop that the 
-user will input commands that will do what the user asks for, and handles some error checking in case of incorrect 
-input.

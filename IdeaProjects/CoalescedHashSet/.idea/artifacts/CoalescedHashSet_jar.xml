@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/CoalescedHashSet_jar</output-path>
     <root id="archive" name="CoalescedHashSet.jar">
       <element id="module-output" name="CoalescedHashSet" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
     </root>
   </artifact>
 </component>
