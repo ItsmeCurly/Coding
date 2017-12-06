@@ -934,7 +934,7 @@ void OP35(char * IR, int *PC) {
   }
   *PC = parseOp1(IR) - 1;
 }
-void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, int aIC, struct PCB *currentPCB, int * deadlockCounter) {
+void OP36(char * IR, int ** Rg, struct Semaphore sems[5], struct Semaphore * doorman, int * PC, int * IC, int aIC, struct PCB *currentPCB, int * deadlockCounter) {
   printf("Opcode 36: System Command\n");
   printIR(IR);
   if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
@@ -949,18 +949,29 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, in
   int reg2 = parseOp2Reg(IR);
   switch(*reg1) {
     case 0:
-      if(sems[*Rg[reg2]].count > 0) {
-        sems[*Rg[reg2]].count = sems[*Rg[reg2]].count - 1;
-        *deadlockCounter = 0;
+      if(*Rg[reg2] == 10) {
+        if(doorman -> count > 0) doorman -> count = doorman -> count - 1;
+        else {
+          *PC = *PC - 1;
+          *IC = aIC;
+        }
       }
       else {
-        *PC = *PC - 1;
-        *IC = aIC;
-        *deadlockCounter += 1;
+        if(sems[*Rg[reg2]].count > 0) {
+          sems[*Rg[reg2]].count = sems[*Rg[reg2]].count - 1;
+          *deadlockCounter = 0;
+        }
+        else {
+          *PC = *PC - 1;
+          *IC = aIC;
+          *deadlockCounter += 1;
+        }
       }
       break;
     case 1:
-      sems[*Rg[reg2]].count = sems[*Rg[reg2]].count + 1;
+      if(*Rg[reg2] == 10)
+        doorman -> count = doorman -> count + 1;
+      else sems[*Rg[reg2]].count = sems[*Rg[reg2]].count + 1;
       break;
     case 2:
       *Rg[reg2] = currentPCB -> PID;
