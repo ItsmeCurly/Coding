@@ -1,0 +1,36 @@
+00P035
+030000
+
+160001
+
+120002
+36R0R3 getpid
+
+120000
+36R0R2 call getpid
+
+06P0ZZ store acc into P0
+120002
+36R0R3 getpid
+14R3ZZ store r3 acc
+160001 add 1 to acc
+3705ZZ mod by 5
+15R3ZZ load r3 pid + 1 % 5
+120001 r1 = 1
+13R1R0
+120000 r0 = 0
+36R0R3 call pid + 1 % 5
+
+38ZZZZ
+38ZZZZ
+38ZZZZ
+38ZZZZ
+38ZZZZ
+
+36R1R2 signal getpid
+36R0R3 signal getpid + 1 % 5
+04P0ZZ
+270050
+
+3406ZZ
+99ZZZZ

@@ -79,7 +79,7 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
-void OP36(char *, int **, struct Semaphore [5], int *, int *, int, struct PCB *, int *);
+void OP36(char *, int **, struct Semaphore [5], struct Semaphore *, int *, int *, int, struct PCB *, int *);
 void OP37(char *, int *);
 void OP38(int);
 void OP99(bool *);
@@ -91,6 +91,7 @@ int DEFAULTIC = 5;
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
   struct Semaphore sem[5];
+  struct Semaphore * doormanSemaphore;
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -156,7 +157,7 @@ int main(int argc, char * argv[]) {
     tmp = tmp -> Next_PCB;
   }
   for(int i = 0; i < 5; i++) sem[i].count = 1;
-
+  doormanSemaphore.count = 4;
   //initialize and declare
 
   char IR[6]; //instruction register
@@ -945,11 +946,11 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, in
     return;
   }
   int * reg1 = Rg[parseOp1Reg(IR)];
-  int * reg2 = Rg[parseOp2Reg(IR)];
+  int reg2 = parseOp2Reg(IR);
   switch(*reg1) {
     case 0:
-      if(sems[*reg2].count > 0) {
-        sems[*reg2].count = sems[*reg2].count - 1;
+      if(sems[*Rg[reg2]].count > 0) {
+        sems[*Rg[reg2]].count = sems[*Rg[reg2]].count - 1;
         *deadlockCounter = 0;
       }
       else {
@@ -959,10 +960,10 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, in
       }
       break;
     case 1:
-      sems[*reg2].count = sems[*reg2].count + 1;
+      sems[*Rg[reg2]].count = sems[*Rg[reg2]].count + 1;
       break;
     case 2:
-      *reg2 = currentPCB -> PID;
+      *Rg[reg2] = currentPCB -> PID;
       printf("e\n");
       break;
     default:
