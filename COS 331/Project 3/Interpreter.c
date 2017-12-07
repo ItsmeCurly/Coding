@@ -23,6 +23,7 @@ struct PCB {
 
 struct Semaphore {
   int count;
+  struct PCB * semQueue;
 };
 //prototypes
 
@@ -79,8 +80,8 @@ void OP32(char *, char *, int *, int **);
 void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
-void OP36(char *, int **, struct Semaphore [5], int *, int *, int, struct PCB *, int *);
-void OP37(char *, int *);
+void OP36(char *, int **, struct Semaphore [5], struct Semaphore *, int *, int *, int, struct PCB *, int *);
+void OP37(char *, int **, int *);
 void OP38(int);
 void OP99(bool *);
 
@@ -91,6 +92,7 @@ int DEFAULTIC = 5;
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
   struct Semaphore sem[5];
+  struct Semaphore doorman;
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -156,7 +158,7 @@ int main(int argc, char * argv[]) {
     tmp = tmp -> Next_PCB;
   }
   for(int i = 0; i < 5; i++) sem[i].count = 1;
-
+  doorman.count = 4;
   //initialize and declare
 
   char IR[6]; //instruction register
@@ -225,7 +227,7 @@ int main(int argc, char * argv[]) {
   }
   struct PCB * currentPCB = ptr;
 
-  int i = 0;
+  //int i = 0;
   int deadlockCounter = 0;
   int EA;
   bool leave = false;
@@ -233,7 +235,7 @@ int main(int argc, char * argv[]) {
   int PC = 0; //program counter
   int IC = 0;
   while(1) { //OS loop
-    i+=1;
+    //i+=1;
     //GET NEXTPCB VARS
     PC = currentPCB -> EAR;
 
@@ -338,9 +340,9 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
 
-        case 36: OP36(IR, Rg, sem, &PC, &IC, aIC, currentPCB, &deadlockCounter); PC++; IC++; break;
+        case 36: OP36(IR, Rg, sem, &doorman, &PC, &IC, aIC, currentPCB, &deadlockCounter); PC++; IC++; break;
 
-        case 37: OP37(IR, &ACC); PC++; IC++; break;
+        case 37: OP37(IR, Rg, &ACC); PC++; IC++; break;
 
         case 38: OP38(currentPCB -> PID); PC++; IC++; break;
 
@@ -349,6 +351,7 @@ int main(int argc, char * argv[]) {
         default: printf("Unrec ognized Opcode: %d\n", opcode); PC++; IC++; break; //decided to let the program continue running
       }
       printf("\n");
+      //printRegisters(Rg);
       if(leave) {
         printf("Terminating process PID: %d\n\n", currentPCB -> PID);
         if(currentPCB -> Last_PCB != NULL)
@@ -391,9 +394,9 @@ int main(int argc, char * argv[]) {
       printf("Deadlock encountered! Exiting...\n");
       exit(1);
     }
-    if(i > 15) {
-      exit(1);
-    }
+    // if(i > 15) {
+    //   exit(1);
+    // }
     //END CHECK DEADLOCK
 
     if(currentPCB -> Next_PCB != NULL) currentPCB = currentPCB -> Next_PCB;
@@ -936,7 +939,7 @@ void OP35(char * IR, int *PC) {
   }
   *PC = parseOp1(IR) - 1;
 }
-void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, int aIC, struct PCB *currentPCB, int * deadlockCounter) {
+void OP36(char * IR, int ** Rg, struct Semaphore sems[5], struct Semaphore * doorman, int * PC, int * IC, int aIC, struct PCB *currentPCB, int * deadlockCounter) {
   printf("Opcode 36: System Command\n");
   printIR(IR);
   if(IR[2] != 'R' || !((int)IR[3] - 48 >= 0 && (int)IR[3] - 48 <= 3)) {
@@ -951,6 +954,18 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, in
   int * reg2 = Rg[parseOp2Reg(IR)];
   switch(*reg1) {
     case 0:
+      if(*reg2 == 10) {
+        if(doorman -> count > 0) {
+          doorman -> count = doorman -> count - 1;
+          *deadlockCounter = 0;
+        }
+        else {
+          *PC = *PC - 1;
+          *IC = aIC;
+          *deadlockCounter += 1;
+        }
+        break;
+      }
       printf("%d\n", *reg2);
       printf("%d\n", sems[*reg2].count);
       if(sems[*reg2].count > 0) {
@@ -965,22 +980,25 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, in
       printf("%d\n", sems[*reg2].count);
       break;
     case 1:
+      if(*reg2 == 10) {
+        doorman -> count = doorman -> count + 1;
+        break;
+      }
       sems[*reg2].count = sems[*reg2].count + 1;
       break;
     case 2:
       *reg2 = currentPCB -> PID;
-      printf("%d\n", currentPCB -> PID);
       break;
     default:
       printfError('o');
       break;
   }
 }
-void OP37(char * IR, int * ACC) {
+void OP37(char * IR, int ** Rg, int * ACC) {
   printf("Opcode 37: Modulus\n");
   printIR(IR);
 
-  *ACC = *ACC % parseOp1(IR);
+  *ACC = *Rg[parseOp1Reg(IR)] % *Rg[parseOp2Reg(IR)];
 }
 
 void OP38(int PID) {

@@ -23,6 +23,7 @@ struct PCB {
 
 struct Semaphore {
   int count;
+  struct PCB * semQueue;
 };
 //prototypes
 
