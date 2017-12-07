@@ -80,7 +80,7 @@ void OP33(char *, char *, int *);
 void OP34(char *, char *, int *);
 void OP35(char *, int *);
 void OP36(char *, int **, struct Semaphore [5], int *, int *, int, struct PCB *, int *);
-void OP37(char *, int *);
+void OP37(char *, int **, int *);
 void OP38(int);
 void OP99(bool *);
 
@@ -225,7 +225,7 @@ int main(int argc, char * argv[]) {
   }
   struct PCB * currentPCB = ptr;
 
-  int i = 0;
+  //int i = 0;
   int deadlockCounter = 0;
   int EA;
   bool leave = false;
@@ -233,7 +233,7 @@ int main(int argc, char * argv[]) {
   int PC = 0; //program counter
   int IC = 0;
   while(1) { //OS loop
-    i+=1;
+    //i+=1;
     //GET NEXTPCB VARS
     PC = currentPCB -> EAR;
 
@@ -340,7 +340,7 @@ int main(int argc, char * argv[]) {
 
         case 36: OP36(IR, Rg, sem, &PC, &IC, aIC, currentPCB, &deadlockCounter); PC++; IC++; break;
 
-        case 37: OP37(IR, &ACC); PC++; IC++; break;
+        case 37: OP37(IR, Rg, &ACC); PC++; IC++; break;
 
         case 38: OP38(currentPCB -> PID); PC++; IC++; break;
 
@@ -349,6 +349,7 @@ int main(int argc, char * argv[]) {
         default: printf("Unrec ognized Opcode: %d\n", opcode); PC++; IC++; break; //decided to let the program continue running
       }
       printf("\n");
+      //printRegisters(Rg);
       if(leave) {
         printf("Terminating process PID: %d\n\n", currentPCB -> PID);
         if(currentPCB -> Last_PCB != NULL)
@@ -391,9 +392,9 @@ int main(int argc, char * argv[]) {
       printf("Deadlock encountered! Exiting...\n");
       exit(1);
     }
-    if(i > 15) {
-      exit(1);
-    }
+    // if(i > 15) {
+    //   exit(1);
+    // }
     //END CHECK DEADLOCK
 
     if(currentPCB -> Next_PCB != NULL) currentPCB = currentPCB -> Next_PCB;
@@ -969,18 +970,17 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], int * PC, int * IC, in
       break;
     case 2:
       *reg2 = currentPCB -> PID;
-      printf("%d\n", currentPCB -> PID);
       break;
     default:
       printfError('o');
       break;
   }
 }
-void OP37(char * IR, int * ACC) {
+void OP37(char * IR, int ** Rg, int * ACC) {
   printf("Opcode 37: Modulus\n");
   printIR(IR);
 
-  *ACC = *ACC % parseOp1(IR);
+  *ACC = *Rg[parseOp1Reg(IR)] % *Rg[parseOp2Reg(IR)];
 }
 
 void OP38(int PID) {

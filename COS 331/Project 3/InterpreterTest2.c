@@ -23,7 +23,6 @@ struct PCB {
 
 struct Semaphore {
   int count;
-  struct PCB ** Sem_Queue; //not sure what to do with this
 };
 //prototypes
 
@@ -92,7 +91,7 @@ int DEFAULTIC = 5;
 int main(int argc, char * argv[]) {
   struct PCB *ptr, *tmp; // ptr is the head, tmp is the tail
   struct Semaphore sem[5];
-  struct Semaphore doormanSemaphore;
+  struct Semaphore doorman;
   if(argc == 1) {
     printf("No programs called\n");
     exit(1);
@@ -157,12 +156,8 @@ int main(int argc, char * argv[]) {
     tmp -> Next_PCB -> IC = aIC;
     tmp = tmp -> Next_PCB;
   }
-
-  for(int i = 0; i < 5; i++) {
-    sem[i].count = 1;
-    //sem[i].Sem_Queue = (struct PCB **) malloc(sizeof(struct PCB) * 5);
-  }
-  doormanSemaphore.count = 4;
+  for(int i = 0; i < 5; i++) sem[i].count = 1;
+  doorman.count = 4;
   //initialize and declare
 
   char IR[6]; //instruction register
@@ -231,6 +226,7 @@ int main(int argc, char * argv[]) {
   }
   struct PCB * currentPCB = ptr;
 
+  //int i = 0;
   int deadlockCounter = 0;
   int EA;
   bool leave = false;
@@ -238,7 +234,7 @@ int main(int argc, char * argv[]) {
   int PC = 0; //program counter
   int IC = 0;
   while(1) { //OS loop
-
+    //i+=1;
     //GET NEXTPCB VARS
     PC = currentPCB -> EAR;
 
@@ -343,7 +339,7 @@ int main(int argc, char * argv[]) {
 
         case 35: OP35(IR, &PC); PC++; IC++; break;
 
-        case 36: OP36(IR, Rg, sem, &doormanSemaphore, &PC, &IC, aIC, currentPCB, &deadlockCounter); PC++; IC++; break;
+        case 36: OP36(IR, Rg, sem, &doorman, &PC, &IC, aIC, currentPCB, &deadlockCounter); PC++; IC++; break;
 
         case 37: OP37(IR, Rg, &ACC); PC++; IC++; break;
 
@@ -354,6 +350,7 @@ int main(int argc, char * argv[]) {
         default: printf("Unrec ognized Opcode: %d\n", opcode); PC++; IC++; break; //decided to let the program continue running
       }
       printf("\n");
+      //printRegisters(Rg);
       if(leave) {
         printf("Terminating process PID: %d\n\n", currentPCB -> PID);
         if(currentPCB -> Last_PCB != NULL)
@@ -375,7 +372,6 @@ int main(int argc, char * argv[]) {
       printf("Switching processes\n\n");
 
       currentPCB -> ACC = ACC;
-
       currentPCB -> R0 = R0;
       currentPCB -> R1 = R1;
       currentPCB -> R2 = R2;
@@ -397,6 +393,9 @@ int main(int argc, char * argv[]) {
       printf("Deadlock encountered! Exiting...\n");
       exit(1);
     }
+    // if(i > 15) {
+    //   exit(1);
+    // }
     //END CHECK DEADLOCK
 
     if(currentPCB -> Next_PCB != NULL) currentPCB = currentPCB -> Next_PCB;
@@ -955,37 +954,8 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], struct Semaphore * doo
   switch(*reg1) {
     case 0:
       if(*reg2 == 10) {
-        if(doorman -> count > 0) doorman -> count = doorman -> count - 1;
-        else {
-          *PC = *PC - 1;
-          *IC = aIC;
-        }
-      }
-      else {
-        // printf("%d\n", *reg2);
-        // printf("%d\n", sems[*reg2].count);
-        // sems[*reg2].count = sems[*reg2].count - 1;
-        //
-        // if(sems[*reg2].count >= 0) {
-        //   *deadlockCounter = 0;
-        // }
-        // else {
-        //   *PC = *PC - 1;
-        //   *IC = aIC;
-        //   *deadlockCounter += 1;
-        //   struct PCB * ptr = sems[*reg2].Sem_Queue[0];
-        //   int i = 0;
-        //   while (ptr != NULL) {
-        //     ptr = sems[*reg2].Sem_Queue[i];
-        //     i+=1;
-        //   }
-        //   sems[*reg2].Sem_Queue[i] = currentPCB;
-        // }
-        // printf("%d\n", sems[*reg2].count);
-        printf("%d\n", *reg2);
-        printf("%d\n", sems[*reg2].count);
-        if(sems[*reg2].count > 0) {
-          sems[*reg2].count = sems[*reg2].count - 1;
+        if(doorman -> count > 0) {
+          doorman -> count = doorman -> count - 1;
           *deadlockCounter = 0;
         }
         else {
@@ -993,23 +963,27 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], struct Semaphore * doo
           *IC = aIC;
           *deadlockCounter += 1;
         }
-        printf("%d\n", sems[*reg2].count);
+        break;
       }
+      printf("%d\n", *reg2);
+      printf("%d\n", sems[*reg2].count);
+      if(sems[*reg2].count > 0) {
+        sems[*reg2].count = sems[*reg2].count - 1;
+        *deadlockCounter = 0;
+      }
+      else {
+        *PC = *PC - 1;
+        *IC = aIC;
+        *deadlockCounter += 1;
+      }
+      printf("%d\n", sems[*reg2].count);
       break;
     case 1:
       if(*reg2 == 10) {
         doorman -> count = doorman -> count + 1;
+        break;
       }
-      else {
-        sems[*reg2].count = sems[*reg2].count + 1;
-        struct PCB * ptr = sems[*reg2].Sem_Queue[0];
-        int i = 0;
-        while (ptr != NULL) {
-          ptr = sems[*reg2].Sem_Queue[i];
-          i+=1;
-        }
-        sems[*reg2].Sem_Queue[i] = NULL;
-      }
+      sems[*reg2].count = sems[*reg2].count + 1;
       break;
     case 2:
       *reg2 = currentPCB -> PID;
@@ -1022,6 +996,7 @@ void OP36(char * IR, int ** Rg, struct Semaphore sems[5], struct Semaphore * doo
 void OP37(char * IR, int ** Rg, int * ACC) {
   printf("Opcode 37: Modulus\n");
   printIR(IR);
+
   *ACC = *Rg[parseOp1Reg(IR)] % *Rg[parseOp2Reg(IR)];
 }
 
