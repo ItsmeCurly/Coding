@@ -7,23 +7,30 @@ public class JJ {
     public JJ(int doorLength, int[] pogoJumps) {
         this.pogoJumps = pogoJumps;
         this.doorLength = doorLength;
-        move(new int[doorLength + 1], 0);
+        move(new int[doorLength], 0);
     }
 
-    public void move(int[] movements, int currentIndex) {
+    private void move(int[] movements, int currentIndex) {
         int sum = 0;
         for (int i : movements)
             sum += i;
 
         if (doorLength == sum)
-            System.out.println(Arrays.toString(movements));
+            printMinimalisticArray(movements, currentIndex);
         if (doorLength <= sum)
             return;
 
-        for (int i = 0; i < pogoJumps.length; i++) {
+        for (int pogoJump : pogoJumps) {
             int[] newMovements = Arrays.copyOf(movements, movements.length);
-            newMovements[currentIndex] = pogoJumps[i];
+            newMovements[currentIndex] = pogoJump;
             move(newMovements, currentIndex + 1);
         }
+    }
+
+    private void printMinimalisticArray(int[] movements, int range) {
+        int[] newArray = Arrays.copyOfRange(movements, 0, range);
+        for (int i : newArray)
+            System.out.print(i + " ");
+        System.out.println();
     }
 }
