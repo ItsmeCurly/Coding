@@ -2,7 +2,86 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="828003fd-b427-40ce-b8ad-694907c647e5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/daysolver/dates.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/fixedfilelength/file.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze1.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze2.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze3.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze4.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze5.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze6.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze7.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/daysolver/IncorrectDateInputException.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/daysolver/Runner.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/daysolver/Solver.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/fixedfilelength/FileLength.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/fixedfilelength/Person.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/fixedfilelength/Runner.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/mazerunner/Maze.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/mazerunner/MazeMover.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/mazerunner/Runner.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/ExternalTesting/src/Client.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/ExternalTesting/src/Server2.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Project/.idea/typescript-compiler.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Project/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/COS125GAme.iml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/src/game/PythonGame.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/src/game/__init__.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/PythonGame.iml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/inspectionProfiles/Project_Default.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/src/__init__.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/src/game/PythonGame.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/src/game/__init__.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/typescript-compiler.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/index.html" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeCache.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeCache.txt" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeCCompiler.cmake" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeCXXCompiler.cmake" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeDetermineCompilerABI_C.bin" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeDetermineCompilerABI_CXX.bin" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeRCCompiler.cmake" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeSystem.cmake" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdC/CMakeCCompilerId.c" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdC/a.exe" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdCXX/a.exe" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeOutput.log" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile.cmake" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile.cmake" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile2" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile2" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/CXX.includecache" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/build.make" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/build.make" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/depend.internal" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/depend.make" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/depend.make" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/flags.make" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/flags.make" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/link.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/link.txt" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/main.cpp.obj" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/objects.a" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-environment.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-environment.txt" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-log.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-log.txt" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/feature_tests.bin" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/feature_tests.bin" />
+      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/Makefile" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/Makefile" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/Challenges/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/ImageDescrambler.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/ImageDescrambler.java" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/Runner.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/Runner.java" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/COS125Project.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/modules.xml" afterPath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/modules.xml" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/vcs.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/workspace.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/PythonGame.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -14,14 +93,52 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Hello World.ts" />
+        <option value="$PROJECT_DIR$/Hello World.js" />
+        <option value="$PROJECT_DIR$/test.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="width" value="976" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -39,8 +156,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project1" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
     </panes>
   </component>
@@ -49,6 +176,8 @@
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -62,8 +191,28 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Node.js.test.js">
+    <configuration name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Project1/index.html" />
+    <configuration name="Hello World.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="Hello World.js" working-dir="$PROJECT_DIR$" />
+    <configuration name="test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="test.js" working-dir="$PROJECT_DIR$" />
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.Hello World.js" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.test.js" />
+    </list>
+    <recent_temporary>
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.test.js" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.Hello World.js" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -73,6 +222,13 @@
       <option name="presentableId" value="Default" />
       <updated>1510619581211</updated>
       <workItem from="1510619582371" duration="150000" />
+      <workItem from="1511968569564" duration="502000" />
+      <workItem from="1511969084517" duration="294000" />
+      <workItem from="1516569874729" duration="310000" />
+      <workItem from="1516571315630" duration="83000" />
+      <workItem from="1516571420008" duration="36000" />
+      <workItem from="1516838336581" duration="2548000" />
+      <workItem from="1516842857981" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Coding update">
       <created>1510619630437</created>
@@ -85,27 +241,29 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150000" />
+    <option name="totallyTimeSpent" value="3925000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="260" y="20" width="1400" height="990" extended-state="0" />
+    <frame x="-8" y="0" width="976" height="1038" extended-state="0" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496382" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36012527" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273743" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39553073" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -124,7 +282,39 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="4" />
+    </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Hello World.ts" />
+    <entry file="file://$PROJECT_DIR$/Hello World.js" />
+    <entry file="file://$PROJECT_DIR$/Hello World.ts" />
+    <entry file="file://$PROJECT_DIR$/Hello World.js" />
+    <entry file="file://$PROJECT_DIR$/Hello World.ts" />
+    <entry file="file://$PROJECT_DIR$/Hello World.js" />
+    <entry file="file://$PROJECT_DIR$/Hello World.ts" />
+    <entry file="file://$PROJECT_DIR$/Hello World.js" />
+    <entry file="file://$PROJECT_DIR$/Hello World.ts" />
+    <entry file="file://$PROJECT_DIR$/Hello World.ts" />
+    <entry file="file://$PROJECT_DIR$/Hello World.js" />
+    <entry file="file://$PROJECT_DIR$/test.js" />
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
