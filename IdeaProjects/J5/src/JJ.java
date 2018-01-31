@@ -4,10 +4,19 @@ public class JJ {
     private int[] pogoJumps;
     private int doorLength;
 
-    public JJ(int doorLength, int[] pogoJumps) {
+    private int counter;
+    private String output;
+
+    JJ(int doorLength, int[] pogoJumps) {
         this.pogoJumps = pogoJumps;
         this.doorLength = doorLength;
+        this.counter = 0;
+        this.output = "";
+
+        Arrays.sort(pogoJumps);
         move(new int[doorLength], 0);
+        System.out.println("# of Combinations: " + counter + " ");
+        System.out.println(output);
     }
 
     private void move(int[] movements, int currentIndex) {
@@ -28,9 +37,14 @@ public class JJ {
     }
 
     private void printMinimalisticArray(int[] movements, int range) {
+        counter += 1;
         int[] newArray = Arrays.copyOfRange(movements, 0, range);
         for (int i : newArray)
-            System.out.print(i + " ");
-        System.out.println();
+            output += i + " ";
+        output += "\n";
+    }
+
+    public int getCombos() {
+        return counter;
     }
 }

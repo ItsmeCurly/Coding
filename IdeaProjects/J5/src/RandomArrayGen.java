@@ -3,7 +3,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RandomArrayGen {
+public class RandomArrayGen implements DATA {
     private int[] pogos;
     private int doorLength;
 
@@ -25,7 +25,7 @@ public class RandomArrayGen {
 
     public static void main(String[] args) throws IOException {
         PrintWriter pw = new PrintWriter("assets\\inputs.txt");
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < RUNS; i++)
             pw.println(new RandomArrayGen().toString());
         pw.close();
     }

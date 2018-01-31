@@ -30,7 +30,7 @@ public class ASCII85Encoding {
             if(bitValue / Math.pow(85, maxPower + 1) < 1) break;
         int [] decomposed = new int[maxPower+1];
         for(int i = maxPower; i > 0; i++) {
-            decomposed[]
+            //decomposed[]
         }
 
         return output;

@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-public class Runner {
+public class Runner implements DATA {
     private static Scanner scan;
 
-    public Runner(String input) {
+    private Runner(String input) {
         scan = new Scanner(input);
         int doorDistance = Integer.parseInt(scan.next());
         String[] pogos = input.split(" ");
