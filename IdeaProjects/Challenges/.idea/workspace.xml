@@ -2,18 +2,129 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcca0239-aa4f-42cd-825c-5e7f47314b60" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/src/DATA.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/src/Graph.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/src/Runner.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../COS226Ktrees/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../FSAInterpreter/src/Interpreter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/.idea/artifacts/J5_jar.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/README.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/makefile" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/src/META-INF/MANIFEST.MF" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/.idea/artifacts/Ramsey_jar.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/README.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/makefile" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/src/META-INF/MANIFEST.MF" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../maxContigSubseqSum/.gitignore" />
+      <change beforePath="$PROJECT_DIR$/../COS226Ktrees/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../COS226Ktrees/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/ASCII85/ASCII85Encoding.java" afterPath="$PROJECT_DIR$/src/ASCII85/ASCII85Encoding.java" />
-      <change beforePath="$PROJECT_DIR$/../J5/assets/inputs.txt" afterPath="$PROJECT_DIR$/../J5/assets/inputs.txt" />
-      <change beforePath="$PROJECT_DIR$/../J5/assets/times.txt" afterPath="$PROJECT_DIR$/../J5/assets/times.txt" />
       <change beforePath="$PROJECT_DIR$/../J5/src/JJ.java" afterPath="$PROJECT_DIR$/../J5/src/JJ.java" />
-      <change beforePath="$PROJECT_DIR$/../J5/src/RandomArrayGen.java" afterPath="$PROJECT_DIR$/../J5/src/RandomArrayGen.java" />
       <change beforePath="$PROJECT_DIR$/../J5/src/Runner.java" afterPath="$PROJECT_DIR$/../J5/src/Runner.java" />
-      <change beforePath="$PROJECT_DIR$/../J5/src/RunnerTester.java" afterPath="$PROJECT_DIR$/../J5/src/RunnerTester.java" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/artifacts/JarHomework1_jar.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/modules.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/workspace.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/JarHomework1.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/Makefile" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/README.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/artifacts/JarHomework1_jar/JarHomework1.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/InvalidKValException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/KSearchTree.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane$CaptionFrame.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane$StateFrame.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/RecordManager.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/SwingWindow.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/TreeNode.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework1/src/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/artifacts/JarHomework4_jar.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/modules.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/uiDesigner.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/vcs.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../JarHomework4/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/JarHomework4.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/README.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/makefile" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/artifacts/JarHomework4_jar/JarHomework4.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/InvalidArgsException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/InvalidKValException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/KSearchTree.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane$CaptionFrame.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane$StateFrame.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/RecordManager.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/SwingWindow.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/TreeNode.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/InvalidArgsException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/InvalidKValException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/KSearchTree.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/Pane.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/RecordManager.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/SwingWindow.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/TreeNode.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/artifacts/JarHomework4EC_jar.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/modules.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/vcs.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/workspace.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/JarHomework4EC.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/README.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/makefile" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/artifacts/JarHomework4EC_jar/JarHomework4EC.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/AbstractClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/AnalogClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/ClockGUI.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/DateAndTime.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/DigitalClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/SliderBasedClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/Window.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/AbstractClock.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/AnalogClock.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/ClockGUI.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/DateAndTime.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/DigitalClock.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/SliderBasedClock.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/Window.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/artifacts/JarHomeworkEC1_jar.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/modules.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/workspace.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/JarHomeworkEC1.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/Makefile" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/README.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/artifacts/JarHomeworkEC1_jar/JarHomeworkEC1.jar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/AbstractClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/AnalogClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/ClockGUI.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/DateAndTime.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/DigitalClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/SliderBasedClock.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/Window.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/src/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/.idea/modules.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/.idea/workspace.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/NateHomework.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/out/production/NateHomework/BobCar.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/out/production/NateHomework/NestedLoop.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/src/BobCar.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../NateHomework/src/NestedLoop.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../Project/.idea/typescript-compiler.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../Project/.idea/vcs.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../Ramsey/src/Graph.java" afterPath="$PROJECT_DIR$/../Ramsey/src/Graph.java" />
+      <change beforePath="$PROJECT_DIR$/../Ramsey/src/Runner.java" afterPath="$PROJECT_DIR$/../Ramsey/src/Runner.java" />
+      <change beforePath="$PROJECT_DIR$/../maxContigSubseqSum/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../maxContigSubseqSum/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../../WebstormProjects/Project1/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../WebstormProjects/Project1/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,7 +140,7 @@
         <entry file="file://$PROJECT_DIR$/src/scrambledimages/Runner.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
-              <caret line="4" column="75" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="75" />
+              <caret line="4" column="75" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -38,18 +149,28 @@
       <file leaf-file-name="ImageDescrambler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scrambledimages/ImageDescrambler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-231">
+            <state relative-caret-position="273">
               <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ASCII85Encoding.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ASCII85Encoding.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ASCII85/ASCII85Encoding.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="672">
               <caret line="32" column="14" lean-forward="false" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="644">
+              <caret line="47" column="54" lean-forward="false" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -114,6 +235,7 @@
         <option value="$PROJECT_DIR$/src/ASCII85/ASCII85.java" />
         <option value="$PROJECT_DIR$/assets/ascii85/strings.txt" />
         <option value="$PROJECT_DIR$/src/ASCII85/ASCII85Encoding.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -123,11 +245,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="310" />
-    <option name="y" value="86" />
-    <option name="width" value="976" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-7" />
+    <option name="width" value="974" />
+    <option name="height" value="1037" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -147,36 +268,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Challenges" type="b2602c69:ProjectViewProjectNode" />
               <item name="Challenges" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Challenges" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Challenges" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Challenges" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Challenges" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="ascii85" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Challenges" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Challenges" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="daysolver" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Challenges" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Challenges" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="scrambledimages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Challenges" type="b2602c69:ProjectViewProjectNode" />
@@ -195,7 +293,7 @@
       </pane>
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -427,18 +525,19 @@
       <workItem from="1516941253727" duration="612000" />
       <workItem from="1516993105441" duration="17000" />
       <workItem from="1517091498850" duration="131000" />
+      <workItem from="1518407306246" duration="445000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47304000" />
+    <option name="totallyTimeSpent" value="47749000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281768" sideWeight="0.49583334" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -449,7 +548,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12447917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12447917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -461,6 +560,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281768" sideWeight="0.49583334" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281768" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -507,13 +607,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/mazerunner/Runner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="true" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/mazerunner/MazeMover.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -736,7 +829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -744,7 +836,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,22 +843,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="25" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="25" />
-          <folding>
-            <element signature="e#179#180#0" expanded="true" />
-            <element signature="e#208#209#0" expanded="true" />
-            <element signature="e#241#242#0" expanded="true" />
-            <element signature="e#275#276#0" expanded="true" />
-            <element signature="e#309#310#0" expanded="true" />
-            <element signature="e#338#339#0" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#505#506#0" expanded="true" />
-            <element signature="e#536#537#0" expanded="true" />
-            <element signature="e#563#564#0" expanded="true" />
-            <element signature="e#604#605#0" expanded="true" />
-            <element signature="e#640#641#0" expanded="true" />
-            <element signature="e#680#681#0" expanded="true" />
-            <element signature="e#712#713#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -775,16 +850,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="33" column="70" lean-forward="false" selection-start-line="33" selection-start-column="70" selection-end-line="33" selection-end-column="70" />
-          <folding>
-            <element signature="e#111#112#0" expanded="true" />
-            <element signature="e#155#156#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scrambledimages/ImageDescrambler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-231">
+        <state relative-caret-position="273">
           <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
           <folding />
         </state>
@@ -793,7 +864,7 @@
     <entry file="file://$PROJECT_DIR$/src/scrambledimages/Runner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="4" column="75" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="75" />
+          <caret line="4" column="75" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="75" />
           <folding />
         </state>
       </provider>
@@ -837,6 +908,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
           <caret line="32" column="14" lean-forward="false" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="47" column="54" lean-forward="false" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
           <folding />
         </state>
       </provider>

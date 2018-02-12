@@ -2,86 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="828003fd-b427-40ce-b8ad-694907c647e5" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/daysolver/dates.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/fixedfilelength/file.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze1.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze2.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze3.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze4.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze5.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze6.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/assets/mazerunner/maze7.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/daysolver/IncorrectDateInputException.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/daysolver/Runner.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/daysolver/Solver.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/fixedfilelength/FileLength.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/fixedfilelength/Person.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/fixedfilelength/Runner.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/mazerunner/Maze.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/mazerunner/MazeMover.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/mazerunner/Runner.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/ExternalTesting/src/Client.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/ExternalTesting/src/Server2.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Project/.idea/typescript-compiler.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Project/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/COS125GAme.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/workspace.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/src/game/PythonGame.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/src/game/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/PythonGame.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/inspectionProfiles/Project_Default.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/src/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/src/game/PythonGame.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../../PycharmProjects/PythonGame/src/game/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/typescript-compiler.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/index.html" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeCache.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeCache.txt" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeCCompiler.cmake" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeCXXCompiler.cmake" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeDetermineCompilerABI_C.bin" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeDetermineCompilerABI_CXX.bin" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeRCCompiler.cmake" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CMakeSystem.cmake" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdC/CMakeCCompilerId.c" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdC/a.exe" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdCXX/a.exe" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/CMakeOutput.log" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile.cmake" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile.cmake" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile2" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Makefile2" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/CXX.includecache" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/build.make" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/build.make" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/depend.internal" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/depend.make" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/depend.make" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/flags.make" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/flags.make" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/link.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/link.txt" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/main.cpp.obj" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/objects.a" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-environment.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-environment.txt" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-log.txt" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/clion-log.txt" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/feature_tests.bin" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/CMakeFiles/feature_tests.bin" />
-      <change beforePath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/Makefile" afterPath="$PROJECT_DIR$/../../CLionProjects/Project2/cmake-build-debug/Makefile" />
-      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/Challenges/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/ImageDescrambler.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/ImageDescrambler.java" />
-      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/Runner.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/Challenges/src/scrambledimages/Runner.java" />
-      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/maxContigSubseqSum/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/COS125Project.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/misc.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/modules.xml" afterPath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/modules.xml" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/vcs.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/.idea/workspace.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/untitled/PythonGame.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/J5/.idea/artifacts/J5_jar.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/J5/README.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/J5/makefile" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/J5/src/META-INF/MANIFEST.MF" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Ramsey/.idea/artifacts/Ramsey_jar.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Ramsey/README.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Ramsey/makefile" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../IdeaProjects/Ramsey/src/META-INF/MANIFEST.MF" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/J5/src/JJ.java" afterPath="$PROJECT_DIR$/../../IdeaProjects/J5/src/JJ.java" />
+      <change beforePath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../IdeaProjects/JarHomework4/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -157,6 +87,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -168,7 +99,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -229,6 +159,8 @@
       <workItem from="1516571420008" duration="36000" />
       <workItem from="1516838336581" duration="2548000" />
       <workItem from="1516842857981" duration="2000" />
+      <workItem from="1517367770775" duration="41000" />
+      <workItem from="1518235660366" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="Coding update">
       <created>1510619630437</created>
@@ -241,10 +173,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3925000" />
+    <option name="totallyTimeSpent" value="3967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="976" height="1038" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36012527" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -288,6 +221,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">

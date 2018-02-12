@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="J5:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/J5_jar</output-path>
+    <root id="archive" name="J5.jar">
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+      <element id="dir-copy" path="$PROJECT_DIR$/assets" />
+      <element id="file-copy" path="$PROJECT_DIR$/makefile" />
+      <element id="file-copy" path="$PROJECT_DIR$/README.txt" />
+    </root>
+  </artifact>
+</component>

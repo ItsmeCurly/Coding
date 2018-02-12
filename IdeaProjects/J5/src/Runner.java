@@ -11,11 +11,13 @@ public class Runner implements DATA {
         for (int i = 1; i < pogos.length; i++)
             pogoDistances[i - 1] = Integer.parseInt(pogos[i]);
         new JJ(doorDistance, pogoDistances);
+        scan.close();
     }
 
     public static void main(String[] args) {
         scan = new Scanner(System.in);
         System.out.print("Enter the distance to the door, followed by JJ's pogo sticks' distances: ");
         new Runner(scan.nextLine());
+        scan.close();
     }
 }

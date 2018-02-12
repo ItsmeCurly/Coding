@@ -9,7 +9,7 @@ public class Runner {
         StringTokenizer st = new StringTokenizer(input,"(");
         while(st.hasMoreTokens())
             addNode(st.nextToken(), graph);
-        findCliques(graph);
+        findCliques(graph); //finds cliques (the homework)
     }
 
     private void addNode(String s, Graph<Character> graph) {
@@ -30,12 +30,12 @@ public class Runner {
     }
 
     public static void findCliques(Graph<Character> graph) {
-        Graph<Character> clique = new Graph<>();
-        Graph<Character> antiClique = new Graph<>();
-        ArrayList<Graph.Connection<Character>> list;
+        Graph<Character> clique = new Graph<>();    //cliques
+        Graph<Character> antiClique = new Graph<>();    //anticliques
+        ArrayList<Graph.Connection<Character>> list;    //list of connections for later
         while (graph.hasMoreNodes()) {
-            char data = graph.getNodes().get(0);
-            if(graph.getNodeDegree(data) > graph.getNodes().size()/2) {
+            char data = graph.getNodes().get(0);    //start at first added node and remove nodes in that order
+            if(graph.getNodeDegree(data) > graph.getNodes().size()/2) { //if node degree > nodes/2 it is added to cliques, otherwise add to anticliques
                 clique.addNode(data);
                 list = graph.removeNonConnections(data);
                 for (Graph.Connection<Character> conn : list) {

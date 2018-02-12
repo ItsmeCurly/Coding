@@ -1,2 +1,0 @@
-This is my implementation of the Extra credit question on homework 4, of the clocks in particular. The clocks will be kept up to date with each other
-by utilizing the same object to keep time. Using the slider will change the time of day between 00:00 and 24:00 in the same day.
