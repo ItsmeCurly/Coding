@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 public class Interpreter {
     public Interpreter() {
+        this.run();
+    }
+
+    private void run() {
         Scanner scan = new Scanner(System.in);
         Map<String, Object> varMap = new LinkedHashMap<>();
         label:
@@ -21,7 +25,7 @@ public class Interpreter {
                     String data = scan.nextLine().trim();
 
                     if (data.equals("fsa")) {
-                        Automata fsa = new Automata();
+                        Automaton fsa = new Automaton();
                         fsa.setDesc(scan.nextLine());
                         String line = scan.nextLine();
                         Scanner fsaScan = new Scanner(line);
@@ -41,6 +45,7 @@ public class Interpreter {
                             }
                             states.add(state);
                         }
+                        fsaScan.close();
                         fsa.setTransitions(states);
                         varMap.put(name, fsa);
                     } else if (data.contains("\"")) {
@@ -49,7 +54,7 @@ public class Interpreter {
 
                     break;
                 case "run": {
-                    Automata fsa = (Automata) varMap.get(scan.next());
+                    Automaton fsa = (Automaton) varMap.get(scan.next());
                     String x = scan.next();
                     if (x.contains("\"")) {
                         fsa.run(x);
