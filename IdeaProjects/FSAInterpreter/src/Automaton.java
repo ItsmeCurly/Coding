@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Automaton {
     private String comment;
-    private List<Character> alphabet = new ArrayList<Character>();
+    private List<Character> alphabet = new ArrayList<>();
     private ArrayList<ArrayList<String>> states = new ArrayList<>();
     private ArrayList<String> accept = new ArrayList<>();
 
@@ -60,19 +60,36 @@ public class Automaton {
     }
 
     private String formattedTable() {
-        String defaultSpace = "  ";
-        String outputTable = "";
+        String defaultSpace = "  ", formatSpace = " ", outputTable = "";
         ArrayList<String> strings = new ArrayList<>();
-        String _temp = "";
-        for (char c : alphabet) {
 
+        for (ArrayList<String> stateTable : states) {
+            String temp = " ";
+            String state = stateTable.get(0);
+            for (String acceptState : accept) {
+                if (state.equals(acceptState)) {
+                    temp = temp.replace(" ", "*");
+                }
+                for (String stateTransition : stateTable) {
+                    temp += stateTransition + defaultSpace;
+
+                }
+            }
+            strings.add(temp);
         }
 
-        for (int i = 0; i < states.size(); i++) {
-            String temp = "";
-            ArrayList<String> stateTransitions = states.get(i);
-            String state = stateTransitions.get(0);
+        String temp = "";
+        temp += defaultSpace;
+        temp += formatSpace;
+        for (Character alpha : alphabet) {
+            temp += defaultSpace;
+            temp += formatSpace;
+            temp += alpha;
+        }
+        outputTable += temp + '\n';
 
+        for (String s : strings) {
+            outputTable += s + '\n';
         }
         return outputTable;
     }

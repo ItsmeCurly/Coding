@@ -36,8 +36,8 @@ public class Interpreter {
 
                     if (data.equals("fsa")) {
                         Automaton fsa = new Automaton();
-                        fsa.setDesc(scan.next());
-                        scan.nextLine();
+                        Scanner line_ = new Scanner(scan.nextLine());
+                        fsa.setDesc(line_.next());
                         String line = scan.nextLine();
                         Scanner fsaScan = new Scanner(line);
                         while (fsaScan.hasNext()) {
@@ -46,7 +46,7 @@ public class Interpreter {
                                 System.err.println("Invalid character value for alphabet");
                                 break;
                             }
-                            fsa.addAlphabet(fsaScan.next().trim().charAt(0));
+                            fsa.addAlphabet(s.charAt(0));
                         }
 
                         ArrayList<ArrayList<String>> states = new ArrayList<>();
