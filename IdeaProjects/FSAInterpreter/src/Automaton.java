@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Automaton {
-    private String desc;
+    private String comment;
     private List<Character> alphabet = new ArrayList<Character>();
     private ArrayList<ArrayList<String>> states = new ArrayList<>();
     private ArrayList<String> accept = new ArrayList<>();
@@ -11,8 +11,8 @@ public class Automaton {
         this("", new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
-    public Automaton(String desc, List<Character> alphabet, ArrayList<ArrayList<String>> transitions, ArrayList<String> accept) {
-        this.desc = desc;
+    public Automaton(String comment, List<Character> alphabet, ArrayList<ArrayList<String>> transitions, ArrayList<String> accept) {
+        this.comment = comment;
         this.alphabet = alphabet;
         this.states = transitions;
         this.accept = accept;
@@ -38,40 +38,16 @@ public class Automaton {
         return "reject";
     }
 
-    public List<Character> getAlphabet() {
-        return this.alphabet;
-    }
-
-    public void setAlphabet(List<Character> alphabet) {
-        this.alphabet = alphabet;
-    }
-
     public void addAlphabet(char c) {
         this.alphabet.add(c);
     }
 
-    public String getDesc() {
-        return this.desc;
-    }
-
     public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public ArrayList<ArrayList<String>> getTransitions() {
-        return this.states;
+        this.comment = desc;
     }
 
     public void setTransitions(ArrayList<ArrayList<String>> transitions) {
         this.states = transitions;
-    }
-
-    public ArrayList<String> getAccept() {
-        return this.accept;
-    }
-
-    public void setAccept(ArrayList<String> accept) {
-        this.accept = accept;
     }
 
     public void addAccept(String s) {
@@ -80,22 +56,24 @@ public class Automaton {
 
     @Override
     public String toString() {
-        return "Automata{" +
-                "desc='" + this.desc + '\'' +
-                ", alphabet=" + this.alphabet +
-                ", transitions=" + this.states +
-                ", accept=" + this.accept +
-                '}';
+        return this.comment + '\n' + formattedTable();
     }
 
+    private String formattedTable() {
+        String defaultSpace = "  ";
+        String outputTable = "";
+        ArrayList<String> strings = new ArrayList<>();
+        String _temp = "";
+        for (char c : alphabet) {
 
-//    public static class Transition {
-//        private String start;
-//        private String character;
-//        private String end;
-//        public Transition(String start, String character, String end) {
-//
-//        }
-//    }
+        }
 
+        for (int i = 0; i < states.size(); i++) {
+            String temp = "";
+            ArrayList<String> stateTransitions = states.get(i);
+            String state = stateTransitions.get(0);
+
+        }
+        return outputTable;
+    }
 }

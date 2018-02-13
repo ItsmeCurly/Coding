@@ -4,8 +4,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Interpreter {
+    private final String VALUEPATTERN = "\"";
+
     public Interpreter() {
         this.run();
+    }
+
+    public static void main(String[] args) {
+        new Interpreter();
     }
 
     private void run() {
@@ -22,15 +28,27 @@ public class Interpreter {
                 }
                 case "define":
                     String name = scan.next();
+                    if (!isValidIdentifier(name)) {
+                        System.err.println("Invalid identifier for variable");
+                        break;
+                    }
                     String data = scan.nextLine().trim();
 
                     if (data.equals("fsa")) {
                         Automaton fsa = new Automaton();
-                        fsa.setDesc(scan.nextLine());
+                        fsa.setDesc(scan.next());
+                        scan.nextLine();
                         String line = scan.nextLine();
                         Scanner fsaScan = new Scanner(line);
-                        while (fsaScan.hasNext())
+                        while (fsaScan.hasNext()) {
+                            String s = fsaScan.next().trim();
+                            if (s.length() != 1) {
+                                System.err.println("Invalid character value for alphabet");
+                                break;
+                            }
                             fsa.addAlphabet(fsaScan.next().trim().charAt(0));
+                        }
+
                         ArrayList<ArrayList<String>> states = new ArrayList<>();
                         while (!(line = scan.nextLine()).isEmpty()) {
                             fsaScan = new Scanner(line);
@@ -47,21 +65,45 @@ public class Interpreter {
                         }
                         fsaScan.close();
                         fsa.setTransitions(states);
-                        varMap.put(name, fsa);
-                    } else if (data.contains("\"")) {
-                        varMap.put(name, data.substring(1, data.length() - 1));
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, fsa);
+                        else
+                            varMap.replace(name, fsa);
+                    } else if (data.contains(this.VALUEPATTERN)) {
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, data.replaceAll(this.VALUEPATTERN, ""));
+                        else
+                            varMap.replace(name, data.replaceAll(this.VALUEPATTERN, ""));
                     }
 
                     break;
                 case "run": {
-                    Automaton fsa = (Automaton) varMap.get(scan.next());
-                    String x = scan.next();
-                    if (x.contains("\"")) {
-                        System.out.println(fsa.run(x).substring(1, x.length()));
-                    } else if (varMap.containsKey(x)) {
-                        System.out.println(fsa.run((String)varMap.get(x)));
+                    Automaton fsa;
+                    String varIdentifier = scan.next();
+                    if (!isValidIdentifier(varIdentifier)) {
+                        System.err.println("Automaton identifier not valid");
+                        break;
                     }
 
+                    if (varMap.containsKey(varIdentifier))
+                        fsa = (Automaton) varMap.get(varIdentifier);
+                    else {
+                        System.err.println("Automaton " + varIdentifier + " not present");
+                        break;
+                    }
+                    String value = scan.next();
+                    if (value.contains("\"")) {
+                        System.out.println(fsa.run(value.replaceAll(this.VALUEPATTERN, "")));
+                        break;
+                    }
+                    if (!isValidIdentifier(value)) {
+                        System.err.println("Variable identifier not valid");
+                        break;
+                    }
+                    if (varMap.containsKey(value))
+                        System.out.println(fsa.run((String) varMap.get(value)));
+                    else
+                        System.err.println("Variable Identifier " + value + " not present");
                     break;
                 }
                 default:
@@ -71,7 +113,17 @@ public class Interpreter {
         }
     }
 
-    public static void main(String[] args) {
-        new Interpreter();
+    /**
+     * @param s The string to validate
+     * @return Whether the string is a valid Java variable identifier
+     */
+    private boolean isValidIdentifier(String s) {
+        if (!Character.isJavaIdentifierStart(s.charAt(0)))
+            return false;
+        for (int i = 1; i < s.length(); i++) {
+            if (!Character.isJavaIdentifierPart(s.charAt(i)))
+                return false;
+        }
+        return true;
     }
 }
