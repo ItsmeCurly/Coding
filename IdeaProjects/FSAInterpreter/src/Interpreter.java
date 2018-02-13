@@ -57,9 +57,9 @@ public class Interpreter {
                     Automaton fsa = (Automaton) varMap.get(scan.next());
                     String x = scan.next();
                     if (x.contains("\"")) {
-                        fsa.run(x);
+                        System.out.println(fsa.run(x).substring(1, x.length()));
                     } else if (varMap.containsKey(x)) {
-                        fsa.run((String) varMap.get(x));
+                        System.out.println(fsa.run((String)varMap.get(x)));
                     }
 
                     break;
