@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Interpreter {
     private final String VALUEPATTERN = "\"";
 
-    public Interpreter() {
+    private Interpreter() {
         this.run();
     }
 
@@ -14,30 +14,49 @@ public class Interpreter {
         new Interpreter();
     }
 
+    /**
+     * @param s The string to validate
+     * @return Whether the string is a valid Java variable identifier
+     */
+    private boolean isValidIdentifier(String s) {
+        if (!Character.isJavaIdentifierStart(s.charAt(0)))
+            return false;
+        for (int i = 1; i < s.length(); i++) {
+            if (!Character.isJavaIdentifierPart(s.charAt(i)))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Runner of Interpreter
+     */
     private void run() {
         Scanner scan = new Scanner(System.in);
         Map<String, Object> varMap = new LinkedHashMap<>();
+        String in = "";
         label:
-        while (true) {
-            switch (scan.next()) {
+        while (!(in = scan.nextLine()).isEmpty()) {
+            Scanner scanIn = new Scanner(in);
+            switch (scanIn.next()) {
                 case "quit":
                     break label;
                 case "print": {
-                    System.out.println(varMap.get(scan.next()));
+                    System.out.println(varMap.get(scanIn.next()));
                     break;
                 }
                 case "define":
-                    String name = scan.next();
+                    String name = scanIn.next();
                     if (!isValidIdentifier(name)) {
                         System.err.println("Invalid identifier for variable");
                         break;
                     }
-                    String data = scan.nextLine().trim();
+                    String data = scanIn.nextLine().trim();
 
                     if (data.equals("fsa")) {
                         Automaton fsa = new Automaton();
                         Scanner line_ = new Scanner(scan.nextLine());
-                        fsa.setDesc(line_.next());
+                        fsa.setComment(line_.next());
                         String line = scan.nextLine();
                         Scanner fsaScan = new Scanner(line);
                         while (fsaScan.hasNext()) {
@@ -79,7 +98,7 @@ public class Interpreter {
                     break;
                 case "run": {
                     Automaton fsa;
-                    String varIdentifier = scan.next();
+                    String varIdentifier = scanIn.next();
                     if (!isValidIdentifier(varIdentifier)) {
                         System.err.println("Automaton identifier not valid");
                         break;
@@ -91,7 +110,7 @@ public class Interpreter {
                         System.err.println("Automaton " + varIdentifier + " not present");
                         break;
                     }
-                    String value = scan.next();
+                    String value = scanIn.next();
                     if (value.contains("\"")) {
                         System.out.println(fsa.run(value.replaceAll(this.VALUEPATTERN, "")));
                         break;
@@ -111,19 +130,5 @@ public class Interpreter {
                     break;
             }
         }
-    }
-
-    /**
-     * @param s The string to validate
-     * @return Whether the string is a valid Java variable identifier
-     */
-    private boolean isValidIdentifier(String s) {
-        if (!Character.isJavaIdentifierStart(s.charAt(0)))
-            return false;
-        for (int i = 1; i < s.length(); i++) {
-            if (!Character.isJavaIdentifierPart(s.charAt(i)))
-                return false;
-        }
-        return true;
     }
 }
