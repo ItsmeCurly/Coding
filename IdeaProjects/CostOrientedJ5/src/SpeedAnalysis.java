@@ -1,10 +1,10 @@
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-public class Interpreter {
+public class SpeedAnalysis {
     private static Scanner scan;
 
-    private Interpreter(String input) {
+    private SpeedAnalysis(String input) {
         scan = new Scanner(input);
         char move = scan.next().charAt(0);
         int doorDistance = Integer.parseInt(scan.next());
@@ -51,7 +51,7 @@ public class Interpreter {
     public static void main(String[] args) {
         scan = new Scanner(System.in);
         System.out.print("Enter the distance to the door, followed by JJ's pogo sticks' distances: ");
-        new Interpreter(scan.nextLine());
+        new SpeedAnalysis(scan.nextLine());
         scan.close();
     }
 }
