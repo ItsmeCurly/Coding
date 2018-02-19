@@ -14,7 +14,7 @@ public class ArrayGen {
 
     public ArrayGen() {
         Random rand = new Random();
-        doorLength = rand.nextInt(25) + 5;
+        doorLength = rand.nextInt(15) + 5;
 
         int length = rand.nextInt(doorLength - 2) + 3;
 

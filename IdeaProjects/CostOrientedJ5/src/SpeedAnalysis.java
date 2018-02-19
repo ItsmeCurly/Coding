@@ -1,57 +1,152 @@
+import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class SpeedAnalysis {
-    private static Scanner scan;
 
-    private SpeedAnalysis(String input) {
-        scan = new Scanner(input);
-        char move = scan.next().charAt(0);
-        int doorDistance = Integer.parseInt(scan.next());
+    private SpeedAnalysis() {
+        Scanner scan2 = new Scanner(System.in);
+        char move = scan2.next().toUpperCase().charAt(0);
 
-        String line = scan.nextLine();
-        Scanner lineS = new Scanner(line);
-        String firstEl = "";
-
-        LinkedHashMap<Integer, Integer> coins = new LinkedHashMap<>();
-        String po = "";
-        String co = "";
-
-        while (lineS.hasNext()) {
-            if ((firstEl = lineS.next()).contains("-"))
-                coins.put(lineS.nextInt(), Integer.parseInt(firstEl.replace("-", "")));
-            else {
-                co += firstEl + " ";
-                po += lineS.next() + " ";
-            }
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("assets\\RuntimeAnalysis\\" + Character.toString(move).toLowerCase() + "arrays.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-
-        String[] cos = co.split(" ");
-        String[] pog = po.split(" ");
-
-        int[] costs = new int[cos.length];
-        int[] pogos = new int[pog.length];
-
-        for (int i = 0; i < pog.length; i++) {
-            costs[i] = Integer.parseInt(cos[i]);
-            pogos[i] = Integer.parseInt(pog[i]);
-        }
+        long[] times = new long[DATA.RUNS];
+        int[] length = new int[DATA.RUNS];
+        int[] length_ = new int[DATA.RUNS];
+        int[] combos = new int[DATA.RUNS];
 
         switch (move) {
             case 'E':
-                new JJ(doorDistance, pogos, costs);
+                for (int i = 0; i < DATA.RUNS; i++) {
+                    String input = null;
+                    try {
+                        assert br != null;
+                        input = br.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Scanner lineS = new Scanner(input);
+                    lineS.next();
+                    int doorDistance = lineS.nextInt();
+                    String firstEl;
+
+                    LinkedHashMap<Integer, Integer> coins = new LinkedHashMap<>();
+                    String po = "";
+                    String co = "";
+
+                    while (lineS.hasNext()) {
+                        if ((firstEl = lineS.next()).contains("-"))
+                            coins.put(lineS.nextInt(), Integer.parseInt(firstEl.replace("-", "")));
+                        else {
+                            co += firstEl + " ";
+                            po += lineS.next() + " ";
+                        }
+                    }
+
+                    String[] cos = co.split(" ");
+                    String[] pog = po.split(" ");
+
+                    int[] costs = new int[cos.length];
+                    int[] pogos = new int[pog.length];
+
+                    for (int j = 0; j < pog.length; j++) {
+                        costs[j] = Integer.parseInt(cos[j]);
+                        pogos[j] = Integer.parseInt(pog[j]);
+                    }
+
+                    long startTime = System.currentTimeMillis();
+                    JJ jj = new JJ(doorDistance, pogos, costs);
+                    long endTime = System.currentTimeMillis();
+                    times[i] = endTime - startTime;
+                    length[i] = doorDistance;
+                    length_[i] = pogos.length;
+                    combos[i] = jj.getCombos();
+                    System.out.println(i);
+                }
+                PrintWriter pw = null;
+                try {
+                    br.close();
+                    pw = new PrintWriter("assets\\RuntimeAnalysis\\" + Character.toString(move).toLowerCase() + "times.txt");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < DATA.RUNS; i++) {
+                    pw.print(times[i]);
+                    pw.println(" " + length[i] + " " + length_[i] + " " + combos[i]);
+                }
+                pw.close();
+
                 break;
             case 'M':
-                new JJ(doorDistance, pogos, costs, coins);
+                for (int i = 0; i < DATA.RUNS; i++) {
+                    String input = null;
+                    try {
+                        assert br != null;
+                        input = br.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Scanner lineS = new Scanner(input);
+
+                    lineS.next();
+                    int doorDistance = lineS.nextInt();
+                    String firstEl;
+
+                    LinkedHashMap<Integer, Integer> coins = new LinkedHashMap<>();
+                    String po = "";
+                    String co = "";
+
+                    while (lineS.hasNext()) {
+                        if ((firstEl = lineS.next()).contains("-"))
+                            coins.put(lineS.nextInt(), Integer.parseInt(firstEl.replace("-", "")));
+                        else {
+                            co += firstEl + " ";
+                            po += lineS.next() + " ";
+                        }
+                    }
+
+                    String[] cos = co.split(" ");
+                    String[] pog = po.split(" ");
+
+                    int[] costs = new int[cos.length];
+                    int[] pogos = new int[pog.length];
+
+                    for (int j = 0; j < pog.length; j++) {
+                        costs[j] = Integer.parseInt(cos[j]);
+                        pogos[j] = Integer.parseInt(pog[j]);
+                    }
+
+                    long startTime = System.currentTimeMillis();
+                    JJ jj = new JJ(doorDistance, pogos, costs, coins);
+                    long endTime = System.currentTimeMillis();
+                    times[i] = endTime - startTime;
+                    length[i] = doorDistance;
+                    length_[i] = pogos.length;
+                    combos[i] = jj.getCombos();
+                }
+                pw = null;
+                try {
+                    br.close();
+                    pw = new PrintWriter("assets\\RuntimeAnalysis\\" + Character.toString(move).toLowerCase() + "times.txt");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < DATA.RUNS; i++) {
+                    pw.print(times[i]);
+                    pw.println(" " + length[i] + " " + length_[i] + " " + combos[i]);
+                }
+                pw.close();
                 break;
         }
-        scan.close();
     }
 
     public static void main(String[] args) {
-        scan = new Scanner(System.in);
-        System.out.print("Enter the distance to the door, followed by JJ's pogo sticks' distances: ");
-        new SpeedAnalysis(scan.nextLine());
-        scan.close();
+        new SpeedAnalysis();
     }
 }

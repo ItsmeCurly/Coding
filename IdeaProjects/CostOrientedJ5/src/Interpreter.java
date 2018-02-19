@@ -11,7 +11,7 @@ public class Interpreter {
 
         String line = scan.nextLine();
         Scanner lineS = new Scanner(line);
-        String firstEl = "";
+        String firstEl;
 
         LinkedHashMap<Integer, Integer> coins = new LinkedHashMap<>();
         String po = "";
@@ -39,10 +39,12 @@ public class Interpreter {
 
         switch (move) {
             case 'E':
-                new JJ(doorDistance, pogos, costs);
+                JJ jj = new JJ(doorDistance, pogos, costs);
+                jj.printOutput(move);
                 break;
             case 'M':
-                new JJ(doorDistance, pogos, costs, coins);
+                jj = new JJ(doorDistance, pogos, costs, coins);
+                jj.printOutput(move);
                 break;
         }
         scan.close();

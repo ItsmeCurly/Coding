@@ -21,7 +21,6 @@ public class JJ {
 
         enumerate(new int[doorLength], 0, 0);
         sortList(output);
-        System.out.println("# of Combinations: " + counter + "\n" + printList(output));
     }
 
     JJ(int doorLength, int[] pogos, int[] costs, LinkedHashMap<Integer, Integer> coins) { //min cost
@@ -32,14 +31,19 @@ public class JJ {
         minCost = Integer.MAX_VALUE;
 
         minimumCost(new int[doorLength], 0, 0, coins);
-        System.out.println(this.minCost + " " + printList(minList));
     }
 
     private void enumerate(int[] movements, int currentIndex, int currentCost) { //minCost
         int sum = sumArr(movements);
 
-        if (doorLength == sum) //the movements = doorlength(reached)
+        if (doorLength == sum) {
+            //the movements = doorlength(reached)
+            long startTime = System.currentTimeMillis();
             addEnumeration(movements, currentCost, currentIndex);
+            long endTime = System.currentTimeMillis();
+            System.out.println(endTime - startTime);
+        }
+
         if (doorLength <= sum) //the movements is greater or equal to the doorlength, to end recursion
             return;
 
@@ -112,6 +116,22 @@ public class JJ {
         for (int movement : list)
             sum += movement;
         return sum;
+    }
+
+    public int getCombos() {
+        return counter;
+    }
+
+    public void printOutput(char move) {
+        switch (move) {
+            case 'E':
+                System.out.println("# of Combinations: " + counter + "\n" + printList(output));
+                break;
+            case 'M':
+
+                System.out.println(this.minCost + " " + printList(minList));
+                break;
+        }
     }
 
     class StringSort implements Comparator {
