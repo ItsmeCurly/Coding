@@ -36,13 +36,8 @@ public class JJ {
     private void enumerate(int[] movements, int currentIndex, int currentCost) { //minCost
         int sum = sumArr(movements);
 
-        if (doorLength == sum) {
-            //the movements = doorlength(reached)
-            long startTime = System.currentTimeMillis();
+        if (doorLength == sum) //the movements = doorlength(reached)
             addEnumeration(movements, currentCost, currentIndex);
-            long endTime = System.currentTimeMillis();
-            System.out.println(endTime - startTime);
-        }
 
         if (doorLength <= sum) //the movements is greater or equal to the doorlength, to end recursion
             return;
@@ -128,7 +123,6 @@ public class JJ {
                 System.out.println("# of Combinations: " + counter + "\n" + printList(output));
                 break;
             case 'M':
-
                 System.out.println(this.minCost + " " + printList(minList));
                 break;
         }
