@@ -12,6 +12,9 @@ public class ArrayGen {
     private int doorLength;
     private LinkedHashMap<Integer, Integer> coins;
 
+    /**
+     * Randomly generates sets of arrays set
+     */
     public ArrayGen() {
         Random rand = new Random();
         doorLength = rand.nextInt(15) + 5;

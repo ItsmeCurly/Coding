@@ -3,7 +3,10 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class SpeedAnalysis {
-
+    /**
+     * Recycled code from homework 1, uses System.currentTimeMillis() to get runtime and subtracts from end time
+     * The algorithm will print to etimes.txt or mtimes.txt whether the command was E vs M
+     */
     private SpeedAnalysis() {
         Scanner scan2 = new Scanner(System.in);
         char move = scan2.next().toUpperCase().charAt(0);

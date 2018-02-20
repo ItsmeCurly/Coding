@@ -16,7 +16,7 @@ public class Interpreter {
         LinkedHashMap<Integer, Integer> coins = new LinkedHashMap<>();
         String po = "";
         String co = "";
-
+        //whether the input is a coin or a cost/pogo combination
         while (lineS.hasNext()) {
             if ((firstEl = lineS.next()).contains("-"))
                 coins.put(lineS.nextInt(), Integer.parseInt(firstEl.replace("-", "")));
@@ -36,7 +36,7 @@ public class Interpreter {
             costs[i] = Integer.parseInt(cos[i]);
             pogos[i] = Integer.parseInt(pog[i]);
         }
-
+        //uses different constructors for E vs M
         switch (move) {
             case 'E':
                 JJ jj = new JJ(doorDistance, pogos, costs);
