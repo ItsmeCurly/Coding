@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74af97d6-b19b-4123-b18a-0e7e9db9247f" name="Default" comment="" />
+    <list default="true" id="74af97d6-b19b-4123-b18a-0e7e9db9247f" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../IdeaProjects/NFAInterpreter/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../IdeaProjects/NFAInterpreter/Makefile" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../IdeaProjects/NFAInterpreter/src/Automaton.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../IdeaProjects/NFAInterpreter/src/Interpreter.java" />
+    </list>
     <ignored path="../../../IdeaProjects/ExternalTesting/.idea/workspace.xml" />
     <ignored path="../../../IdeaProjects/ExternalTesting/out/production/ExternalTesting/Client.class" />
     <ignored path="../../../IdeaProjects/ExternalTesting/out/production/ExternalTesting/Inet.class" />
@@ -87,6 +92,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -99,7 +105,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -189,6 +194,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/rabbits.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rabbits.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
