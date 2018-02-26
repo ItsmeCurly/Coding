@@ -1,0 +1,7 @@
+define n1 fsa
+n101
+	0 	1 	..
+ q1	q1	q1,q2	..
+ q2	q3	..	q3
+ q3	..	q4	..
+*q4	q4	q4	..

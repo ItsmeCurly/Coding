@@ -1,0 +1,13 @@
+define m1 fsa
+m1
+	0   1
+q1  	q1  q2
+*q2  	q1  q2
+
+define m2 fsa
+m2
+0 1
+q4 q5 q5
+*q5 q4 q5
+
+define m1nm2 dfaUnion m1 m2

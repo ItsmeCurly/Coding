@@ -72,20 +72,23 @@ public class State implements Comparable<State> {
     }
 
     @Override
-    public String toString() {
-        return stateID;
+    public int compareTo(State o) {
+
+        int val = 0;
+        for (char c : this.getStateID().toCharArray()) {
+            val += c;
+        }
+
+        int oVal = 0;
+        for (char c : o.getStateID().toCharArray()) {
+            oVal += c;
+        }
+
+        return val - oVal;
     }
 
     @Override
-    public int compareTo(State o) {
-        int val = 0;
-        for (char c : this.getStateID().toCharArray()) {
-            val += Character.valueOf(c);
-        }
-        int oVal = 0;
-        for (char c : o.getStateID().toCharArray()) {
-            oVal += Character.valueOf(c);
-        }
-        return val - oVal;
+    public String toString() {
+        return stateID;
     }
 }

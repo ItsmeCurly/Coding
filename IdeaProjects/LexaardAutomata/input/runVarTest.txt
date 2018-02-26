@@ -1,0 +1,8 @@
+define m1 fsa
+m1
+	0   1
+q1  	q1  q2
+*q2  	q1  q2
+
+define x "010101010101"
+run m1 x

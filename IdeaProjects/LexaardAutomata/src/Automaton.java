@@ -1,36 +1,55 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-public class Automaton {
+public class Automaton implements Comparable<Automaton> {
     private final int SPACE = -20;
     private ArrayList<String> alphabet;
     private List<State> states;
     private String comment;
+    private State startState;
 
+    /**
+     * Creates a blank automaton
+     */
     public Automaton() {
         this.states = new LinkedList<>();
         this.comment = "";
         this.alphabet = new ArrayList<>();
     }
 
-    public Automaton(LinkedList<State> states) {
+    /**
+     * Create a new Automaton with a specified list of states
+     *
+     * @param states
+     */
+    public Automaton(List<State> states) {
         this.states = states;
         this.comment = "";
         this.alphabet = new ArrayList<>();
     }
 
+    /**
+     * Copies an automaton's data onto another
+     * @param other The other automaton to copy
+     */
     public Automaton(Automaton other) {
         this.alphabet = other.getAlphabet();
         this.states = other.getStates();
         this.comment = other.getComment();
     }
 
+    /**
+     * Runs an input string on the FSA
+     * @param input The input specified by the input alphabet
+     * @return The string "accept" or "reject" depending on whether the input string is accepted or not
+     */
     public String run(String input) {
-        ArrayList<State> currentState = new ArrayList<>();
-        ArrayList<State> nextStates = new ArrayList<>();
+        List<State> currentState = new ArrayList<>();
+        List<State> nextStates = new ArrayList<>();
 
         currentState.add(states.get(0));
-
-        Scanner scan = new Scanner(input);
 
         for (char c : input.toCharArray()) {
             for (State s : currentState) {
@@ -57,25 +76,105 @@ public class Automaton {
         return "reject";
     }
 
+    /**
+     * Returns the states of the FSA
+     * @return The states of the FSA as a List
+     */
     public List<State> getStates() {
         return states;
     }
 
+    /**
+     * Sets the states of the FSA
+     * @param states The new states List
+     */
     public void setStates(List<State> states) {
         this.states = states;
     }
 
+    /**
+     * Get the comment of the FSA
+     * @return The FSA's comment
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     * Set the comment of the FSA
+     * @param comment The comment to set to the FSA
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
+    /**
+     * Gets the start state of the FSA
+     *
+     * @return The start state
+     */
+    public State getStartState() {
+        return startState;
+    }
+
+    /**
+     * Sets the start state of the FSA
+     *
+     * @param startState The new start state
+     */
+    public void setStartState(State startState) {
+        this.startState = startState;
+    }
+
+    /**
+     * Gets the alphabet of the FSA
+     *
+     * @return The alphabet
+     */
+    public ArrayList<String> getAlphabet() {
+        return alphabet;
+    }
+
+    /**
+     * Sets the alphabet of the FSA
+     *
+     * @param alphabet The new alphabet
+     */
+    public void setAlphabet(ArrayList<String> alphabet) {
+        this.alphabet = alphabet;
+    }
+
+    /**
+     * Checks whether the FSA is deterministic or not
+     *
+     * @return Whether the FSA is deterministic
+     */
+    protected boolean isDeterministic() {
+        if (alphabet.contains("..")) {
+            return false;
+        }
+        for (String str : alphabet) {
+            for (State s : states) {
+                ArrayList<State> current = s.getNextState().get(str);
+                if (current != null && current.size() > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Sorts the states of the FSA in lexicographical order
+     */
+    public void sortStates() {
+        states = Interpreter.asSortedList(states);
+    }
+
     @Override
     public String toString() {
-        String result = String.format("%" + SPACE + "s", "");
+        String result = comment + '\n';
+        result += String.format("%" + SPACE + "s", "");
         for (String anAlphabet : alphabet) {
             result += String.format("%" + SPACE + "s", anAlphabet);
         }
@@ -101,30 +200,9 @@ public class Automaton {
         return result;
     }
 
-    public boolean isDeterministic() {
-        if (alphabet.contains("..")) {
-            return false;
-        }
-        for (String str : alphabet) {
-            for (State s : states) {
-                ArrayList<State> current = s.getNextState().get(str);
-                if (current != null && current.size() > 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public ArrayList<String> getAlphabet() {
-        return alphabet;
-    }
-
-    public void setAlphabet(ArrayList<String> alphabet) {
-        this.alphabet = alphabet;
-    }
-
-    public void sortStates() {
-        states = Interpreter.asSortedList(states);
+    @Override
+    public int compareTo(Automaton o) {
+        //TODO FOR EQUIVP
+        return 0;
     }
 }
