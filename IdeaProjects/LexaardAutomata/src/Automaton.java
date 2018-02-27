@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Automaton implements Comparable<Automaton> {
+public class Automaton {
     private final int SPACE = -20;
     private ArrayList<String> alphabet;
     private List<State> states;
@@ -201,8 +201,17 @@ public class Automaton implements Comparable<Automaton> {
     }
 
     @Override
-    public int compareTo(Automaton o) {
-        //TODO FOR EQUIVP
-        return 0;
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Automaton)) {
+            return false;
+        }
+
+        Automaton fsa2 = (Automaton) o;
+
+        return this.states.equals(fsa2.getStates()) && this.alphabet.equals(fsa2.getAlphabet());
     }
 }

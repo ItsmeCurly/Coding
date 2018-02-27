@@ -1,12 +1,20 @@
 import java.util.*;
 
 public class Interpreter {
-    private final String VALUEPATTERN = "\"";
+    private final String VALUEPATTERN = "\"";   //value to indicate number instead of variable
 
+    /**
+     * Interpreter to run program
+     */
     private Interpreter() {
         this.run();
     }
 
+    /**
+     * Main function
+     *
+     * @param args input to program
+     */
     public static void main(String[] args) {
         new Interpreter();
     }
@@ -304,7 +312,11 @@ public class Interpreter {
                     }
                     //if user command is FSAequivP, read in the two FSAs and return a boolean denoting whether they are equivalent
                     else if (command.equals("FSAequivp")) {
-                        //TODO
+                        boolean newBool = fsaEquivP((Automaton) varMap.get(scanIn.next()), (Automaton) varMap.get(scanIn.next()));
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, newBool);
+                        else
+                            varMap.replace(name, newBool);
                     }
                     break;
                 case "run": {
@@ -596,8 +608,19 @@ public class Interpreter {
      * @return Whether the two FSA are equivalent
      */
     private boolean fsaEquivP(Automaton fsa1, Automaton fsa2) {
-        //TODO FINISH SECTION
-        return true;
+        Automaton dfa1, dfa2;
+        if (!fsa1.isDeterministic()) {
+            dfa1 = nfa2Dfa(fsa1);
+        } else {
+            dfa1 = fsa1;
+        }
+        if (!fsa2.isDeterministic()) {
+            dfa2 = nfa2Dfa(fsa2);
+        } else {
+            dfa2 = fsa2;
+        }
+
+        return dfa1.equals(dfa2);
     }
 
     /**

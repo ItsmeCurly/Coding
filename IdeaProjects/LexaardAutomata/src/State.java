@@ -15,6 +15,12 @@ public class State implements Comparable<State> {
         this.setNextState(new HashMap<>());
     }
 
+    /**
+     * Creates a new state with stateID and set of states, to be used with DFA
+     *
+     * @param stateID
+     * @param stateSet
+     */
     public State(String stateID, Set<State> stateSet) {
         this.stateID = stateID;
         this.stateSet = stateSet;
