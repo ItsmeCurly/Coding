@@ -5,7 +5,10 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Interpreter implements CROSS {
-
+    /**
+     * Interpreter that runs from MainRunner.java, consists of a single line of input that will print the results to the console
+     * @param line - the line of input that denotes the user input of pole lengths
+     */
     public Interpreter(String line) {
         String[] lengths = line.split(" ");
 
@@ -19,8 +22,12 @@ public class Interpreter implements CROSS {
         poles.printResults();
     }
 
+    /**
+     * Interpreter constructor called from TestRunner.java, which passes in a file for input lines
+     * @param file The file that contains the test cases randomly generated from RandomPoleGeneration.java
+     */
     public Interpreter(File file) {
-        long[] times = new long[RUNS];
+        long[] times = new long[RUNS];          //for printing to output
         int[] numPoles = new int[RUNS];
         int[] combinations = new int[RUNS];
         int[] calls = new int[RUNS];
@@ -33,11 +40,11 @@ public class Interpreter implements CROSS {
         }
 
 
-        for (int t = 0; t < RUNS; t++) {
+        for (int t = 0; t < RUNS; t++) {        //should run for RUNS amount of times
             String line = fileScanner.nextLine();
 
             String[] input = line.split(" ");
-            int[] poleLengths = new int[input.length];
+            int[] poleLengths = new int[input.length];  //get input from line, break into array for input into poles
 
             for (int i = 0; i < poleLengths.length; i++) {
                 poleLengths[i] = Integer.parseInt(input[i]);
@@ -49,15 +56,15 @@ public class Interpreter implements CROSS {
 
             long endTime = System.nanoTime();
 
-            long elongatedTime = endTime - startTime;
+            long elongatedTime = endTime - startTime;       //get elapsed time for algorithm
 
-            times[t] = elongatedTime;
+            times[t] = elongatedTime;                   //data to print
             numPoles[t] = poles.getNumPoles();
             combinations[t] = poles.getCombinations();
             calls[t] = poles.getCalls();
         }
 
-        PrintWriter pw = null;
+        PrintWriter pw = null;      //print out to output file
         try {
             pw = new PrintWriter(outputFileString);
             fileScanner.close();
