@@ -6,9 +6,14 @@ import java.util.Set;
 public class Poles {
     private int[] poleLengths;
     private Set<int[]> outputSet;
+    private final int MAXSIZE = 3;
+    private int calls;
+    private int combinations;
 
     public Poles(int[] poleLengths) {
         this.poleLengths = poleLengths;
+        this.combinations = 0;
+        this.calls = 0;
         outputSet = new HashSet<>();
         Arrays.sort(poleLengths);
         getPoles(this.poleLengths, new int[]{0, 0, 0}, 0);
@@ -18,9 +23,10 @@ public class Poles {
         if (isLine(theseMoves)) {
             if (!setContains(outputSet, theseMoves))
                 outputSet.add(theseMoves);
+            combinations += 1;
         }
 
-        if (poleNumber > 2) {
+        if (poleNumber >= MAXSIZE) {
             return;
         }
 
@@ -35,7 +41,11 @@ public class Poles {
         for (int i = 0; i < poles.length; i++) { //to check all pogo jumps
             int[] newMoves = Arrays.copyOf(theseMoves, theseMoves.length);
             int[] newPoles = Arrays.copyOfRange(poles, i + 1, poles.length);
+
             newMoves[poleNumber] = poles[i];
+
+            calls += 1;
+
             getPoles(newPoles, newMoves, poleNumber + 1);
         }
     }
@@ -83,5 +93,13 @@ public class Poles {
 
     public int getNumPoles() {
         return poleLengths.length;
+    }
+
+    public int getCombinations() {
+        return combinations;
+    }
+
+    public int getCalls() {
+        return calls;
     }
 }

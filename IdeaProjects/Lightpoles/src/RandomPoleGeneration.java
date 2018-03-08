@@ -3,8 +3,8 @@ import java.io.PrintWriter;
 import java.util.Random;
 
 public class RandomPoleGeneration implements CROSS {
-    private final int MAXPOLELENGTH = 15;
-    private final int MAXPOLES = 20;
+    private final int MAXPOLELENGTH = 20;
+    private final int MAXPOLES = 40;
 
     private int[] poleLengths;
 
@@ -36,7 +36,7 @@ public class RandomPoleGeneration implements CROSS {
 
     public String toString() {
         String s = "";
-        for (int pole : poleLengths) s += " " + pole;
+        for (int pole : poleLengths) s += pole + " ";
         return s;
     }
 }
