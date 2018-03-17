@@ -49,7 +49,7 @@ public class Automaton {
         List<State> currentState = new ArrayList<>();
         List<State> nextStates = new ArrayList<>();
 
-        currentState.add(states.get(0));
+        currentState.add(startState);
 
         for (char c : input.toCharArray()) {
             for (State s : currentState) {

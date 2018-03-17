@@ -195,76 +195,11 @@ public class Interpreter {
                             varMap.put(name, command);
                         else
                             varMap.replace(name, command);
-                    } else if (command.equals("nfa2dfa")) {
-                        String oldName = scanIn.nextLine().trim();
-                        Automaton oldFSA = (Automaton) varMap.get(oldName);
+                    }
+                    //if user command is nfa2Dfa, read in one FSA and return the DFA equivalent regardless if DFA or NFA
+                    else if (command.equals("nfa2dfa")) {
+                        Automaton fsa = nfa2Dfa((Automaton) varMap.get(scanIn.next()));
 
-                        if (oldFSA.isDeterministic()) {
-                            Automaton fsa = new Automaton(oldFSA);
-                            if (!varMap.containsKey(name))
-                                varMap.put(name, fsa);
-                            else
-                                varMap.replace(name, fsa);
-                            break;
-                        }
-                        Automaton fsa = new Automaton();
-                        ArrayList<String> alphabet = new ArrayList<>();
-                        for (String s : oldFSA.getAlphabet()) {
-                            if (!s.equals(".."))
-                                alphabet.add(s);
-                        }
-                        fsa.setComment(oldFSA.getComment());
-
-                        fsa.setAlphabet(alphabet);
-
-                        List<State> oldStates = oldFSA.getStates();
-
-                        Set<State> stateSet = new TreeSet<>(oldStates);
-                        Set<Set<State>> powerSet = powerSet(stateSet);
-
-                        List<State> states = new ArrayList<>();
-
-                        for (Set<State> stateList : powerSet) {
-                            List<State> newList = asSortedList(stateList);
-                            State s = new State(stateNotation(newList), stateList);
-                            states.add(s);
-                        }
-
-                        fsa.setStates(states);
-
-                        for (State s : states) {
-
-                            List<State> transitionsList;
-                            for (String str : alphabet) {
-
-                                transitionsList = new ArrayList<>();
-                                for (State st : s.getStateSet()) {
-
-                                    List<State> transitions = st.getAllTransitions(str);
-                                    for (State sta : transitions) {
-
-                                        if (!transitionsList.contains(sta))
-                                            transitionsList.add(sta);
-                                        ArrayList<State> epsTransitions = sta.getAllTransitions("..");
-                                        for (State state : epsTransitions) {
-
-                                            if (!transitionsList.contains(state))
-                                                transitionsList.add(state);
-                                        }
-                                    }
-                                    transitionsList = asSortedList(transitionsList);
-                                }
-                                s.addTransition(getStateFromString(states, stateNotation(transitionsList)), str);
-                            }
-                        }
-                        ArrayList<State> temp = new ArrayList<>();
-
-                        temp.add(oldFSA.getStates().get(0));
-
-                        fsa.setStartState(getStateFromString(states, stateNotation(temp)));
-                        //to get states in lexicographical order
-                        fsa.sortStates();
-                        //insert state into varmapping
                         if (!varMap.containsKey(name))
                             varMap.put(name, fsa);
                         else
@@ -328,8 +263,12 @@ public class Interpreter {
                         break;
                     }
 
-                    if (varMap.containsKey(varIdentifier))
-                        fsa = (Automaton) varMap.get(varIdentifier);
+                    if (varMap.containsKey(varIdentifier)) {
+                        if (varMap.get(varIdentifier) instanceof Automaton)
+                            fsa = (Automaton) varMap.get(varIdentifier);
+                        else
+                            break;
+                    }
                     else {
                         System.err.println("Automaton " + varIdentifier + " not present");
                         break;
@@ -357,8 +296,73 @@ public class Interpreter {
     }
 
     private Automaton nfa2Dfa(Automaton nfa1) {
-        //TODO MOVE CODE BLOCK INTO METHOD
-        return null;
+        Automaton fsa;
+
+        if (nfa1.isDeterministic()) {
+            fsa = new Automaton(nfa1);
+            return fsa;
+        }
+        fsa = new Automaton();
+
+        ArrayList<String> alphabet = new ArrayList<>();
+
+        for (String s : nfa1.getAlphabet()) {
+            if (!s.equals(".."))
+                alphabet.add(s);
+        }
+        fsa.setComment(nfa1.getComment());
+
+        fsa.setAlphabet(alphabet);
+
+        List<State> oldStates = nfa1.getStates();
+
+        Set<State> stateSet = new TreeSet<>(oldStates);
+        Set<Set<State>> powerSet = powerSet(stateSet);
+
+        List<State> states = new ArrayList<>();
+
+        for (Set<State> stateList : powerSet) {
+            List<State> newList = asSortedList(stateList);
+            State s = new State(stateNotation(newList), stateList);
+            states.add(s);
+        }
+
+        fsa.setStates(states);
+
+        for (State s : states) {
+
+            List<State> transitionsList;
+            for (String str : alphabet) {
+
+                transitionsList = new ArrayList<>();
+                for (State st : s.getStateSet()) {
+
+                    List<State> transitions = st.getAllTransitions(str);
+                    for (State sta : transitions) {
+
+                        if (!transitionsList.contains(sta))
+                            transitionsList.add(sta);
+                        ArrayList<State> epsTransitions = sta.getAllTransitions("..");
+                        for (State state : epsTransitions) {
+
+                            if (!transitionsList.contains(state))
+                                transitionsList.add(state);
+                        }
+                    }
+                    transitionsList = asSortedList(transitionsList);
+                }
+                s.addTransition(getStateFromString(states, stateNotation(transitionsList)), str);
+            }
+        }
+        ArrayList<State> temp = new ArrayList<>();
+
+        temp.add(nfa1.getStates().get(0));
+
+        fsa.setStartState(getStateFromString(states, stateNotation(temp)));
+        //to get states in lexicographical order
+        fsa.sortStates();
+        //insert state into varmapping
+        return fsa;
     }
 
     /**
@@ -649,12 +653,12 @@ public class Interpreter {
     private List<Set<State>> crossProduct(List<State> l1, List<State> l2) {
         List<Set<State>> newList = new ArrayList<>();
         Set<State> temp;
-        for (int i = 0; i < l1.size(); i++) {
-            for (int j = 0; j < l2.size(); j++) {
+        for (State st1 : l1) {
+            for (State st2 : l2) {
                 temp = new TreeSet<>();
 
-                temp.add(l1.get(i));
-                temp.add(l2.get(j));
+                temp.add(st1);
+                temp.add(st2);
 
                 newList.add(temp);
             }
