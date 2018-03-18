@@ -1,17 +1,20 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class State implements Comparable<State> {
+    private static int stateCounter = 0;
     private String stateID;
     private boolean acceptState;
     private Map<String, ArrayList<State>> nextState;
     private Set<State> stateSet;
 
+    public State() {
+        this(Integer.toString(stateCounter));
+    }
+
     public State(String stateID) {
+        stateCounter += 1;
         this.stateID = stateID;
-        this.stateSet = stateSet;
+        this.stateSet = new HashSet<>();
         this.setNextState(new HashMap<>());
     }
 
@@ -25,6 +28,23 @@ public class State implements Comparable<State> {
         this.stateID = stateID;
         this.stateSet = stateSet;
         this.setNextState(new HashMap<>());
+        for (State st : stateSet) {
+            if (st.isAcceptState()) {
+                st.setAcceptState(true);
+                break;
+            }
+        }
+    }
+
+    public State(State other) {
+        this.stateID = other.stateID;
+        this.stateSet = new HashSet<>(other.getStateSet());
+        this.setNextState(new HashMap<>());
+        for (String s : other.getNextState().keySet()) {
+            for (State st : other.getAllTransitions(s)) {
+                addTransition(new State(st), s);
+            }
+        }
         for (State st : stateSet) {
             if (st.isAcceptState()) {
                 st.setAcceptState(true);
@@ -59,6 +79,10 @@ public class State implements Comparable<State> {
 
     public void setAcceptState(boolean acceptState) {
         this.acceptState = acceptState;
+    }
+
+    public void negateAcceptState() {
+        this.acceptState = !this.acceptState;
     }
 
     public Map<String, ArrayList<State>> getNextState() {
