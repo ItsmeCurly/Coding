@@ -4,6 +4,10 @@ public class Regex {
     private String code;
     private Automaton fsaRepre;
 
+    public Regex() {
+        this(null);
+    }
+
     public Regex(String pre) {
         new RegexParser(pre);
     }
@@ -15,6 +19,14 @@ public class Regex {
     @Override
     public String toString() {
         return code;
+    }
+
+    public Automaton getFSARepresentation() {
+        return fsaRepre;
+    }
+
+    public void findFSArepre() {
+        //TODO find fsa repre of regex
     }
 
     private class RegexParser {

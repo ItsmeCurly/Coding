@@ -138,7 +138,26 @@ public class Interpreter {
                         else
                             varMap.replace(name, newRegex);
                     } else if (command.equals("regex2fsa")) {
+                        Regex regex = new Regex();
+                        String varIdentifier = scanIn.next();
 
+                        if (!isValidIdentifier(varIdentifier)) {
+                            System.err.println("Regex identifier not valid");
+                            break;
+                        }
+
+                        if (varMap.containsKey(varIdentifier)) {
+                            if (varMap.get(name) instanceof Regex)
+                                regex = (Regex) varMap.get(varIdentifier);
+                            else
+                                break;
+                        }
+
+                        Automaton fsa = regex.getFSARepresentation();
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, fsa);
+                        else
+                            varMap.replace(name, fsa);
                     }
                     break;
                 case "run": {
