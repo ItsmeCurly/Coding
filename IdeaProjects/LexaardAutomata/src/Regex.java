@@ -5,19 +5,19 @@ public class Regex {
     private String code;
     private Automaton fsaRepre;
 
-    Stack<Automaton> stackNfa = new Stack<Automaton>();
-    Stack<Character> stackOps = new Stack<Character>();
+    private Stack<Automaton> stackNfa;
+    private Stack<Character> stackOps;
 
     public Regex(String pre) {
         new RegexParser(pre);
-        stackNfa = new Stack<Automaton>();
-        stackOps = new Stack<Character>();
+        stackNfa = new Stack<>();
+        stackOps = new Stack<>();
     }
 
     public Regex(String actualRegex, int filler) {
         this.code = actualRegex;
-        stackNfa = new Stack<Automaton>();
-        stackOps = new Stack<Character>();
+        stackNfa = new Stack<>();
+        stackOps = new Stack<>();
     }
 
     public boolean match(String input) {
@@ -159,9 +159,9 @@ public class Regex {
                 } else {
                     switch (input) {
                         case "r.":
-                            return "^$";
+                            return "ε";
                         case "r/":
-                            return null;
+                            return "∅";
                         default:
                             return input;
                     }

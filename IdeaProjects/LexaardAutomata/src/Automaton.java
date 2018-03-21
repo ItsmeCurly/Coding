@@ -40,6 +40,10 @@ public class Automaton {
         this.startState = other.getStartState();
     }
 
+    /**
+     * @param thisFSA
+     * @return
+     */
     public static Automaton constructFSA(String thisFSA) {
         Automaton fsa = new Automaton();
         Scanner scan = new Scanner(thisFSA);
@@ -105,7 +109,6 @@ public class Automaton {
                     State st1 = getStateFromString(states, transitionScan.next());
                     st.addTransition(st1, alphabet.get(j - 1));
                 }
-
                 j += 1;
             }
         }
@@ -114,45 +117,138 @@ public class Automaton {
         return fsa;
     }
 
-    /**
-     * Returns the states of the FSA
-     * @return The states of the FSA as a List
-     */
-    public List<State> getStates() {
-        return states;
+    private static Automaton constructFSA(String thisFSA, State startState) {
+        Automaton fsa = constructFSA(thisFSA);
+        fsa.setStartState(getStateFromString(fsa.getStates(), startState.getStateID()));
+
+        return fsa;
     }
 
     /**
-     * Sets the states of the FSA
-     * @param states The new states List
+     * @param nfa1
+     * @return
      */
-    public void setStates(List<State> states) {
-        this.states = states;
+    public static Automaton nfa2Dfa(Automaton nfa1) {
+        Automaton fsa;
+
+        if (nfa1.isDeterministic()) {
+            fsa = new Automaton(nfa1);
+            return fsa;
+        }
+        fsa = new Automaton();
+
+        ArrayList<String> alphabet = new ArrayList<>();
+
+        for (String s : nfa1.getAlphabet()) {
+            if (!s.equals(".."))
+                alphabet.add(s);
+        }
+        fsa.setComment(nfa1.getComment());
+
+        fsa.setAlphabet(alphabet);
+
+        Automaton copy1 = constructFSA(nfa1.toString());
+
+        List<State> oldStates = copy1.getStates();
+
+        Set<State> stateSet = new TreeSet<>(oldStates);
+        Set<Set<State>> powerSet = powerSet(stateSet);
+
+        List<State> states = new ArrayList<>();
+
+        for (Set<State> stateList : powerSet) {
+            List<State> newList = asSortedList(stateList);
+            State s = new State(stateNotation(newList), stateList);
+            states.add(s);
+        }
+
+        fsa.setStates(states);
+
+        for (State s : states) {
+
+            List<State> transitionsList;
+            for (String str : alphabet) {
+
+                transitionsList = new ArrayList<>();
+                for (State st : s.getStateSet()) {
+
+                    List<State> transitions = st.getAllTransitions(str);
+                    for (State sta : transitions) {
+
+                        if (!transitionsList.contains(sta))
+                            transitionsList.add(sta);
+                        ArrayList<State> epsTransitions = sta.getAllTransitions("..");
+                        for (State state : epsTransitions) {
+
+                            if (!transitionsList.contains(state))
+                                transitionsList.add(state);
+                        }
+                    }
+                    transitionsList = asSortedList(transitionsList);
+                }
+                s.addTransition(getStateFromString(states, stateNotation(transitionsList)), str);
+            }
+        }
+        ArrayList<State> temp = new ArrayList<>();
+
+        temp.add(getStateFromString(oldStates, nfa1.getStartState().getStateID()));
+
+        fsa.setStartState(getStateFromString(states, stateNotation(temp)));
+        //to get states in lexicographical order
+        fsa.sortStates();
+        //insert state into varmapping
+        return fsa;
     }
 
     /**
-     * Get the comment of the FSA
-     * @return The FSA's comment
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * Set the comment of the FSA
-     * @param comment The comment to set to the FSA
-     */
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    /**
-     * Gets the start state of the FSA
+     * Helper method to get a testState variable within an array given a certain state ID
      *
-     * @return The start state
+     * @param states The states to search for the testState
+     * @param sta    The state ID of the state to find
+     * @return The testState variable within the array, matching the state ID. If not found, return null
      */
-    public State getStartState() {
-        return startState;
+    private static State getStateFromString(List<State> states, String sta) {
+        for (State st : states) {
+            if (st.getStateID().equals(sta)) {
+                return st;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Code provided by https://stackoverflow.com/a/740351, utilized to sort lexicographically
+     *
+     * @param c
+     * @return
+     */
+    private static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+        List<T> list = new ArrayList<T>(c);
+        java.util.Collections.sort(list);
+        return list;
+    }
+
+    /**
+     * Finds the cross product set of two lists
+     *
+     * @param l1 The first list to combine
+     * @param l2 The second list to combine
+     * @return A cross product of the two lists
+     */
+    private static List<Set<State>> crossProduct(List<State> l1, List<State> l2) {
+        List<Set<State>> newList = new ArrayList<>();
+        Set<State> temp;
+        for (State st1 : l1) {
+            for (State st2 : l2) {
+                temp = new TreeSet<>();
+
+                temp.add(st1);
+                temp.add(st2);
+
+                newList.add(temp);
+            }
+        }
+        return newList;
     }
 
     /**
@@ -260,102 +356,30 @@ public class Automaton {
     }
 
     /**
-     * Checks whether the FSA is deterministic or not
+     * Returns the states of the FSA
      *
-     * @return Whether the FSA is deterministic
+     * @return The states of the FSA as a List
      */
-    protected boolean isDeterministic() {
-        if (alphabet.contains("..")) {
-            return false;
-        }
-        for (String str : alphabet) {
-            for (State s : states) {
-                ArrayList<State> current = s.getNextState().get(str);
-                if (current != null && current.size() > 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public List<State> getStates() {
+        return states;
     }
 
-    public static Automaton constructFSA(String thisFSA, State startState) {
-        Automaton fsa = constructFSA(thisFSA);
-        fsa.setStartState(getStateFromString(fsa.getStates(), startState.getStateID()));
-
-        return fsa;
+    /**
+     * Sets the states of the FSA
+     *
+     * @param states The new states List
+     */
+    private void setStates(List<State> states) {
+        this.states = states;
     }
 
-    public static Automaton nfa2Dfa(Automaton nfa1) {
-        Automaton fsa;
-
-        if (nfa1.isDeterministic()) {
-            fsa = new Automaton(nfa1);
-            return fsa;
-        }
-        fsa = new Automaton();
-
-        ArrayList<String> alphabet = new ArrayList<>();
-
-        for (String s : nfa1.getAlphabet()) {
-            if (!s.equals(".."))
-                alphabet.add(s);
-        }
-        fsa.setComment(nfa1.getComment());
-
-        fsa.setAlphabet(alphabet);
-
-        Automaton copy1 = constructFSA(nfa1.toString());
-
-        List<State> oldStates = copy1.getStates();
-
-        Set<State> stateSet = new TreeSet<>(oldStates);
-        Set<Set<State>> powerSet = powerSet(stateSet);
-
-        List<State> states = new ArrayList<>();
-
-        for (Set<State> stateList : powerSet) {
-            List<State> newList = asSortedList(stateList);
-            State s = new State(stateNotation(newList), stateList);
-            states.add(s);
-        }
-
-        fsa.setStates(states);
-
-        for (State s : states) {
-
-            List<State> transitionsList;
-            for (String str : alphabet) {
-
-                transitionsList = new ArrayList<>();
-                for (State st : s.getStateSet()) {
-
-                    List<State> transitions = st.getAllTransitions(str);
-                    for (State sta : transitions) {
-
-                        if (!transitionsList.contains(sta))
-                            transitionsList.add(sta);
-                        ArrayList<State> epsTransitions = sta.getAllTransitions("..");
-                        for (State state : epsTransitions) {
-
-                            if (!transitionsList.contains(state))
-                                transitionsList.add(state);
-                        }
-                    }
-                    transitionsList = asSortedList(transitionsList);
-                }
-                s.addTransition(getStateFromString(states, stateNotation(transitionsList)), str);
-            }
-        }
-        ArrayList<State> temp = new ArrayList<>();
-
-        temp.add(getStateFromString(oldStates, nfa1.getStartState().getStateID()));
-
-        fsa.setStartState(getStateFromString(states, stateNotation(temp)));
-        //to get states in lexicographical order
-        fsa.sortStates();
-        //insert state into varmapping
-        return fsa;
+    /**
+     * Get the comment of the FSA
+     *
+     * @return The FSA's comment
+     */
+    private String getComment() {
+        return comment;
     }
 
     /**
@@ -501,19 +525,12 @@ public class Automaton {
     }
 
     /**
-     * Helper method to get a testState variable within an array given a certain state ID
+     * Set the comment of the FSA
      *
-     * @param states The states to search for the testState
-     * @param sta    The state ID of the state to find
-     * @return The testState variable within the array, matching the state ID. If not found, return null
+     * @param comment The comment to set to the FSA
      */
-    public static State getStateFromString(List<State> states, String sta) {
-        for (State st : states) {
-            if (st.getStateID().equals(sta)) {
-                return st;
-            }
-        }
-        return null;
+    private void setComment(String comment) {
+        this.comment = comment;
     }
 
     /**
@@ -564,21 +581,32 @@ public class Automaton {
     }
 
     /**
-     * Gets the alphabet of the FSA
+     * Gets the start state of the FSA
      *
-     * @return The alphabet
+     * @return The start state
      */
-    public List<String> getAlphabet() {
-        return alphabet;
+    private State getStartState() {
+        return startState;
     }
 
     /**
-     * Sets the alphabet of the FSA
+     * Checks whether the FSA is deterministic or not
      *
-     * @param alphabet The new alphabet
+     * @return Whether the FSA is deterministic
      */
-    public void setAlphabet(List<String> alphabet) {
-        this.alphabet = alphabet;
+    private boolean isDeterministic() {
+        if (alphabet.contains("..")) {
+            return false;
+        }
+        for (String str : alphabet) {
+            for (State s : states) {
+                ArrayList<State> current = s.getNextState().get(str);
+                if (current != null && current.size() > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -637,15 +665,12 @@ public class Automaton {
     }
 
     /**
-     * Code provided by https://stackoverflow.com/a/740351, utilized to sort lexicographically
+     * Gets the alphabet of the FSA
      *
-     * @param c
-     * @return
+     * @return The alphabet
      */
-    public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
-        List<T> list = new ArrayList<T>(c);
-        java.util.Collections.sort(list);
-        return list;
+    private List<String> getAlphabet() {
+        return alphabet;
     }
 
     @Override
@@ -681,26 +706,12 @@ public class Automaton {
     }
 
     /**
-     * Finds the cross product set of two lists
+     * Sets the alphabet of the FSA
      *
-     * @param l1 The first list to combine
-     * @param l2 The second list to combine
-     * @return A cross product of the two lists
+     * @param alphabet The new alphabet
      */
-    public static List<Set<State>> crossProduct(List<State> l1, List<State> l2) {
-        List<Set<State>> newList = new ArrayList<>();
-        Set<State> temp;
-        for (State st1 : l1) {
-            for (State st2 : l2) {
-                temp = new TreeSet<>();
-
-                temp.add(st1);
-                temp.add(st2);
-
-                newList.add(temp);
-            }
-        }
-        return newList;
+    private void setAlphabet(List<String> alphabet) {
+        this.alphabet = alphabet;
     }
 
     /**
@@ -758,16 +769,22 @@ public class Automaton {
     /**
      * Sorts the states of the FSA in lexicographical order
      */
-    public void sortStates() {
+    private void sortStates() {
         states = asSortedList(states);
     }
 
+    /**
+     *
+     */
     public void negateAcceptStates() {
         for (State s : states) {
             s.negateAcceptState();
         }
     }
 
+    /**
+     * @param c
+     */
     public void addAlphabet(char c) {
         if (!alphabet.contains(c + "")) {
             alphabet.add(c + "");
@@ -775,6 +792,9 @@ public class Automaton {
         ensureEpsilonAtEnd();
     }
 
+    /**
+     * @param s
+     */
     public void addAlphabet(String s) {
         if (!alphabet.contains(s)) {
             alphabet.add(s);
@@ -782,6 +802,9 @@ public class Automaton {
         ensureEpsilonAtEnd();
     }
 
+    /**
+     * @param listAlphabet
+     */
     public void addAlphabet(List<String> listAlphabet) {
         for (String s : listAlphabet) {
             if (!alphabet.contains(s)) {

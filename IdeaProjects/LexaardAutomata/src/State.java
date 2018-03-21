@@ -7,15 +7,24 @@ public class State implements Comparable<State> {
     private Map<String, ArrayList<State>> nextState;
     private Set<State> stateSet;
 
+    /**
+     *
+     */
     public State() {
         this(Integer.toString(stateCounter));
     }
 
+    /**
+     * @param acceptState
+     */
     public State(boolean acceptState) {
         this(Integer.toString(stateCounter));
         this.acceptState = acceptState;
     }
 
+    /**
+     * @param stateID
+     */
     public State(String stateID) {
         stateCounter += 1;
         this.stateID = stateID;
@@ -94,7 +103,7 @@ public class State implements Comparable<State> {
         return nextState;
     }
 
-    public void setNextState(Map<String, ArrayList<State>> nextState) {
+    private void setNextState(Map<String, ArrayList<State>> nextState) {
         this.nextState = nextState;
     }
 
