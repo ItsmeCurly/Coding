@@ -1,15 +1,137 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Regex {
     private String code;
     private Automaton fsaRepre;
 
+    Stack<Automaton> stackNfa = new Stack<Automaton>();
+    Stack<Character> stackOps = new Stack<Character>();
+
     public Regex(String pre) {
         new RegexParser(pre);
+        stackNfa = new Stack<Automaton>();
+        stackOps = new Stack<Character>();
+    }
+
+    public Regex(String actualRegex, int filler) {
+        this.code = actualRegex;
+        stackNfa = new Stack<Automaton>();
+        stackOps = new Stack<Character>();
     }
 
     public boolean match(String input) {
         return fsaRepre.run(input).equals("accept");
+    }
+
+    public Automaton convertFSA() {
+        stackNfa.clear();
+        stackOps.clear();
+
+        for (int i = 0; i < code.length(); i++) {
+            if (isInputCharacter(code.charAt(i))) {
+                addNfa(code.charAt(i));
+            } else if (stackOps.isEmpty()) {
+                stackOps.push(code.charAt(i));
+            } else if (code.charAt(i) == '(') {
+                stackOps.push(code.charAt(i));
+            } else if (code.charAt(i) == ')') {
+                while (stackOps.get(stackOps.size() - 1) != '(') {
+                    doOp();
+                }
+                stackOps.pop();
+            } else {
+                while (!stackOps.isEmpty() &&
+                        precedence(code.charAt(i), stackOps.get(stackOps.size() - 1))) {
+                    doOp();
+                }
+                stackOps.push(code.charAt(i));
+            }
+        }
+        while (!stackOps.isEmpty()) doOp();
+
+        Automaton completeNFA = stackNfa.pop();
+
+        completeNFA.getStates().get(completeNFA.getStates().size() - 1).setAcceptState(true);
+
+        return completeNFA;
+    }
+
+    private void doOp() {
+        if (stackOps.size() > 0) {
+            char charAt = stackOps.pop();
+            Automaton temp;
+            switch (charAt) {
+                case ('|'):
+                    temp = stackNfa.pop();
+                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
+                    break;
+                case ('.'):
+                    temp = stackNfa.pop();
+                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
+                    break;
+                case ('*'):
+                    stackNfa.push(Automaton.nfaStar(stackNfa.pop()));
+                    break;
+                default:
+                    System.err.println("Unknown symbol");
+                    break;
+            }
+        }
+    }
+
+    private boolean precedence(char first, char second) {
+        return first == second || first != '*' && (second == '*' || first != '.' && (second == '.' || first != '|'));
+    }
+
+    private void addNfa(char c) {
+        State s0 = new State(false);
+        State s1 = new State(true);
+        s0.addTransition(s1, c + "");
+
+        Automaton nfa = new Automaton();
+        nfa.addAlphabet(c);
+        nfa.addAlphabet("..");
+
+        nfa.getStates().add(s0);
+        nfa.getStates().add(s1);
+
+        nfa.setStartState(s0);
+
+        stackNfa.add(nfa);
+    }
+
+    private boolean isInputCharacter(char c) {
+        return (int) c >= (int) 'a' && (int) c <= (int) 'z';
+    }
+
+    private String concatExpand(String code) {
+        String ret = "";
+        for (int i = 0; i < code.length() - 1; i++) {
+            if (isInputCharacter(code.charAt(i)) && isInputCharacter(code.charAt(i + 1))) {
+                ret += code.charAt(i) + ".";
+
+            } else if (isInputCharacter(code.charAt(i)) && code.charAt(i + 1) == '(') {
+                ret += code.charAt(i) + ".";
+
+            } else if (code.charAt(i + 1) == ')' && isInputCharacter(code.charAt(i))) {
+                ret += code.charAt(i) + ".";
+
+            } else if (code.charAt(i + 1) == '*' && code.charAt(i + 1) == '(') {
+                ret += code.charAt(i) + ".";
+
+            } else if (code.charAt(i + 1) == '*' && isInputCharacter(code.charAt(i))) {
+                ret += code.charAt(i) + ".";
+
+            } else if (code.charAt(i + 1) == ')' && code.charAt(i + 1) == '(') {
+                ret += code.charAt(i) + ".";
+
+            } else
+                ret += code.charAt(i);
+
+        }
+        ret += code.charAt(ret.length() - 1);
+        return ret;
     }
 
     @Override
@@ -63,8 +185,9 @@ public class Regex {
             ArrayList<String> concatInput = getSplitInput(foo);
             String ret = "";
             for (String s : concatInput) {
-                ret += parseInput(s);
+                ret += parseInput(s) + ".";
             }
+            ret = ret.substring(0, ret.length() - 1);
 
             return ret;
         }

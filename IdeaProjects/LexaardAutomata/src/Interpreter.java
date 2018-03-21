@@ -137,7 +137,27 @@ public class Interpreter {
                             varMap.put(name, newRegex);
                         else
                             varMap.replace(name, newRegex);
+                    } else if (command.equals("regex2")) {
+                        String input = "";
+                        String temp;
+                        while (!(temp = scan.nextLine()).isEmpty()) {
+                            input += temp;
+                        }
+                        Regex newRegex = new Regex(input, 0);
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, newRegex);
+                        else
+                            varMap.replace(name, newRegex);
                     } else if (command.equals("regex2fsa")) {
+                        Regex r1 = (Regex) varMap.get(scanIn.next());
+
+                        Automaton fsa = r1.convertFSA();
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, fsa);
+                        else
+                            varMap.replace(name, fsa);
+                    } else if (command.equals("gnfa")) {
 
                     }
                     break;

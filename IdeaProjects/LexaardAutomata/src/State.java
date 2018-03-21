@@ -11,6 +11,11 @@ public class State implements Comparable<State> {
         this(Integer.toString(stateCounter));
     }
 
+    public State(boolean acceptState) {
+        this(Integer.toString(stateCounter));
+        this.acceptState = acceptState;
+    }
+
     public State(String stateID) {
         stateCounter += 1;
         this.stateID = stateID;
