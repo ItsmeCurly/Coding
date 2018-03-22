@@ -369,7 +369,7 @@ public class Automaton {
      *
      * @param states The new states List
      */
-    private void setStates(List<State> states) {
+    public void setStates(List<State> states) {
         this.states = states;
     }
 
@@ -378,7 +378,7 @@ public class Automaton {
      *
      * @return The FSA's comment
      */
-    private String getComment() {
+    public String getComment() {
         return comment;
     }
 

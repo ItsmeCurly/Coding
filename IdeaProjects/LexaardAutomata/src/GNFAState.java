@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class GNFAState implements Comparable<GNFAState> {
     private static int stateCounter = 0;
     private String stateID;
-    private boolean acceptState;
+    private boolean phState;
 
     private ArrayList<Regex> nextStateTransitions;
 
@@ -11,29 +11,31 @@ public class GNFAState implements Comparable<GNFAState> {
         this(Integer.toString(stateCounter));
     }
 
-    public GNFAState(boolean acceptState) {
-        this(Integer.toString(stateCounter));
-        this.acceptState = acceptState;
-        nextStateTransitions = new ArrayList<>();
+    public GNFAState(String stateID) {
+        stateCounter += 1;
+        this.stateID = stateID;
+        this.phState = false;
     }
 
     /**
      * @param stateID
      */
-    public GNFAState(String stateID) {
+    public GNFAState(String stateID, boolean placeHolderState) {
         stateCounter += 1;
         this.stateID = stateID;
+        this.phState = placeHolderState;
     }
 
-    /**
-     * @param r
-     */
-    public void addTransition(Regex r) {
-        this.nextStateTransitions.add(r);
+    public void setTransition(Regex r, int transitionIndex) {
+        this.nextStateTransitions.set(transitionIndex, r);
     }
 
-    public ArrayList<Regex> getAllTransitions(String s) {
-        return nextStateTransitions;
+    public void appendTransition(Regex r, int transitionIndex) {
+        this.nextStateTransitions.get(transitionIndex).unionReg(r);
+    }
+
+    public void concatTransition(Regex r, int transitionIndex) {
+        this.nextStateTransitions.get(transitionIndex).concatReg(r);
     }
 
     /**
@@ -48,27 +50,6 @@ public class GNFAState implements Comparable<GNFAState> {
      */
     public void setStateID(String stateID) {
         this.stateID = stateID;
-    }
-
-    /**
-     * @return
-     */
-    public boolean isAcceptState() {
-        return acceptState;
-    }
-
-    /**
-     * @param acceptGNFAState
-     */
-    public void setAcceptState(boolean acceptGNFAState) {
-        this.acceptState = acceptGNFAState;
-    }
-
-    /**
-     *
-     */
-    public void negateAcceptState() {
-        this.acceptState = !this.acceptState;
     }
 
     /**
@@ -107,5 +88,13 @@ public class GNFAState implements Comparable<GNFAState> {
             temp += String.format("%" + Automaton.SPACE + "s", nextStateTransition);
         }
         return temp;
+    }
+
+    public boolean isPHState() {
+        return phState;
+    }
+
+    public void setPhState(boolean phState) {
+        this.phState = phState;
     }
 }

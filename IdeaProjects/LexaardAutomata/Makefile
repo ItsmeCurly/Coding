@@ -9,7 +9,11 @@ JVM = java
 CLASSES = \
         Automaton.java \
         Interpreter.java \
-        State.java
+        State.java \
+        Regex.java \
+        Interpreter.java \
+        GNFAState.java \
+        GNFA.java
 
 MAIN = Interpreter
 

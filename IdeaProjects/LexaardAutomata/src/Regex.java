@@ -1,30 +1,34 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class Regex {
-    private final static char EPSILONCHARACTER = 'ε';
-    private final static char EMPTYSETCHARACTER = '∅';
+    protected final static char EPSILONCHARACTER = 'ε';
+    protected final static char EMPTYSETCHARACTER = '∅';
 
+    private String prefixCode;
+    private String infixCode;
 
-    private String code;
     private Automaton fsaRepre;
 
     private Stack<Automaton> stackNfa;
     private Stack<Character> stackOps;
 
     public Regex() {
-        code = null;
+        infixCode = null;
+        prefixCode = null;
         //will throw error on convertfsa
     }
 
     public Regex(String pre) {
+        this.prefixCode = pre;
         new RegexParser(pre);
         stackNfa = new Stack<>();
         stackOps = new Stack<>();
     }
 
     public Regex(String actualRegex, int filler) {
-        this.code = actualRegex;
+        this.infixCode = actualRegex;
         stackNfa = new Stack<>();
         stackOps = new Stack<>();
     }
@@ -36,11 +40,26 @@ public class Regex {
     public static Regex dfa2Regex(Automaton fsa) {
         //will convert if is nfa, if is already dfa will stay the same
         Automaton dfa = Automaton.nfa2Dfa(fsa);
+        GNFA gnfa1 = GNFA.dfa2gnfa(dfa);
+        int i = gnfa1.getStates().size() - 1;
+        while (gnfa1.hasValidStates()) {
+            List<Regex> ownRegex = new ArrayList<>();
+            for (int j = 0; j < gnfa1.getStates().size(); j++) {
+                Regex r1 = gnfa1.getStates().get(j).getNextStateTransitions().remove(i - 1);
+                ownRegex.add(r1);
+            }
+            GNFAState st = gnfa1.getStates().remove(i - 1);
+            i -= 1;
+        }
         return null;
     }
 
-    private void concatReg(Regex newReg) {
-        code += " | " + newReg.code;
+    public void concatReg(Regex newReg) {
+        infixCode += "." + newReg.infixCode;
+    }
+
+    public void unionReg(Regex newReg) {
+        infixCode += "|" + newReg.infixCode;
     }
 
     private void doOp() {
@@ -78,24 +97,24 @@ public class Regex {
         stackNfa.clear();
         stackOps.clear();
 
-        for (int i = 0; i < code.length(); i++) {
-            if (isInputCharacter(code.charAt(i))) {
-                addNfa(code.charAt(i));
+        for (int i = 0; i < infixCode.length(); i++) {
+            if (isInputCharacter(infixCode.charAt(i))) {
+                addNfa(infixCode.charAt(i));
             } else if (stackOps.isEmpty()) {
-                stackOps.push(code.charAt(i));
-            } else if (code.charAt(i) == '(') {
-                stackOps.push(code.charAt(i));
-            } else if (code.charAt(i) == ')') {
+                stackOps.push(infixCode.charAt(i));
+            } else if (infixCode.charAt(i) == '(') {
+                stackOps.push(infixCode.charAt(i));
+            } else if (infixCode.charAt(i) == ')') {
                 while (stackOps.get(stackOps.size() - 1) != '(') {
                     doOp();
                 }
                 stackOps.pop();
             } else {
                 while (!stackOps.isEmpty() &&
-                        precedence(code.charAt(i), stackOps.get(stackOps.size() - 1))) {
+                        precedence(infixCode.charAt(i), stackOps.get(stackOps.size() - 1))) {
                     doOp();
                 }
-                stackOps.push(code.charAt(i));
+                stackOps.push(infixCode.charAt(i));
             }
         }
         while (!stackOps.isEmpty()) doOp();
@@ -145,8 +164,8 @@ public class Regex {
     }
 
     private boolean isValidRegex() {
-        for (int i = 0; i < code.length(); i++) {
-            char c = code.charAt(i);
+        for (int i = 0; i < infixCode.length(); i++) {
+            char c = infixCode.charAt(i);
             if (!(isInputCharacter(c) || isOperand(c) || isOtherCharacter(c) || c == '(' || c == ')'))
                 return false;
         }
@@ -155,13 +174,13 @@ public class Regex {
 
     @Override
     public String toString() {
-        return (code != null ? code : "..");
+        return (prefixCode != null ? prefixCode : "..");
     }
 
     private class RegexParser {
 
         public RegexParser(String input) {
-            code = parseInput(input);
+            infixCode = parseInput(input);
         }
 
         private String parseInput(String input) {

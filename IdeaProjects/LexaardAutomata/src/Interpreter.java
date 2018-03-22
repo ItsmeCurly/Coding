@@ -176,6 +176,13 @@ public class Interpreter {
                         else
                             varMap.replace(name, gnfa);
 
+                    } else if (command.equals("dfa2regex")) {
+                        Regex r1 = Regex.dfa2Regex((Automaton) varMap.get(scanIn.next()));
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, r1);
+                        else
+                            varMap.replace(name, r1);
                     }
                     break;
                 case "run": {
