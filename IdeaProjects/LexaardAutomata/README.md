@@ -10,4 +10,4 @@ constraints.
 
 Included are some of the input tests that I utilized to test my functionality of the program. Some extraneous debugging 
 may have gone over my scope, causing errors at some random points, but I didn't have extensive time to spend on this 
-project(I spent 12+ hours on just this project, as I decided to rewrite my iteration of the first project)
+project

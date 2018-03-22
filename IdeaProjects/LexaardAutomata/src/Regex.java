@@ -2,11 +2,20 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Regex {
+    private final static char EPSILONCHARACTER = 'ε';
+    private final static char EMPTYSETCHARACTER = '∅';
+
+
     private String code;
     private Automaton fsaRepre;
 
     private Stack<Automaton> stackNfa;
     private Stack<Character> stackOps;
+
+    public Regex() {
+        code = null;
+        //will throw error on convertfsa
+    }
 
     public Regex(String pre) {
         new RegexParser(pre);
@@ -24,7 +33,48 @@ public class Regex {
         return fsaRepre.run(input).equals("accept");
     }
 
+    public static Regex dfa2Regex(Automaton fsa) {
+        //will convert if is nfa, if is already dfa will stay the same
+        Automaton dfa = Automaton.nfa2Dfa(fsa);
+        return null;
+    }
+
+    private void concatReg(Regex newReg) {
+        code += " | " + newReg.code;
+    }
+
+    private void doOp() {
+        if (stackOps.size() > 0) {
+            char charAt = stackOps.pop();
+            Automaton temp;
+            switch (charAt) {
+                case ('|'):
+                    temp = stackNfa.pop();
+                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
+                    break;
+                case ('.'):
+                    temp = stackNfa.pop();
+                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
+                    break;
+                case ('*'):
+                    stackNfa.push(Automaton.nfaStar(stackNfa.pop()));
+                    break;
+                default:
+                    System.err.println("Unknown symbol");
+                    break;
+            }
+        }
+    }
+
+    private boolean precedence(char first, char second) {
+        return first == second || first != '*' && (second == '*' || first != '.' && (second == '.' || first != '|'));
+    }
+
     public Automaton convertFSA() {
+        if (!isValidRegex()) {
+            return null;
+        }
+
         stackNfa.clear();
         stackOps.clear();
 
@@ -57,41 +107,22 @@ public class Regex {
         return completeNFA;
     }
 
-    private void doOp() {
-        if (stackOps.size() > 0) {
-            char charAt = stackOps.pop();
-            Automaton temp;
-            switch (charAt) {
-                case ('|'):
-                    temp = stackNfa.pop();
-                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
-                    break;
-                case ('.'):
-                    temp = stackNfa.pop();
-                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
-                    break;
-                case ('*'):
-                    stackNfa.push(Automaton.nfaStar(stackNfa.pop()));
-                    break;
-                default:
-                    System.err.println("Unknown symbol");
-                    break;
-            }
-        }
-    }
-
-    private boolean precedence(char first, char second) {
-        return first == second || first != '*' && (second == '*' || first != '.' && (second == '.' || first != '|'));
-    }
-
     private void addNfa(char c) {
         State s0 = new State(false);
         State s1 = new State(true);
-        s0.addTransition(s1, c + "");
 
         Automaton nfa = new Automaton();
-        nfa.addAlphabet(c);
-        nfa.addAlphabet("..");
+        if (c == EPSILONCHARACTER) {
+            s0.addTransition(s1, "..");
+            nfa.addAlphabet("..");
+        } else if (c == EMPTYSETCHARACTER) {
+            //do nothing
+        } else {
+            s0.addTransition(s1, c + "");
+
+            nfa.addAlphabet(c);
+            nfa.addAlphabet("..");
+        }
 
         nfa.getStates().add(s0);
         nfa.getStates().add(s1);
@@ -102,41 +133,29 @@ public class Regex {
     }
 
     private boolean isInputCharacter(char c) {
-        return (int) c >= (int) 'a' && (int) c <= (int) 'z';
+        return ((int) c >= (int) 'a' && (int) c <= (int) 'z') || ((int) c >= (int) '0' && (int) c <= '9');
     }
 
-    private String concatExpand(String code) {
-        String ret = "";
-        for (int i = 0; i < code.length() - 1; i++) {
-            if (isInputCharacter(code.charAt(i)) && isInputCharacter(code.charAt(i + 1))) {
-                ret += code.charAt(i) + ".";
+    private boolean isOperand(char c) {
+        return c == '*' || c == '.' || c == '|';
+    }
 
-            } else if (isInputCharacter(code.charAt(i)) && code.charAt(i + 1) == '(') {
-                ret += code.charAt(i) + ".";
+    private boolean isOtherCharacter(char c) {
+        return c == EPSILONCHARACTER || c == EMPTYSETCHARACTER;
+    }
 
-            } else if (code.charAt(i + 1) == ')' && isInputCharacter(code.charAt(i))) {
-                ret += code.charAt(i) + ".";
-
-            } else if (code.charAt(i + 1) == '*' && code.charAt(i + 1) == '(') {
-                ret += code.charAt(i) + ".";
-
-            } else if (code.charAt(i + 1) == '*' && isInputCharacter(code.charAt(i))) {
-                ret += code.charAt(i) + ".";
-
-            } else if (code.charAt(i + 1) == ')' && code.charAt(i + 1) == '(') {
-                ret += code.charAt(i) + ".";
-
-            } else
-                ret += code.charAt(i);
-
+    private boolean isValidRegex() {
+        for (int i = 0; i < code.length(); i++) {
+            char c = code.charAt(i);
+            if (!(isInputCharacter(c) || isOperand(c) || isOtherCharacter(c) || c == '(' || c == ')'))
+                return false;
         }
-        ret += code.charAt(ret.length() - 1);
-        return ret;
+        return true;
     }
 
     @Override
     public String toString() {
-        return code;
+        return (code != null ? code : "..");
     }
 
     private class RegexParser {
@@ -159,15 +178,15 @@ public class Regex {
                 } else {
                     switch (input) {
                         case "r.":
-                            return "ε";
+                            return EPSILONCHARACTER + "";
                         case "r/":
-                            return "∅";
+                            return EMPTYSETCHARACTER + "";
                         default:
                             return input;
                     }
                 }
             }
-            return "a";
+            return "";
         }
 
         private String parseInputUnion(String foo) {
@@ -198,7 +217,7 @@ public class Regex {
             while (!temp.isEmpty()) {
                 switch (temp.charAt(0)) {
                     case '(':
-                        int position = getEmbeddedParenthesesLength(temp);
+                        int position = GNFA.getEmbeddedParenthesesLength(temp);
                         concatInput.add(temp.substring(0, position));
                         if (temp.length() == position) {
                             temp = "";
@@ -216,21 +235,6 @@ public class Regex {
                 }
             }
             return concatInput;
-        }
-
-        private int getEmbeddedParenthesesLength(String input) {
-            int openParenCounter = 0;
-            int closeParenCounter = 0;
-            int position = 0;
-            do {
-                if (input.charAt(position) == '(') {
-                    openParenCounter += 1;
-                } else if (input.charAt(position) == ')') {
-                    closeParenCounter += 1;
-                }
-                position += 1;
-            } while (openParenCounter != closeParenCounter && position != input.length());
-            return position;
         }
 
         private String findInputString(String input) {

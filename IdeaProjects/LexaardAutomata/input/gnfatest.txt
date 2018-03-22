@@ -1,0 +1,9 @@
+define g1 gnfa
+gnfa1_61 GNFA on p 70 of textbook
+a b
+	q1      q2          q3              q4
+q1  ..      r/          (r. a (r* b))   b
+q2  ..      (r. a b)    (r* (r. a a))   (r* b)
+q3  ..      (r* a)      ..              (r| (r. a b) (r. b a))
+q4  ..      ..          ..              ..
+

@@ -157,7 +157,24 @@ public class Interpreter {
                             varMap.put(name, fsa);
                         else
                             varMap.replace(name, fsa);
+
                     } else if (command.equals("gnfa")) {
+                        String input = scan.nextLine() + '\n';
+
+                        input += scan.nextLine() + '\n';
+
+                        String temp;
+
+                        while (!(temp = scan.nextLine()).isEmpty()) {
+                            input += temp + '\n';
+                        }
+
+                        GNFA gnfa = GNFA.constructGNFA(input);
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, gnfa);
+                        else
+                            varMap.replace(name, gnfa);
 
                     }
                     break;

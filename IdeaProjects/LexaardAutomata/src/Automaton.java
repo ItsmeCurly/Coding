@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Automaton {
     private static int nfaCounter;
-    private final int SPACE = -20;
+    protected final static int SPACE = -20;
     private List<String> alphabet;
     private List<State> states;
     private String comment;
@@ -594,7 +594,7 @@ public class Automaton {
      *
      * @return Whether the FSA is deterministic
      */
-    private boolean isDeterministic() {
+    public boolean isDeterministic() {
         if (alphabet.contains("..")) {
             return false;
         }
@@ -824,5 +824,4 @@ public class Automaton {
             newAl.add("..");
         alphabet = newAl;
     }
-
 }
