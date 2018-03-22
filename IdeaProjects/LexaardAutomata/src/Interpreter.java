@@ -126,6 +126,17 @@ public class Interpreter {
                             varMap.put(name, newBool);
                         else
                             varMap.replace(name, newBool);
+                    } else if (command.equals("regex2")) {
+                        String input = "";
+                        String temp;
+                        while (!(temp = scan.nextLine()).isEmpty()) {
+                            input += temp;
+                        }
+                        OLDREGEX newOLDREGEX = new OLDREGEX(input);
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, newOLDREGEX);
+                        else
+                            varMap.replace(name, newOLDREGEX);
                     } else if (command.equals("regex")) {
                         String input = "";
                         String temp;
@@ -133,17 +144,6 @@ public class Interpreter {
                             input += temp;
                         }
                         Regex newRegex = new Regex(input);
-                        if (!varMap.containsKey(name))
-                            varMap.put(name, newRegex);
-                        else
-                            varMap.replace(name, newRegex);
-                    } else if (command.equals("regex2")) {
-                        String input = "";
-                        String temp;
-                        while (!(temp = scan.nextLine()).isEmpty()) {
-                            input += temp;
-                        }
-                        Regex newRegex = new Regex(input, 0);
                         if (!varMap.containsKey(name))
                             varMap.put(name, newRegex);
                         else

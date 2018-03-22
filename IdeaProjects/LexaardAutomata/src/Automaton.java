@@ -298,6 +298,9 @@ public class Automaton {
         newStates.addAll(nfa1States);
         newStates.addAll(nfa2States);
 
+        newAutomata.addAlphabet(copy1.getAlphabet());
+        newAutomata.addAlphabet(copy2.getAlphabet());
+
         newAutomata.setStates(newStates);
         newAutomata.setStartState(newStart);
 
@@ -637,6 +640,7 @@ public class Automaton {
 
     @Override
     public String toString() {
+        sortStates();
         String result = comment + '\n';
         result += String.format("%" + SPACE + "s", "");
         for (String anAlphabet : alphabet) {
@@ -771,6 +775,13 @@ public class Automaton {
      */
     private void sortStates() {
         states = asSortedList(states);
+        for (int i = 0; i < states.size(); i++) {
+            if (states.get(i).equals(startState)) {
+                State s = states.remove(i);
+                states.add(0, s);
+                return;
+            }
+        }
     }
 
     /**

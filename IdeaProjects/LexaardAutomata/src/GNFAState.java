@@ -30,14 +30,6 @@ public class GNFAState implements Comparable<GNFAState> {
         this.nextStateTransitions.set(transitionIndex, r);
     }
 
-    public void appendTransition(Regex r, int transitionIndex) {
-        this.nextStateTransitions.get(transitionIndex).unionReg(r);
-    }
-
-    public void concatTransition(Regex r, int transitionIndex) {
-        this.nextStateTransitions.get(transitionIndex).concatReg(r);
-    }
-
     /**
      * @return
      */

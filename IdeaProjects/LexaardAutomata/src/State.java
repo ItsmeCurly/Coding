@@ -18,7 +18,7 @@ public class State implements Comparable<State> {
      * @param acceptState
      */
     public State(boolean acceptState) {
-        this(Integer.toString(stateCounter));
+        this("s" + Integer.toString(stateCounter));
         this.acceptState = acceptState;
     }
 

@@ -3,34 +3,22 @@ import java.util.List;
 import java.util.Stack;
 
 public class Regex {
-    protected final static char EPSILONCHARACTER = 'ε';
-    protected final static char EMPTYSETCHARACTER = '∅';
+    public static final String EPSILONCHARACTER = "r.";
+    public static final String EMPTYSETCHARACTER = "r/";
 
-    private String prefixCode;
-    private String infixCode;
+    private String code;
+    private List<Regex> nextRegex;
+    private boolean isOperand;
 
     private Automaton fsaRepre;
 
-    private Stack<Automaton> stackNfa;
-    private Stack<Character> stackOps;
-
     public Regex() {
-        infixCode = null;
-        prefixCode = null;
-        //will throw error on convertfsa
+        code = "..";
     }
 
     public Regex(String pre) {
-        this.prefixCode = pre;
+        nextRegex = new ArrayList<>();
         new RegexParser(pre);
-        stackNfa = new Stack<>();
-        stackOps = new Stack<>();
-    }
-
-    public Regex(String actualRegex, int filler) {
-        this.infixCode = actualRegex;
-        stackNfa = new Stack<>();
-        stackOps = new Stack<>();
     }
 
     public boolean match(String input) {
@@ -43,10 +31,10 @@ public class Regex {
         GNFA gnfa1 = GNFA.dfa2gnfa(dfa);
         int i = gnfa1.getStates().size() - 1;
         while (gnfa1.hasValidStates()) {
-            List<Regex> ownRegex = new ArrayList<>();
+            List<Regex> ownRegexes = new ArrayList<>();
             for (int j = 0; j < gnfa1.getStates().size(); j++) {
                 Regex r1 = gnfa1.getStates().get(j).getNextStateTransitions().remove(i - 1);
-                ownRegex.add(r1);
+                ownRegexes.add(r1);
             }
             GNFAState st = gnfa1.getStates().remove(i - 1);
             i -= 1;
@@ -54,93 +42,66 @@ public class Regex {
         return null;
     }
 
-    public void concatReg(Regex newReg) {
-        infixCode += "." + newReg.infixCode;
-    }
-
-    public void unionReg(Regex newReg) {
-        infixCode += "|" + newReg.infixCode;
-    }
-
-    private void doOp() {
-        if (stackOps.size() > 0) {
-            char charAt = stackOps.pop();
-            Automaton temp;
-            switch (charAt) {
-                case ('|'):
-                    temp = stackNfa.pop();
-                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
-                    break;
-                case ('.'):
-                    temp = stackNfa.pop();
-                    stackNfa.push(Automaton.nfaConcat(stackNfa.pop(), temp));
-                    break;
-                case ('*'):
-                    stackNfa.push(Automaton.nfaStar(stackNfa.pop()));
-                    break;
-                default:
-                    System.err.println("Unknown symbol");
-                    break;
-            }
-        }
-    }
-
-    private boolean precedence(char first, char second) {
-        return first == second || first != '*' && (second == '*' || first != '.' && (second == '.' || first != '|'));
-    }
-
     public Automaton convertFSA() {
-        if (!isValidRegex()) {
-            return null;
-        }
+        if (isOperand) {
+            switch (code) {
+                case "r*":
+                    return Automaton.nfaStar(nextRegex.get(0).convertFSA());
+                case "r|": {
+                    Stack<Automaton> fsarep = new Stack<>();
+                    for (Regex r : nextRegex) {
+                        Automaton a1 = r.convertFSA();
+                        fsarep.push(a1);
+                    }
+                    while (fsarep.size() > 1) {
+                        Automaton a1 = fsarep.pop();
+                        Automaton a0 = fsarep.pop();
 
-        stackNfa.clear();
-        stackOps.clear();
+                        Automaton newA = Automaton.nfaUnion(a0, a1);
+                        fsarep.push(newA);
+                    }
+                    return fsarep.pop();
+                }
+                case "r.": {
+                    Stack<Automaton> fsarep = new Stack<>();
+                    for (Regex r : nextRegex) {
+                        Automaton a1 = r.convertFSA();
+                        fsarep.push(a1);
+                    }
+                    while (fsarep.size() > 1) {
+                        Automaton a1 = fsarep.pop();
+                        Automaton a0 = fsarep.pop();
 
-        for (int i = 0; i < infixCode.length(); i++) {
-            if (isInputCharacter(infixCode.charAt(i))) {
-                addNfa(infixCode.charAt(i));
-            } else if (stackOps.isEmpty()) {
-                stackOps.push(infixCode.charAt(i));
-            } else if (infixCode.charAt(i) == '(') {
-                stackOps.push(infixCode.charAt(i));
-            } else if (infixCode.charAt(i) == ')') {
-                while (stackOps.get(stackOps.size() - 1) != '(') {
-                    doOp();
+                        Automaton newA = Automaton.nfaConcat(a0, a1);
+                        fsarep.push(newA);
+                    }
+                    return fsarep.pop();
                 }
-                stackOps.pop();
-            } else {
-                while (!stackOps.isEmpty() &&
-                        precedence(infixCode.charAt(i), stackOps.get(stackOps.size() - 1))) {
-                    doOp();
-                }
-                stackOps.push(infixCode.charAt(i));
             }
         }
-        while (!stackOps.isEmpty()) doOp();
-
-        Automaton completeNFA = stackNfa.pop();
-
-        completeNFA.getStates().get(completeNFA.getStates().size() - 1).setAcceptState(true);
-
-        return completeNFA;
+        return addNfa(code);
     }
 
-    private void addNfa(char c) {
+    private Automaton addNfa(String s) {
         State s0 = new State(false);
         State s1 = new State(true);
 
         Automaton nfa = new Automaton();
-        if (c == EPSILONCHARACTER) {
-            s0.addTransition(s1, "..");
-            nfa.addAlphabet("..");
-        } else if (c == EMPTYSETCHARACTER) {
-            //do nothing
-        } else {
-            s0.addTransition(s1, c + "");
 
-            nfa.addAlphabet(c);
-            nfa.addAlphabet("..");
+        switch (s) {
+            case "r.":
+                s0.addTransition(s1, "..");
+                nfa.addAlphabet("..");
+                break;
+            case "r/":
+                //do nothing
+                break;
+            default:
+                s0.addTransition(s1, s);
+
+                nfa.addAlphabet(s);
+                nfa.addAlphabet("..");
+                break;
         }
 
         nfa.getStates().add(s0);
@@ -148,86 +109,75 @@ public class Regex {
 
         nfa.setStartState(s0);
 
-        stackNfa.add(nfa);
-    }
-
-    private boolean isInputCharacter(char c) {
-        return ((int) c >= (int) 'a' && (int) c <= (int) 'z') || ((int) c >= (int) '0' && (int) c <= '9');
-    }
-
-    private boolean isOperand(char c) {
-        return c == '*' || c == '.' || c == '|';
-    }
-
-    private boolean isOtherCharacter(char c) {
-        return c == EPSILONCHARACTER || c == EMPTYSETCHARACTER;
-    }
-
-    private boolean isValidRegex() {
-        for (int i = 0; i < infixCode.length(); i++) {
-            char c = infixCode.charAt(i);
-            if (!(isInputCharacter(c) || isOperand(c) || isOtherCharacter(c) || c == '(' || c == ')'))
-                return false;
-        }
-        return true;
+        return nfa;
     }
 
     @Override
     public String toString() {
-        return (prefixCode != null ? prefixCode : "..");
+        String result = "";
+        if (isOperand) {
+            result += "(" + code + " ";
+            for (Regex r : nextRegex) {
+                result += r.toString() + " ";
+            }
+            result += ")";
+        } else {
+            return code;
+        }
+        return result;
     }
 
     private class RegexParser {
 
         public RegexParser(String input) {
-            infixCode = parseInput(input);
+            parseInput(input);
         }
 
-        private String parseInput(String input) {
-            while (!input.isEmpty()) {
-                if (input.charAt(0) == '(') {
-                    switch (input.substring(1, 3)) {
-                        case "r*":
-                            return "(" + parseInput(findInputString(input)) + ")*";
-                        case "r|":
-                            return "(" + parseInputUnion(findInputString(input)) + ")";
-                        case "r.":
-                            return "(" + parseInputConcat(findInputString(input)) + ")";
-                    }
-                } else {
-                    switch (input) {
-                        case "r.":
-                            return EPSILONCHARACTER + "";
-                        case "r/":
-                            return EMPTYSETCHARACTER + "";
-                        default:
-                            return input;
-                    }
+        private void parseInput(String input) {
+            if (input.charAt(0) == '(') {
+                ArrayList<String> temp;
+                switch (input.substring(1, 3)) {
+                    case "r*":
+                        isOperand = true;
+                        code = "r*";
+                        temp = getSplitInput(findInputString(input));
+                        for (String s : temp) {
+                            nextRegex.add(new Regex(s));
+                        }
+                        break;
+                    case "r|":
+                        isOperand = true;
+                        code = "r|";
+                        temp = getSplitInput(findInputString(input));
+                        for (String s : temp) {
+                            nextRegex.add(new Regex(s));
+                        }
+                        break;
+                    case "r.":
+                        isOperand = true;
+                        code = "r.";
+                        temp = getSplitInput(findInputString(input));
+                        for (String s : temp) {
+                            nextRegex.add(new Regex(s));
+                        }
+                        break;
+                }
+            } else {
+                switch (input) {
+                    case "r.":
+                        isOperand = false;
+                        code = "r.";
+                        break;
+                    case "r/":
+                        isOperand = false;
+                        code = "r/";
+                        break;
+                    default:
+                        isOperand = false;
+                        code = input;
+                        break;
                 }
             }
-            return "";
-        }
-
-        private String parseInputUnion(String foo) {
-            ArrayList<String> concatInput = getSplitInput(foo);
-            String ret = "";
-            for (String s : concatInput) {
-                ret += parseInput(s) + "|";
-            }
-            ret = ret.substring(0, ret.length() - 1);
-
-            return ret;
-        }
-
-        private String parseInputConcat(String foo) {
-            ArrayList<String> concatInput = getSplitInput(foo);
-            String ret = "";
-            for (String s : concatInput) {
-                ret += parseInput(s) + ".";
-            }
-            ret = ret.substring(0, ret.length() - 1);
-
-            return ret;
         }
 
         private ArrayList<String> getSplitInput(String input) {
