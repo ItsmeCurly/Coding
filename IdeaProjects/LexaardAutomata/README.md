@@ -1,4 +1,18 @@
 (HW 4)
+--REVISION--
+Changed parsing of regular expressions into prefix form, and conversion is also prefix version.
+Made a change to nfaUnion that caused it to not output the correct nfa when unioned
+(Did this about 1 hour before it is due) 
+
+Included are some of my test cases in .txt files in a folder named /input/
+
+OLDREGEX was my old implementation of regexes, but it is now deprecated due to needing to use the prefix version.
+
+Regexes are implemented using a tree based format, with node + nextRegex data.
+
+
+--OLD README--
+
 This homework was a doozy, I'm not sure if it is up to the functionality that Chaw expects, as he is quite ambiguous on the
 homework's specifications. 
 Firstly, the syntax to define a regular expression is define %name% regex \n (the regular expression over x amount of lines)
@@ -15,13 +29,3 @@ I didn't get to finishing the DFA to regex section, as it was very complex to de
 If I had time I may be able to do this, but I also may need to change the functionality of my classes so that it isn't so difficult to access the transitions of GNFAs
 This will convert from dfa to gnfa: define %name% dfa2regex %nameofFSA%
 
---REVISION--
-Changed parsing of regular expressions into prefix form, and conversion is also prefix version.
-Made a change to nfaUnion that caused it to not output the correct nfa when unioned
-(Did this about 1 hour before it is due) 
-
-Included are some of my test cases in .txt files in a folder named /input/
-
-OLDREGEX was my old implementation of regexes, but it is now deprecated due to needing to use the prefix version.
-
-Regexes are implemented using a tree based format, with node + nextRegex data.

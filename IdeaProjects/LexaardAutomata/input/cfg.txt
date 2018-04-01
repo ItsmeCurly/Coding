@@ -1,0 +1,5 @@
+define c1 cfg
+G1 p102
+A -> 0 A 1
+A -> B
+B -> #

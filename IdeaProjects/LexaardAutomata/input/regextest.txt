@@ -4,8 +4,7 @@ define r1 regex
 define r1fsa regex2fsa r1
 
 
-define r1 regex
-(r* (r. (r| a (r. b b) (r. c (r* c ))) a))
+define r1 (r* (r. (r| a (r. b b) (r. c (r* c ))) a))
 
 define r1fsa regex2fsa r1
 print r1fsa
