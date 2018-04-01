@@ -1,25 +1,26 @@
 import java.util.*;
 
 public class Automaton {
-    private final int SPACE = -20;
-    private ArrayList<String> alphabet;
-    private List<State> states;
-    private String comment;
-    private State startState;
+    private static int nfaCounter;              //nfaCounter used when comment is null, so it gives it a default unique identifier
+    protected final static int SPACE = -20;     //helper variable to use in the tostring
+    private List<String> alphabet;              //the alphabet of the automata
+    private List<State> states;                 //the states of the automata
+    private String comment;                     //the comment of the automata
+    private State startState;                   //startstate, to use with run
 
     /**
      * Creates a blank automaton
      */
     public Automaton() {
         this.states = new LinkedList<>();
-        this.comment = "";
+        this.comment = ++nfaCounter + "";
         this.alphabet = new ArrayList<>();
     }
 
     /**
      * Create a new Automaton with a specified list of states
      *
-     * @param states
+     * @param states The states of the automata to construct
      */
     public Automaton(List<State> states) {
         this.states = states;
@@ -29,6 +30,7 @@ public class Automaton {
 
     /**
      * Copies an automaton's data onto another
+     *
      * @param other The other automaton to copy
      */
     public Automaton(Automaton other) {
@@ -38,6 +40,11 @@ public class Automaton {
         this.startState = other.getStartState();
     }
 
+    /**
+     * Used to createa deep clone of an FSA
+     * @param thisFSA String representation of the Automata to make
+     * @return The new automata, being an automata with the exact string representation
+     */
     public static Automaton constructFSA(String thisFSA) {
         Automaton fsa = new Automaton();
         Scanner scan = new Scanner(thisFSA);
@@ -103,7 +110,6 @@ public class Automaton {
                     State st1 = getStateFromString(states, transitionScan.next());
                     st.addTransition(st1, alphabet.get(j - 1));
                 }
-
                 j += 1;
             }
         }
@@ -113,100 +119,22 @@ public class Automaton {
     }
 
     /**
-     * Returns the states of the FSA
-     * @return The states of the FSA as a List
+     * Constructs an FSA with the certain start state
+     * @param thisFSA The fsa representation of the automata to make
+     * @param startState The start state of the new automata
+     * @return The newly created Automata
      */
-    public List<State> getStates() {
-        return states;
-    }
-
-    /**
-     * Sets the states of the FSA
-     * @param states The new states List
-     */
-    public void setStates(List<State> states) {
-        this.states = states;
-    }
-
-    /**
-     * Get the comment of the FSA
-     * @return The FSA's comment
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * Set the comment of the FSA
-     * @param comment The comment to set to the FSA
-     */
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    /**
-     * Gets the start state of the FSA
-     *
-     * @return The start state
-     */
-    public State getStartState() {
-        return startState;
-    }
-
-    /**
-     * Sets the start state of the FSA
-     *
-     * @param startState The new start state
-     */
-    public void setStartState(State startState) {
-        this.startState = startState;
-    }
-
-    /**
-     * Gets the alphabet of the FSA
-     *
-     * @return The alphabet
-     */
-    public ArrayList<String> getAlphabet() {
-        return alphabet;
-    }
-
-    /**
-     * Sets the alphabet of the FSA
-     *
-     * @param alphabet The new alphabet
-     */
-    public void setAlphabet(ArrayList<String> alphabet) {
-        this.alphabet = alphabet;
-    }
-
-    /**
-     * Checks whether the FSA is deterministic or not
-     *
-     * @return Whether the FSA is deterministic
-     */
-    protected boolean isDeterministic() {
-        if (alphabet.contains("..")) {
-            return false;
-        }
-        for (String str : alphabet) {
-            for (State s : states) {
-                ArrayList<State> current = s.getNextState().get(str);
-                if (current != null && current.size() > 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static Automaton constructFSA(String thisFSA, State startState) {
+    private static Automaton constructFSA(String thisFSA, State startState) {
         Automaton fsa = constructFSA(thisFSA);
         fsa.setStartState(getStateFromString(fsa.getStates(), startState.getStateID()));
 
         return fsa;
     }
 
+    /**
+     * @param nfa1 The nfa to convert to a dfa
+     * @return The dfa representation of the automata
+     */
     public static Automaton nfa2Dfa(Automaton nfa1) {
         Automaton fsa;
 
@@ -215,7 +143,7 @@ public class Automaton {
             return fsa;
         }
         fsa = new Automaton();
-
+        //set the new alphabet
         ArrayList<String> alphabet = new ArrayList<>();
 
         for (String s : nfa1.getAlphabet()) {
@@ -225,24 +153,24 @@ public class Automaton {
         fsa.setComment(nfa1.getComment());
 
         fsa.setAlphabet(alphabet);
-
+        //copy to not overwrite the nfa
         Automaton copy1 = constructFSA(nfa1.toString());
 
         List<State> oldStates = copy1.getStates();
 
         Set<State> stateSet = new TreeSet<>(oldStates);
-        Set<Set<State>> powerSet = powerSet(stateSet);
+        Set<Set<State>> powerSet = powerSet(stateSet);//get the powerset of the states
 
         List<State> states = new ArrayList<>();
 
         for (Set<State> stateList : powerSet) {
-            List<State> newList = asSortedList(stateList);
+            List<State> newList = asSortedList(stateList);  //sort the states
             State s = new State(stateNotation(newList), stateList);
             states.add(s);
         }
 
         fsa.setStates(states);
-
+        //get all the statetransitions for every state, then set the new state with the specified stateset with these transitions
         for (State s : states) {
 
             List<State> transitionsList;
@@ -257,7 +185,7 @@ public class Automaton {
                         if (!transitionsList.contains(sta))
                             transitionsList.add(sta);
                         ArrayList<State> epsTransitions = sta.getAllTransitions("..");
-                        for (State state : epsTransitions) {
+                        for (State state : epsTransitions) {        //add all epsilon transitions(transitions that can be followed from a certain transition
 
                             if (!transitionsList.contains(state))
                                 transitionsList.add(state);
@@ -265,7 +193,7 @@ public class Automaton {
                     }
                     transitionsList = asSortedList(transitionsList);
                 }
-                s.addTransition(getStateFromString(states, stateNotation(transitionsList)), str);
+                s.addTransition(getStateFromString(states, stateNotation(transitionsList)), str);   //add the transition
             }
         }
         ArrayList<State> temp = new ArrayList<>();
@@ -277,6 +205,192 @@ public class Automaton {
         fsa.sortStates();
         //insert state into varmapping
         return fsa;
+    }
+
+    /**
+     * Helper method to get a testState variable within an array given a certain state ID
+     *
+     * @param states The states to search for the testState
+     * @param sta    The state ID of the state to find
+     * @return The testState variable within the array, matching the state ID. If not found, return null
+     */
+    private static State getStateFromString(List<State> states, String sta) {
+        for (State st : states) {
+            if (st.getStateID().equals(sta)) {
+                return st;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Code provided by https://stackoverflow.com/a/740351, utilized to sort lexicographically
+     *
+     * @param c The collection to sort
+     * @return A sorted collection of items
+     */
+    private static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+        List<T> list = new ArrayList<>(c);
+        java.util.Collections.sort(list);
+        return list;
+    }
+
+    /**
+     * Finds the cross product set of two lists
+     *
+     * @param l1 The first list to combine
+     * @param l2 The second list to combine
+     * @return A cross product of the two lists
+     */
+    private static List<Set<State>> crossProduct(List<State> l1, List<State> l2) {
+        List<Set<State>> newList = new ArrayList<>();
+        Set<State> temp;
+        for (State st1 : l1) {
+            for (State st2 : l2) {
+                temp = new TreeSet<>();
+
+                temp.add(st1);
+                temp.add(st2);
+
+                newList.add(temp);
+            }
+        }
+        return newList;
+    }
+
+    /**
+     * Sets the start state of the FSA
+     *
+     * @param startState The new start state
+     */
+    public void setStartState(State startState) {
+        this.startState = startState;
+    }
+
+    /**
+     * Applies a union to two NFAs
+     *
+     * @param nfa1 The first NFA to apply a union to
+     * @param nfa2 The second NFA to apply a union to
+     * @return The new NFA with a union applied
+     */
+    public static Automaton nfaUnion(Automaton nfa1, Automaton nfa2) {
+        if (nfa1 == null) {
+            return nfa2;
+        }
+        if (nfa2 == null) {
+            return nfa1;
+        }
+        if (nfa1.isDeterministic() || nfa2.isDeterministic()) {
+            return null;
+        }
+        //clone the automata to not overwrite current fsa
+        Automaton copy1 = constructFSA(nfa1.toString(), nfa1.getStartState());
+        Automaton copy2 = constructFSA(nfa2.toString(), nfa2.getStartState());
+        //create new start to connect to the nfas
+        State newStart = new State(false);
+
+        Automaton newAutomata = new Automaton();
+
+        List<State> nfa1States = new ArrayList<>(copy1.getStates());
+        List<State> nfa2States = new ArrayList<>(copy2.getStates());
+
+        //add transition from the newstart to the automata
+        newStart.addTransition(copy1.getStartState(), "..");
+        newStart.addTransition(copy2.getStartState(), "..");
+
+        List<State> newStates = new ArrayList<>();
+        //add everything to automata
+        newStates.add(newStart);
+
+        newStates.addAll(nfa1States);
+        newStates.addAll(nfa2States);
+
+        newAutomata.addAlphabet(copy1.getAlphabet());
+        newAutomata.addAlphabet(copy2.getAlphabet());
+
+        newAutomata.setStates(newStates);
+        newAutomata.setStartState(newStart);
+
+        return newAutomata;
+    }
+
+    /**
+     * Concatenates two NFAs together
+     *
+     * @param nfa1 The first NFA to concatenate
+     * @param nfa2 The second NFA to concatenate
+     * @return A new NFA that is two NFAs concatenated
+     */
+    public static Automaton nfaConcat(Automaton nfa1, Automaton nfa2) {
+        if (nfa1 == null) {
+            return nfa2;
+        }
+        if (nfa2 == null) {
+            return nfa1;
+        }
+        if (nfa1.isDeterministic() || nfa2.isDeterministic()) {
+            return null;
+        }
+
+        //deep clone
+        Automaton copy1 = constructFSA(nfa1.toString(), nfa1.getStartState());
+        Automaton copy2 = constructFSA(nfa2.toString(), nfa2.getStartState());
+
+        Automaton newAutomata = new Automaton();
+
+        List<State> nfa1States = new ArrayList<>(copy1.getStates());
+        List<State> nfa2States = new ArrayList<>(copy2.getStates());
+
+        for (State s : nfa1States) {
+            if (s.isAcceptState()) {
+                s.setAcceptState(false);
+                s.addTransition(getStateFromString(nfa2States, nfa2.getStartState().getStateID()), "..");
+            }
+        }
+
+        List<State> newStates = new ArrayList<>();
+        //add everything to the new automata
+        newStates.addAll(nfa1States);
+        newStates.addAll(nfa2States);
+
+        newAutomata.setStates(newStates);
+
+        newAutomata.setComment(nfa1.getComment() + nfa2.getComment());
+
+        newAutomata.addAlphabet(nfa1.getAlphabet());
+        newAutomata.addAlphabet(nfa2.getAlphabet());
+
+        newAutomata.setStartState(copy1.getStartState());
+
+        return newAutomata;
+    }
+
+    /**
+     * Returns the states of the FSA
+     *
+     * @return The states of the FSA as a List
+     */
+    public List<State> getStates() {
+        return states;
+    }
+
+    /**
+     * Sets the states of the FSA
+     *
+     * @param states The new states List
+     */
+    public void setStates(List<State> states) {
+        this.states = states;
+    }
+
+    /**
+     * Get the comment of the FSA
+     *
+     * @return The FSA's comment
+     */
+    public String getComment() {
+        return comment;
     }
 
     /**
@@ -314,7 +428,7 @@ public class Automaton {
         List<State> dfa1States = new ArrayList<>(copy1.getStates());
         List<State> dfa2States = new ArrayList<>(copy2.getStates());
 
-        List<Set<State>> newList = crossProduct(dfa1States, dfa2States);
+        List<Set<State>> newList = crossProduct(dfa1States, dfa2States);    //construct crossproduct of the states that represents the dfaUnion
 
         for (Set<State> stateList : newList) {
             State s = new State(stateNotation(stateList), stateList);
@@ -322,7 +436,7 @@ public class Automaton {
         }
 
         newAutomata.setStates(newStates);
-
+        //sets the new transitions from the old state transitions
         for (State s : newStates) {
 
             List<State> transitionsList;
@@ -355,98 +469,7 @@ public class Automaton {
     }
 
     /**
-     * Applies a union to two NFAs
-     *
-     * @param nfa1 The first NFA to apply a union to
-     * @param nfa2 The second NFA to apply a union to
-     * @return The new NFA with a union applied
-     */
-    public static Automaton nfaUnion(Automaton nfa1, Automaton nfa2) {
-        if (nfa1 == null) {
-            return nfa2;
-        }
-        if (nfa2 == null) {
-            return nfa1;
-        }
-        if (nfa1.isDeterministic() || nfa2.isDeterministic()) {
-            return null;
-        }
-
-        State newStart = new State("0");
-
-        Automaton newAutomata = new Automaton();
-
-        newStart.setAcceptState(false);
-
-        List<State> nfa1States = new ArrayList<>(nfa1.getStates());
-        List<State> nfa2States = new ArrayList<>(nfa2.getStates());
-
-        newStart.addTransition(nfa1.getStartState(), "..");
-        newStart.addTransition(nfa2.getStartState(), "..");
-
-        List<State> newStates = new ArrayList<>();
-
-        newStates.add(newStart);
-
-        newStates.addAll(nfa1States);
-        newStates.addAll(nfa2States);
-
-        newAutomata.setStates(newStates);
-        newAutomata.setStartState(newStart);
-
-        return newAutomata;
-    }
-
-    /**
-     * Concatenates two NFAs together
-     *
-     * @param nfa1 The first NFA to concatenate
-     * @param nfa2 The second NFA to concatenate
-     * @return A new NFA that is two NFAs concatenated
-     */
-    public static Automaton nfaConcat(Automaton nfa1, Automaton nfa2) {
-        if (nfa1 == null) {
-            return nfa2;
-        }
-        if (nfa2 == null) {
-            return nfa1;
-        }
-        if (nfa1.isDeterministic() || nfa2.isDeterministic()) {
-            return null;
-        }
-        Automaton copy1 = constructFSA(nfa1.toString(), nfa1.getStartState());
-
-        Automaton copy2 = constructFSA(nfa2.toString(), nfa2.getStartState());
-
-        Automaton newAutomata = new Automaton();
-
-        List<State> nfa1States = new ArrayList<>(copy1.getStates());
-        List<State> nfa2States = new ArrayList<>(copy2.getStates());
-
-        for (State s : nfa1States) {
-            if (s.isAcceptState()) {
-                s.setAcceptState(false);
-                s.addTransition(getStateFromString(nfa2States, nfa2.getStartState().getStateID()), "..");
-            }
-        }
-
-        List<State> newStates = new ArrayList<>();
-
-        newStates.addAll(nfa1States);
-        newStates.addAll(nfa2States);
-
-        newAutomata.setStates(newStates);
-
-        newAutomata.setComment(nfa1.getComment() + nfa2.getComment());
-        newAutomata.setAlphabet(nfa1.getAlphabet());
-
-        newAutomata.setStartState(nfa1States.get(0));
-
-        return newAutomata;
-    }
-
-    /**
-     * Applies a Kleene star operation to a Finite State Automaton
+     * Applies a Kleene star operation to a Finite testState Automaton
      *
      * @param nfa1 The FSA to apply the Kleene star to
      * @return The FSA with the star operation applied to it
@@ -455,27 +478,29 @@ public class Automaton {
         if (nfa1 == null) {
             return null;
         }
+
         if (nfa1.isDeterministic()) {
             return null;
         }
+
         Automaton copyAutomata = constructFSA(nfa1.toString(), nfa1.getStartState());
 
         Automaton newAutomata = new Automaton(copyAutomata);
 
         List<State> nfa1States = copyAutomata.getStates();
+        //new state, true as star is 0 or more
+        State newStart = new State(true);
 
-        State newStart = new State("0");
-
-        newStart.setAcceptState(true);
-
+        nfa1States.add(newStart);
+        //add transition from start to old start
         newStart.addTransition(copyAutomata.getStartState(), "..");
 
         for (State s : nfa1States) {
             if (s.isAcceptState()) {
-                s.addTransition(nfa1States.get(0), "..");
+                s.addTransition(copyAutomata.getStartState(), "..");
             }
         }
-
+        //add everything to old automata
         newAutomata.setStates(nfa1States);
 
         newAutomata.setStartState(newStart);
@@ -484,54 +509,7 @@ public class Automaton {
     }
 
     /**
-     * Prunes the FSA of any unreachable states
-     *
-     * @param fsa1 The FSA to be pruned
-     * @return The pruned automaton, to be inserted into the variable map as a new variable name
-     */
-    public static Automaton fsaPrune(Automaton fsa1) {
-        if (fsa1 == null) {
-            return null;
-        }
-
-        Automaton newAutomata = constructFSA(fsa1.toString(), fsa1.getStartState());
-
-        List<Integer> countingList = new ArrayList<>();
-
-        for (int i = 0; i < fsa1.getStates().size(); i++) {
-            countingList.add(0);
-        }
-
-        List<State> oldStates = newAutomata.getStates();
-
-        for (int i = 0; i < countingList.size(); i++) {
-
-            for (String str : newAutomata.getAlphabet()) {
-
-                for (State s : oldStates.get(i).getAllTransitions(str)) {
-
-                    int count = countingList.get(oldStates.indexOf(s));
-                    count += 1;
-                    countingList.set(oldStates.indexOf(s), count);
-                }
-            }
-        }
-        List<State> newStates = new ArrayList<>(oldStates);
-        Iterator iter = countingList.iterator();
-        while (iter.hasNext()) {
-            int i;
-            if ((i = (int) iter.next()) == 0 && !(newStates.get(countingList.indexOf(i)).equals(newAutomata.getStartState()))) {
-                newStates.remove(countingList.indexOf(i));
-                iter.remove();
-            }
-        }
-        newAutomata.setStates(newStates);
-        newAutomata.setStartState(getStateFromString(newStates, fsa1.getStartState().getStateID()));
-        return newAutomata;
-    }
-
-    /**
-     * Tests whether two Finite State Automata are equivalent
+     * Tests whether two Finite testState Automata are equivalent
      *
      * @param fsa1 The first automaton
      * @param fsa2 The second automaton
@@ -558,19 +536,89 @@ public class Automaton {
     }
 
     /**
-     * Helper method to get a State variable within an array given a certain state ID
+     * Set the comment of the FSA
      *
-     * @param states The states to search for the State
-     * @param sta    The state ID of the state to find
-     * @return The State variable within the array, matching the state ID. If not found, return null
+     * @param comment The comment to set to the FSA
      */
-    public static State getStateFromString(List<State> states, String sta) {
-        for (State st : states) {
-            if (st.getStateID().equals(sta)) {
-                return st;
+    private void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    /**
+     * Prunes the FSA of any unreachable states
+     *
+     * @param fsa1 The FSA to be pruned
+     * @return The pruned automaton, to be inserted into the variable map as a new variable name
+     */
+    public static Automaton fsaPrune(Automaton fsa1) {
+        if (fsa1 == null) {
+            return null;
+        }
+
+        Automaton newAutomata = constructFSA(fsa1.toString(), fsa1.getStartState());
+
+        List<Integer> countingList = new ArrayList<>();
+
+        for (int i = 0; i < fsa1.getStates().size(); i++) {
+            countingList.add(0);
+        }
+
+        List<State> oldStates = newAutomata.getStates();
+        //count the number of times each state is referenced in transitions
+        for (int i = 0; i < countingList.size(); i++) {
+
+            for (String str : newAutomata.getAlphabet()) {
+
+                for (State s : oldStates.get(i).getAllTransitions(str)) {
+
+                    int count = countingList.get(oldStates.indexOf(s));
+                    count += 1;
+                    countingList.set(oldStates.indexOf(s), count);
+                }
             }
         }
-        return null;
+        List<State> newStates = new ArrayList<>(oldStates);
+        Iterator iter = countingList.iterator();    //check the counter of every state, if is 0 remove the state
+        while (iter.hasNext()) {
+            int i;
+            if ((i = (int) iter.next()) == 0 && !(newStates.get(countingList.indexOf(i)).equals(newAutomata.getStartState()))) {
+                newStates.remove(countingList.indexOf(i));
+                iter.remove();
+            }
+        }
+        //return new pruned fsa
+        newAutomata.setStates(newStates);
+        newAutomata.setStartState(getStateFromString(newStates, fsa1.getStartState().getStateID()));
+        return newAutomata;
+    }
+
+    /**
+     * Gets the start state of the FSA
+     *
+     * @return The start state
+     */
+    private State getStartState() {
+        return startState;
+    }
+
+    /**
+     * Checks whether the FSA is deterministic or not
+     *
+     * @return Whether the FSA is deterministic
+     */
+    public boolean isDeterministic() {
+        if (alphabet.contains("..")) {
+            return false;
+        }
+        for (String str : alphabet) {
+            for (State s : states) {
+                ArrayList<State> current = s.getNextState().get(str);
+                if (current != null && current.size() > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -601,6 +649,7 @@ public class Automaton {
 
     @Override
     public String toString() {
+        sortStates();
         String result = comment + '\n';
         result += String.format("%" + SPACE + "s", "");
         for (String anAlphabet : alphabet) {
@@ -629,15 +678,12 @@ public class Automaton {
     }
 
     /**
-     * Code provided by https://stackoverflow.com/a/740351, utilized to sort lexicographically
+     * Gets the alphabet of the FSA
      *
-     * @param c
-     * @return
+     * @return The alphabet
      */
-    public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
-        List<T> list = new ArrayList<T>(c);
-        java.util.Collections.sort(list);
-        return list;
+    private List<String> getAlphabet() {
+        return alphabet;
     }
 
     @Override
@@ -673,26 +719,12 @@ public class Automaton {
     }
 
     /**
-     * Finds the cross product set of two lists
+     * Sets the alphabet of the FSA
      *
-     * @param l1 The first list to combine
-     * @param l2 The second list to combine
-     * @return A cross product of the two lists
+     * @param alphabet The new alphabet
      */
-    public static List<Set<State>> crossProduct(List<State> l1, List<State> l2) {
-        List<Set<State>> newList = new ArrayList<>();
-        Set<State> temp;
-        for (State st1 : l1) {
-            for (State st2 : l2) {
-                temp = new TreeSet<>();
-
-                temp.add(st1);
-                temp.add(st2);
-
-                newList.add(temp);
-            }
-        }
-        return newList;
+    private void setAlphabet(List<String> alphabet) {
+        this.alphabet = alphabet;
     }
 
     /**
@@ -706,7 +738,7 @@ public class Automaton {
         List<State> nextStates = new ArrayList<>();
 
         currentState.add(getStartState());
-
+        //runs a certain string iteratively
         for (char c : input.toCharArray()) {
             for (State s : currentState) {
                 ArrayList<State> current = s.getNextState().get(Character.toString(c));
@@ -717,7 +749,7 @@ public class Automaton {
                         }
                     }
                 }
-                for (State st : s.getAllTransitions("..")) {
+                for (State st : s.getAllTransitions("..")) {    //add all epsilon transitions of every state
                     if (!nextStates.contains(st)) {
                         nextStates.add(st);
                     }
@@ -740,7 +772,7 @@ public class Automaton {
             }
             nextStates.clear();
         }
-        for (State s : currentState)
+        for (State s : currentState)    //if the state at the end is accepting, return accept
             if (s.isAcceptState())
                 return "accept";
 
@@ -750,13 +782,72 @@ public class Automaton {
     /**
      * Sorts the states of the FSA in lexicographical order
      */
-    public void sortStates() {
+    private void sortStates() {
         states = asSortedList(states);
+        for (int i = 0; i < states.size(); i++) {
+            if (states.get(i).equals(startState)) {
+                State s = states.remove(i);
+                states.add(0, s);
+                return;
+            }
+        }
     }
 
+    /**
+     * Negates the states of the Automata, to be used in FSAEquivP
+     */
     public void negateAcceptStates() {
         for (State s : states) {
             s.negateAcceptState();
         }
+    }
+
+    /**
+     * Add a character to an alphabet
+     * @param c The char to be added to the automata's alphabet
+     */
+    public void addAlphabet(char c) {
+        if (!alphabet.contains(c + "")) {
+            alphabet.add(c + "");
+        }
+        ensureEpsilonAtEnd();
+    }
+
+    /**
+     * Add a string to an alphabet, typically a valid char for the fsa
+     * @param s The string to add to the alphabet
+     */
+    public void addAlphabet(String s) {
+        if (!alphabet.contains(s)) {
+            alphabet.add(s);
+        }
+        ensureEpsilonAtEnd();
+    }
+
+    /**
+     * Add a list of alphabet characters to the alphabet of the automata
+     * @param listAlphabet The list of characters to add to the automata's alphabet
+     */
+    public void addAlphabet(List<String> listAlphabet) {
+        for (String s : listAlphabet) {
+            if (!alphabet.contains(s)) {
+                alphabet.add(s);
+            }
+        }
+        ensureEpsilonAtEnd();
+    }
+
+    /**
+     * Ensures that the epsilon character appears at the end of the fsa's alphabet
+     */
+    private void ensureEpsilonAtEnd() {
+        List<String> newAl = new ArrayList<>();
+        for (String s : alphabet)
+            if (!s.equals(".."))
+                newAl.add(s);
+        Collections.sort(newAl);
+        if (alphabet.contains(".."))
+            newAl.add("..");
+        alphabet = newAl;
     }
 }

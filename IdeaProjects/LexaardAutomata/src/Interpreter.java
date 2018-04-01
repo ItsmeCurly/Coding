@@ -44,7 +44,7 @@ public class Interpreter {
                         System.err.println("Invalid identifier for variable");
                         break;
                     }
-                    String command = scanIn.next().trim();
+                    String command = scanIn.nextLine().trim();
                     //create a new FSA
                     if (command.equals("fsa")) {
                         String input = scan.nextLine() + '\n';
@@ -126,8 +126,68 @@ public class Interpreter {
                             varMap.put(name, newBool);
                         else
                             varMap.replace(name, newBool);
-                    } else if (command.equals("regex")) {
-                        String input = "";
+                    }
+                    //if the user input is regex2fsa, then this creates the fsa of the regex
+                    else if (command.equals("regex2fsa")) {
+                        Regex r1 = (Regex) varMap.get(scanIn.next());
+
+                        Automaton fsa = r1.convertFSA();
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, fsa);
+                        else
+                            varMap.replace(name, fsa);
+
+                    }
+                    //creates a GNFA when the user input is gnfa
+                    else if (command.equals("gnfa")) {
+                        String input = scan.nextLine() + '\n';
+
+                        input += scan.nextLine() + '\n';
+
+                        String temp;
+
+                        while (!(temp = scan.nextLine()).isEmpty()) {
+                            input += temp + '\n';
+                        }
+
+                        GNFA gnfa = GNFA.constructGNFA(input);
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, gnfa);
+                        else
+                            varMap.replace(name, gnfa);
+
+                    }
+                    //creates a regex from a certain dfa
+                    else if (command.equals("dfa2regex")) {
+                        Regex r1 = Regex.dfa2Regex((Automaton) varMap.get(scanIn.next()));
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, r1);
+                        else
+                            varMap.replace(name, r1);
+                    }
+                    else if(command.equals("cfg")) {
+                        String input = scan.nextLine() + '\n';
+
+                        input += scan.nextLine() + '\n';
+
+                        String temp;
+
+                        while (!(temp = scan.nextLine()).isEmpty()) {
+                            input += temp + '\n';
+                        }
+
+                        CFG cfg = new CFG(input);
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, cfg);
+                        else
+                            varMap.replace(name, cfg);
+                    }
+                    else if (command.contains("(") || isCharacter(command)) {
+                        String input = command;
                         String temp;
                         while (!(temp = scan.nextLine()).isEmpty()) {
                             input += temp;
@@ -137,27 +197,6 @@ public class Interpreter {
                             varMap.put(name, newRegex);
                         else
                             varMap.replace(name, newRegex);
-                    } else if (command.equals("regex2fsa")) {
-                        Regex regex = new Regex();
-                        String varIdentifier = scanIn.next();
-
-                        if (!isValidIdentifier(varIdentifier)) {
-                            System.err.println("Regex identifier not valid");
-                            break;
-                        }
-
-                        if (varMap.containsKey(varIdentifier)) {
-                            if (varMap.get(name) instanceof Regex)
-                                regex = (Regex) varMap.get(varIdentifier);
-                            else
-                                break;
-                        }
-
-                        Automaton fsa = regex.getFSARepresentation();
-                        if (!varMap.containsKey(name))
-                            varMap.put(name, fsa);
-                        else
-                            varMap.replace(name, fsa);
                     }
                     break;
                 case "run": {
@@ -201,9 +240,13 @@ public class Interpreter {
         }
     }
 
+    private boolean isCharacter(String command) {
+        return command.charAt(0) >= 'a' && command.charAt(0) <= 'z';
+    }
 
 
     /**
+     * Checks whether the identifier is valid for a certain variable
      * @param s The string to validate
      * @return Whether the string is a valid Java variable identifier
      */
