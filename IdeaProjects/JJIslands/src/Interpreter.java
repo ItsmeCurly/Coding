@@ -26,5 +26,9 @@ public class Interpreter {
         while (m.find()) {
             list.add(m.group());
         }
+
+        //System.out.println(list);
+
+        new Islands(list);
     }
 }

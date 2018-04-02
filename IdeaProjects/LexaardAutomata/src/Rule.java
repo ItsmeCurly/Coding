@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+@Deprecated
 public class Rule {
     private String lhs;
     private List<String> rhs;

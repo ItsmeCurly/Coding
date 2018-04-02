@@ -1,9 +1,10 @@
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class CFG {
     private String name;
     private String comment;
-    private List<Rule> rules;
+    private Map<String, List<String>> rules;
     private List<String> varAlphabet;
     private List<String> termAlphabet;
 
@@ -12,7 +13,7 @@ public class CFG {
     }
 
     public CFG(String input) {
-        rules = new LinkedList<>();
+        rules = new HashMap<>();
         varAlphabet = new LinkedList<>();
         termAlphabet = new LinkedList<>();
 
@@ -27,18 +28,13 @@ public class CFG {
             String ruleText = scan.nextLine();
             Scanner ruleScan = new Scanner(ruleText);
             if (ruleText.contains("->")) {
-                Rule r = new Rule();
 
                 String lhs = ruleScan.next();
                 addVarAlphabet(lhs);
 
-                r.setLHS(lhs);
+                List<String> rhs = rules.computeIfAbsent(lhs, k -> new ArrayList<>());
 
-                if(rules.contains(r)) {
-                    r = getRule(lhs);
-                }
-
-                String temp = ruleScan.next();
+                String unUsed = ruleScan.next();
 
                 String s = ruleScan.nextLine().trim();
                 String [] sa = s.split("\\|");
@@ -46,7 +42,8 @@ public class CFG {
                 for(String st : sa) {
                     addTermAlphabet(st);
                 }
-                r.addRHS(sa);
+
+                rhs.addAll(Arrays.asList(sa));
             }
             else if(ruleScan.next().equals("..")) {
                 for(String s : ruleText.split(" ")) {
@@ -87,25 +84,6 @@ public class CFG {
                 varAlphabet.add(s);
             }
         }
-    }
-
-    public Rule getRule(String lhs) {
-        for(Rule r : rules) {
-            if(r.getLHS().equals(lhs)) {
-                return r;
-            }
-        }
-        return null;
-    }
-
-
-    public boolean containsRule(String lhs) {
-        for(Rule r : rules) {
-            if(r.getLHS().equals(lhs)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

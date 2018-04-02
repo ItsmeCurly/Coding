@@ -1,8 +1,8 @@
 //import java.util.ArrayList;
 //import java.util.Stack;
 //
-//@Deprecated
-//public class OLDREGEX {
+@Deprecated
+public class OLDREGEX {
 //    protected final static char EPSILONCHARACTER = 'ε';
 //    protected final static char EMPTYSETCHARACTER = '∅';
 //
@@ -243,4 +243,4 @@
 //            return input.substring(4, input.length() - 1);
 //        }
 //    }
-//}
+}
