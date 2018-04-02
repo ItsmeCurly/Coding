@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-@Deprecated
+
 public class Rule {
     private String lhs;
     private List<String> rhs;
@@ -9,30 +9,24 @@ public class Rule {
     public Rule() {
         lhs = "";
         rhs = new LinkedList<>();
-        parseRule();
     }
 
-    private void parseRule() {
+    public Rule(String lhs) {
+        this.lhs = lhs;
+        rhs = new LinkedList<>();
 
-    }
-
-    public String toString() {
-        String result = lhs;
-
-        if(!rhs.isEmpty()) {
-            result += " -> ";
-        }
-        for (String rh : rhs) {
-            result += rh + " | ";
-        }
-        if(!rhs.isEmpty()) {
-            result = result.substring(result.length() - 2);
-        }
-        return result;
     }
 
     public void addRHS(String [] addRhs) {
         rhs.addAll(Arrays.asList(addRhs));
+    }
+
+    public List<String> getRHS() {
+        return rhs;
+    }
+
+    public void setRHS(List<String> rhs) {
+        this.rhs = rhs;
     }
 
     public void setLHS(String lhs) {
@@ -41,5 +35,23 @@ public class Rule {
 
     public String getLHS() {
         return lhs;
+    }
+
+    public String toString() {
+        String result = lhs;
+
+        if (!rhs.isEmpty()) {
+            result += " -> ";
+        }
+
+        for (String rh : rhs) {
+            result += rh + " | ";
+        }
+
+        if (!rhs.isEmpty()) {
+            result = result.substring(0, result.length() - 3);
+        }
+
+        return result;
     }
 }

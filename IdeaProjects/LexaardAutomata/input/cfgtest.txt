@@ -1,0 +1,7 @@
+define c1 cfg
+odd1 xtra v
+A -> B
+B -> C
+C -> A
+D -> D
+E B F G
