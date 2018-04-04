@@ -40,11 +40,12 @@ public class Interpreter {
                 }
                 case "define":
                     String name = scanIn.next();
+
                     if (!isValidIdentifier(name)) {
                         System.err.println("Invalid identifier for variable");
                         break;
                     }
-                    String command = scanIn.nextLine().trim();
+                    String command = scanIn.next().trim();
                     //create a new FSA
                     if (command.equals("fsa")) {
                         String input = scan.nextLine() + '\n';
@@ -185,8 +186,21 @@ public class Interpreter {
                             varMap.put(name, cfg);
                         else
                             varMap.replace(name, cfg);
-                    }
-                    else if (command.contains("(") || isCharacter(command)) {
+                    } else if (command.equals("chomskyNF")) {
+                        CFG oldCFG = (CFG) varMap.get(scanIn.next());
+                        CFG cfg = CFG.chomskyNF(oldCFG);
+
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, cfg);
+                        else
+                            varMap.replace(name, cfg);
+                    } else if (command.equals("cfgGen")) {
+                        boolean b1 = CFG.cfgGen((CFG) varMap.get(scanIn.next()), scanIn.next());
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, b1);
+                        else
+                            varMap.replace(name, b1);
+                    } else if (command.contains("(") || isCharacter(command)) {
                         String input = command;
                         String temp;
                         while (!(temp = scan.nextLine()).isEmpty()) {

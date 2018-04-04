@@ -1,0 +1,8 @@
+define c1 cfg
+stupidfuckingcfg c1
+S -> A S A | a B
+A -> B | S
+B -> b | ..
+
+define c1nf chomskyNF c1
+print c1nf

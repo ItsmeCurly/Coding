@@ -9,7 +9,11 @@ public class CFG {
     private List<String> termAlphabet;
 
     public CFG() {
-        this("");
+        rules = new ArrayList<>();
+        varAlphabet = new LinkedList<>();
+        termAlphabet = new LinkedList<>();
+
+        startRule = name = comment = "";
     }
 
     public CFG(String input) {
@@ -18,7 +22,232 @@ public class CFG {
         termAlphabet = new LinkedList<>();
 
         parseCFG(input);
-        System.out.println(this);
+    }
+
+    /**
+     * Deep clone
+     *
+     * @param oldCFG
+     */
+    public CFG(CFG oldCFG) {
+        this.name = oldCFG.name;
+        this.comment = oldCFG.comment;
+        this.startRule = oldCFG.startRule;
+        List<Rule> temp = new ArrayList<>();
+        for (Rule r : oldCFG.rules) {
+            temp.add(new Rule(r));
+        }
+        this.rules = temp;
+        this.termAlphabet = new ArrayList<>(oldCFG.termAlphabet);
+        this.varAlphabet = new ArrayList<>(oldCFG.varAlphabet);
+    }
+
+    public static CFG chomskyNF(CFG cfg1) {
+        CFG newCFG = new CFG(cfg1);
+        //new start S_0 -> S
+        List<String> temp = new LinkedList<>();
+        temp.add(newCFG.rules.get(0).getLHS());
+
+        Rule newStartRule = new Rule("S_0", temp);
+
+        newCFG.rules.add(0, newStartRule);
+
+        newCFG.addVarAlphabet(newStartRule.getLHS());
+        newCFG.startRule = newStartRule.getLHS();
+        //remove epsilon S -> ..
+
+        for (Rule r : newCFG.rules) {
+            if (r.getRHS().contains("..")) {
+                removeEpsilon(r, newCFG.rules);
+            }
+        }
+
+        newCFG.termAlphabet.remove("..");
+        //remove unit rules S -> S
+
+        //remove other unit rules A -> B
+
+        for (Rule r : newCFG.rules) {
+            removeUnitRules(r, newCFG);
+        }
+
+        System.out.println(newCFG);
+
+        System.exit(1);
+
+
+        //remove var > 2
+
+        for (int i = 0; i < newCFG.rules.size(); i++) {
+            replaceOversizeVariableLists(newCFG.rules.get(i), newCFG);
+        }
+
+        for (int i = 0; i < newCFG.rules.size(); i++) {
+            replaceVariableTerminalPatterns(newCFG.rules.get(i), newCFG);
+        }
+
+        return newCFG;
+    }
+
+    public static boolean cfgGen(CFG cfg1, String w) {
+        CFG cfgCNF = chomskyNF(cfg1);
+
+        ArrayList<String> current = new ArrayList<>();
+        current.add(cfgCNF.startRule);
+
+        cfgCNF.getDerivations(current, 0, w.length());
+
+        return current.contains(w);
+    }
+
+    private static void removeEpsilon(Rule r, List<Rule> rules) {
+        List<String> ruleRhs = r.getRHS();
+        ruleRhs.remove("..");
+
+        for (Rule rule : rules) {
+            for (int i = 0; i < rule.getRHS().size(); i++) {
+                String sArr = rule.getRHS().get(i);
+
+                StringTokenizer st = new StringTokenizer(sArr);
+                int loc = 0;
+                while (st.hasMoreTokens()) {
+                    String token = st.nextToken();
+                    if (token.equals(r.getLHS())) {
+                        String newString = "";
+                        if (loc != 0) {
+                            newString += sArr.substring(0, loc - 1);
+                        }
+                        if (loc + r.getLHS().length() < sArr.length()) {
+                            newString += sArr.substring(loc + r.getLHS().length() + 1);
+                        }
+                        if (newString.equals("")) {
+                            newString = "..";
+                        }
+                        rule.addRHS(newString);
+                    }
+                    loc += token.length() + 1;
+                }
+            }
+        }
+        for (Rule rule : rules) {
+            if (rule.getRHS().contains("..")) {
+                removeEpsilon(rule, rules);
+            }
+        }
+    }
+
+    private static void removeUnitRules(Rule r, CFG cfg) {
+        for (int i = 0; i < r.getRHS().size(); i++) {
+            if (r.getRHS().get(i).length() == 1 && getNumVars(r.getRHS().get(i), cfg) == 1) {
+                String s = r.getRHS().remove(i);
+                Rule rule = cfg.getRule(s);
+                if (cfg.rules.contains(cfg.getRule(s)) && !rule.equals(r)) {
+                    removeUnitRules(rule, cfg);
+                }
+                r.addRHS(rule.getRHS());
+                i -= 1;
+            }
+        }
+    }
+
+    private static void replaceOversizeVariableLists(Rule rule, CFG newCFG) {
+        for (int i = 0; i < rule.getRHS().size(); i++) {
+            String rhs1 = rule.getRHS().get(i);
+            StringTokenizer st = new StringTokenizer(rhs1);
+            String s = st.nextToken();
+            if (getNumTerms(rhs1) > 2 || getNumTerminals(rhs1, newCFG) > 1) {
+                String convert = rhs1.substring(s.length() + 1).trim();
+                Rule r = createRule(newCFG, convert);
+
+                rule.setRHS(i, rhs1.substring(0, s.length()) + " " + r.getLHS());
+            }
+        }
+    }
+
+    private static void replaceVariableTerminalPatterns(Rule rule, CFG newCFG) {
+        for (int i = 0; i < rule.getRHS().size(); i++) {
+            String rhs1 = rule.getRHS().get(i);
+            StringTokenizer st = new StringTokenizer(rhs1);
+            String s = st.nextToken();
+            if (getNumVars(rhs1, newCFG) > 0 && getNumTerminals(rhs1, newCFG) > 0) {
+                if (newCFG.isVar(rhs1.substring(0, s.length()))) {
+                    String convert = rhs1.substring(s.length() + 1).trim();
+                    Rule r = createRule(newCFG, convert);
+
+                    rule.setRHS(i, rhs1.substring(0, s.length()) + " " + r.getLHS());
+                } else {
+                    String convert = rhs1.substring(0, s.length()).trim();
+                    Rule r = createRule(newCFG, convert);
+
+                    rule.setRHS(i, r.getLHS() + " " + rhs1.substring(s.length() + 1));
+                }
+            }
+        }
+    }
+
+    private static Rule createRule(CFG newCFG, String convert) {
+        Rule r = new Rule();
+        boolean containsRHS = false;
+        for (Rule rule1 : newCFG.rules) {
+            if (rule1.getRHS().size() == 1 && rule1.getRHS().contains(convert)) {
+                containsRHS = true;
+                r = rule1;
+            }
+        }
+        if (!containsRHS) {
+            r.addRHS(convert);
+            newCFG.addRule(r);
+            newCFG.addVarAlphabet(r.getLHS());
+        }
+        return r;
+    }
+
+    private static int getNumVars(String s, CFG cfg) {
+        int count = 0;
+        for (String st : s.split(" ")) {
+            if (cfg.varAlphabet.contains(st)) count += 1;
+        }
+        return count;
+    }
+
+    private static int getNumTerminals(String s, CFG cfg) {
+        int count = 0;
+        for (String st : s.split(" ")) {
+            if (cfg.termAlphabet.contains(st)) count += 1;
+        }
+        return count;
+    }
+
+    private static int getNumTerms(String s) {
+        return s.split(" ").length;
+    }
+
+    private void getDerivations(ArrayList<String> currentDerivations, int numberDerivation, int w_length) {
+        if (numberDerivation == 2 * w_length - 1) {
+            return;
+        }
+
+        ArrayList<String> nextDerivations = new ArrayList<>();
+        for (String derivation : currentDerivations) {
+            int currentIndex = 0;
+
+            for (String splitDerivation : derivation.split(" ")) {
+                if (isVar(splitDerivation)) {
+                    Rule r = getRule(splitDerivation);
+                    for (String patternString : r.getRHS()) {
+                        String s = "";
+                        s += derivation.substring(0, currentIndex);
+                        s += patternString;
+                        if (currentIndex + splitDerivation.length() < derivation.length()) {
+                            s += derivation.substring(currentIndex + splitDerivation.length());
+                        }
+                        nextDerivations.add(s);
+                    }
+                }
+                currentIndex += splitDerivation.length();
+            }
+        }
+        getDerivations(nextDerivations, numberDerivation + 1, w_length);
     }
 
     public void parseCFG(String input) {
@@ -36,9 +265,7 @@ public class CFG {
                 if (i == 0) {
                     startRule = lhs;
                 }
-            } else if (ruleText.contains("..")) {
-
-            } else {
+            } else if (!ruleText.contains("..")) {
                 String start = ruleScan.next();
                 if (i == 0)
                     startRule = start;
@@ -61,10 +288,10 @@ public class CFG {
 
                 r.setLHS(lhs);
 
-                String unUsed = ruleScan.next();
+                ruleScan.next();
 
                 String s = ruleScan.nextLine().trim();
-                String [] sa = s.split("\\|");
+                String[] sa = s.split(" \\| ");
 
                 for(String st : sa) {
                     for (String str : st.split(" ")) {
@@ -88,26 +315,6 @@ public class CFG {
                 }
             }
         }
-    }
-
-    private void sortRules() {
-
-    }
-
-    private Rule getRule(String lhs) {
-        for (Rule r : rules) {
-            if (r.getLHS().equals(lhs)) {
-                return r;
-            }
-        }
-        return new Rule();
-    }
-
-    private boolean isVar(String st) {
-        for (String var : varAlphabet) {
-            if (var.equals(st)) return true;
-        }
-        return false;
     }
 
     private void addRule(Rule r) {
@@ -144,10 +351,50 @@ public class CFG {
         }
     }
 
+    private void sortRules() {
+        List<Rule> sortedRules = new ArrayList<>(rules);
+        Collections.sort(sortedRules);
+        sortedRules.remove(getRule(startRule));
+        sortedRules.add(0, getRule(startRule));
+        rules = sortedRules;
+    }
+
     private String printList(ArrayList<String> list) {
         String result = "";
         for (String s : list) {
             result += s + " ";
+        }
+        return result;
+    }
+
+    public Rule getRule(String lhs) {
+        for (Rule r : rules) {
+            if (r.getLHS().equals(lhs)) {
+                return r;
+            }
+        }
+        return new Rule();
+    }
+
+    public boolean isVar(String st) {
+        for (String var : varAlphabet) {
+            if (var.equals(st)) return true;
+        }
+        return false;
+    }
+
+    private <T> void addIfNotPresent(Collection<T> list, T element) {
+        if (!list.contains(element)) {
+            list.add(element);
+        }
+    }
+
+    private String replaceVarWithString(int index, String change, String original, String add) {
+        String result = "";
+        result += original.substring(0, index);
+        result += add;
+        if (index < original.length()) {
+            result += original.substring(index + change.length() + 1);
         }
         return result;
     }
@@ -169,7 +416,7 @@ public class CFG {
             }
         }
 
-        if (varAlphabet.contains("S")) {
+        if (varAlphabet.contains(startRule)) {
             list.add(0, printList(varAlphabet));
         } else {
             if (!varAlphabet.isEmpty())
@@ -181,7 +428,7 @@ public class CFG {
         }
 
         String result = "";
-
+        result += name + " " + comment + '\n';
         for (String s : list) {
             result += s + '\n';
         }

@@ -1,8 +1,11 @@
 define c1 cfg
 odd3 xtra t
 A -> B b C
-B -> A a
+B -> C a
 C -> A | ..
 .. x y a
 
 define c1nf chomskyNF c1
+print c1nf
+
+define cfGen cfgGen c1 ab

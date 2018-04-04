@@ -1,0 +1,8 @@
+define c1 cfg
+G2excerpt from Ex 2.10 of the textbook
+sentence -> noun-phrase verb-phrase
+noun-phrase -> cmplx-noun | cmplx-noun prep-phrase
+noun -> boy | girl | flower
+
+define c1nf chomskyNF c1
+print c1nf

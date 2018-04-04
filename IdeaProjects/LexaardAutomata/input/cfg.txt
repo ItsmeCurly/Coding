@@ -1,5 +1,8 @@
 define c1 cfg
 G1 p102
 A -> 0 A 1
-A -> B
 B -> #
+A -> B
+
+define c1nf chomskyNF c1
+print c1nf
