@@ -1,34 +1,39 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Rule implements Comparable<Rule> {
+    private static ArrayList<String> availableNames;
     private String lhs;
     private List<String> rhs;
-    private static int counter;
 
     public Rule() {
-        lhs = "R_" + counter;
+        lhs = availableNames.remove(0);
         rhs = new LinkedList<>();
-        counter += 1;
-    }
-
-    public Rule(String lhs) {
-        this.lhs = lhs;
-        rhs = new LinkedList<>();
-        counter += 1;
-
     }
 
     public Rule(String lhs, List<String> rhs) {
         this.lhs = lhs;
+        availableNames.remove(lhs);
         this.rhs = rhs;
-        counter += 1;
     }
 
     public Rule(Rule o) {
         this.lhs = o.lhs;
+        availableNames.remove(lhs);
         this.rhs = new LinkedList<>(o.rhs);
-        counter += 1;
+    }
+
+    public static void initNames() {
+        availableNames = new ArrayList<>();
+        for (int i = 65; i <= 90; i++) {
+            availableNames.add((char) i + "");
+        }
+        int i = availableNames.size();
+        for (int j = 0; j < i; j++) {
+            availableNames.add(availableNames.get(j) + "*");
+            availableNames.add(availableNames.get(j) + '\'');
+        }
     }
 
     public void addRHS(String[] rhs) {

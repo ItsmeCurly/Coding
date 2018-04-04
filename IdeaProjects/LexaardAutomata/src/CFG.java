@@ -9,6 +9,7 @@ public class CFG {
     private List<String> termAlphabet;
 
     public CFG() {
+        Rule.initNames();
         rules = new ArrayList<>();
         varAlphabet = new LinkedList<>();
         termAlphabet = new LinkedList<>();
@@ -17,6 +18,7 @@ public class CFG {
     }
 
     public CFG(String input) {
+        Rule.initNames();
         rules = new ArrayList<>();
         varAlphabet = new LinkedList<>();
         termAlphabet = new LinkedList<>();
@@ -30,6 +32,7 @@ public class CFG {
      * @param oldCFG
      */
     public CFG(CFG oldCFG) {
+        Rule.initNames();
         this.name = oldCFG.name;
         this.comment = oldCFG.comment;
         this.startRule = oldCFG.startRule;
@@ -45,15 +48,31 @@ public class CFG {
     public static CFG chomskyNF(CFG cfg1) {
         CFG newCFG = new CFG(cfg1);
         //new start S_0 -> S
-        List<String> temp = new LinkedList<>();
-        temp.add(newCFG.rules.get(0).getLHS());
+        boolean startInRHS = false;
+        for (Rule r : newCFG.rules) {
 
-        Rule newStartRule = new Rule("S_0", temp);
+            for (String rhs : r.getRHS()) {
 
-        newCFG.rules.add(0, newStartRule);
+                for (String rhsSplit : getTerms(rhs)) {
 
-        newCFG.addVarAlphabet(newStartRule.getLHS());
-        newCFG.startRule = newStartRule.getLHS();
+                    if (rhsSplit.equals(newCFG.startRule)) {
+                        startInRHS = true;
+                    }
+                }
+            }
+        }
+
+        if (startInRHS) {
+            List<String> temp = new LinkedList<>();
+            temp.add(newCFG.getRule(newCFG.startRule).getLHS());
+
+            Rule newStartRule = new Rule("S_0", temp);
+
+            newCFG.rules.add(0, newStartRule);
+
+            newCFG.addVarAlphabet(newStartRule.getLHS());
+            newCFG.startRule = newStartRule.getLHS();
+        }
         //remove epsilon S -> ..
 
         for (Rule r : newCFG.rules) {
@@ -71,11 +90,6 @@ public class CFG {
             removeUnitRules(r, newCFG);
         }
 
-        System.out.println(newCFG);
-
-        System.exit(1);
-
-
         //remove var > 2
 
         for (int i = 0; i < newCFG.rules.size(); i++) {
@@ -85,7 +99,7 @@ public class CFG {
         for (int i = 0; i < newCFG.rules.size(); i++) {
             replaceVariableTerminalPatterns(newCFG.rules.get(i), newCFG);
         }
-
+        newCFG.sortRules();
         return newCFG;
     }
 
@@ -95,9 +109,15 @@ public class CFG {
         ArrayList<String> current = new ArrayList<>();
         current.add(cfgCNF.startRule);
 
-        cfgCNF.getDerivations(current, 0, w.length());
+        ArrayList<String> results = cfgCNF.getDerivations(current, 0, (w.length() == 0 ? 1 : w.length()));
 
-        return current.contains(w);
+        for (int i = 0; i < results.size(); i++) {
+            results.set(i, results.get(i).replace(" ", ""));
+        }
+
+        System.out.println(results);
+
+        return results.contains(w);
     }
 
     private static void removeEpsilon(Rule r, List<Rule> rules) {
@@ -185,6 +205,14 @@ public class CFG {
         }
     }
 
+    private static int getNumVars(String s, CFG cfg) {
+        int count = 0;
+        for (String st : getTerms(s)) {
+            if (cfg.varAlphabet.contains(st)) count += 1;
+        }
+        return count;
+    }
+
     private static Rule createRule(CFG newCFG, String convert) {
         Rule r = new Rule();
         boolean containsRHS = false;
@@ -202,58 +230,67 @@ public class CFG {
         return r;
     }
 
-    private static int getNumVars(String s, CFG cfg) {
-        int count = 0;
-        for (String st : s.split(" ")) {
-            if (cfg.varAlphabet.contains(st)) count += 1;
-        }
-        return count;
-    }
-
     private static int getNumTerminals(String s, CFG cfg) {
         int count = 0;
-        for (String st : s.split(" ")) {
+        for (String st : getTerms(s)) {
             if (cfg.termAlphabet.contains(st)) count += 1;
         }
         return count;
     }
 
     private static int getNumTerms(String s) {
-        return s.split(" ").length;
+        return getTerms(s).length;
     }
 
-    private void getDerivations(ArrayList<String> currentDerivations, int numberDerivation, int w_length) {
-        if (numberDerivation == 2 * w_length - 1) {
-            return;
-        }
+    private static String[] getTerms(String s) {
+        return s.split(" ");
+    }
+
+    private ArrayList<String> getDerivations(ArrayList<String> currentDerivations, int numberDerivation, int w_length) {
+        if (numberDerivation == 2 * w_length - 1) return currentDerivations;
 
         ArrayList<String> nextDerivations = new ArrayList<>();
+
         for (String derivation : currentDerivations) {
+
             int currentIndex = 0;
 
-            for (String splitDerivation : derivation.split(" ")) {
+            for (String splitDerivation : getTerms(derivation)) {
+
                 if (isVar(splitDerivation)) {
+
                     Rule r = getRule(splitDerivation);
+
                     for (String patternString : r.getRHS()) {
                         String s = "";
+
                         s += derivation.substring(0, currentIndex);
+
                         s += patternString;
+
                         if (currentIndex + splitDerivation.length() < derivation.length()) {
                             s += derivation.substring(currentIndex + splitDerivation.length());
                         }
+
                         nextDerivations.add(s);
                     }
                 }
-                currentIndex += splitDerivation.length();
+
+                currentIndex += splitDerivation.length() + 1;
+
             }
+
         }
-        getDerivations(nextDerivations, numberDerivation + 1, w_length);
+
+        return getDerivations(nextDerivations, numberDerivation + 1, w_length);
     }
 
     public void parseCFG(String input) {
         Scanner scan = new Scanner(input);
         name = scan.next();
+
         comment = scan.nextLine().trim();
+
         int i = 0;
         while (scan.hasNextLine()) {
 
@@ -294,7 +331,7 @@ public class CFG {
                 String[] sa = s.split(" \\| ");
 
                 for(String st : sa) {
-                    for (String str : st.split(" ")) {
+                    for (String str : getTerms(st)) {
                         if (!isVar(str)) {
                             addTermAlphabet(str);
                         }
@@ -305,12 +342,12 @@ public class CFG {
                 sortRules();
             }
             else if(ruleScan.next().equals("..")) {
-                for(String s : ruleText.split(" ")) {
+                for (String s : getTerms(ruleText)) {
                     addTermAlphabet(s);
                 }
             }
             else {
-                for(String s : ruleText.split(" ")) {
+                for (String s : getTerms(ruleText)) {
                     addVarAlphabet(s);
                 }
             }
@@ -329,25 +366,9 @@ public class CFG {
         }
     }
 
-    private void addTermAlphabet(Collection<String> c) {
-        for(String s : c) {
-            if(!termAlphabet.contains(s)) {
-                termAlphabet.add(s);
-            }
-        }
-    }
-
     private void addVarAlphabet(String s) {
         if(!varAlphabet.contains(s)) {
             varAlphabet.add(s);
-        }
-    }
-
-    private void addVarAlphabet (Collection<String> c) {
-        for(String s : c) {
-            if(!varAlphabet.contains(s)) {
-                varAlphabet.add(s);
-            }
         }
     }
 
@@ -383,22 +404,6 @@ public class CFG {
         return false;
     }
 
-    private <T> void addIfNotPresent(Collection<T> list, T element) {
-        if (!list.contains(element)) {
-            list.add(element);
-        }
-    }
-
-    private String replaceVarWithString(int index, String change, String original, String add) {
-        String result = "";
-        result += original.substring(0, index);
-        result += add;
-        if (index < original.length()) {
-            result += original.substring(index + change.length() + 1);
-        }
-        return result;
-    }
-
     @Override
     public String toString() {
         ArrayList<String> list = new ArrayList<>();
@@ -410,7 +415,7 @@ public class CFG {
             list.add(r.toString());
             varAlphabet.remove(r.getLHS());
             for (String s : r.getRHS()) {
-                for (String st : s.split(" ")) {
+                for (String st : getTerms(s)) {
                     termAlphabet.remove(st);
                 }
             }

@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="878fe98f-9b69-4c15-950a-12984fd7c189" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgGenTest.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgwordtest" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LexaardAutomata/input/testVidCFG.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/testIslands.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input/testIslands.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfg.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfg.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfgGenTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgGenTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/testVidCFG.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/testVidCFG.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LexaardAutomata/src/CFG.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/src/CFG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/src/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/src/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/src/OLDREGEX.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/src/OLDREGEX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LexaardAutomata/src/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/src/Rule.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,7 +24,7 @@
       <file leaf-file-name="Interpreter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Interpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
+            <state relative-caret-position="323">
               <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -41,8 +36,8 @@
       <file leaf-file-name="Islands.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Islands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1190">
-              <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
+            <state relative-caret-position="1394">
+              <caret line="82" column="1" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -110,6 +105,8 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,8 +128,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -223,6 +218,7 @@
       <workItem from="1522545571976" duration="354000" />
       <workItem from="1522638772135" duration="1966000" />
       <workItem from="1522796661131" duration="694000" />
+      <workItem from="1522866500212" duration="615000" />
     </task>
     <task id="LOCAL-00001" summary="Generic commit">
       <created>1522545635102</created>
@@ -235,7 +231,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5247000" />
+    <option name="totallyTimeSpent" value="5862000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
@@ -243,15 +239,14 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50104165" side_tool="true" visible="true" weight="0.25398514" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50104165" side_tool="true" visible="true" weight="0.32943678" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49895832" visible="true" weight="0.25398514" />
       <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49895832" weight="0.25398514" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -261,14 +256,15 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Messages" order="7" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +281,37 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Interpreter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Islands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1394">
+          <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="11" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input/testIslands.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Interpreter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -418,7 +445,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Interpreter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
+        <state relative-caret-position="323">
           <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -428,8 +455,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Islands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
+        <state relative-caret-position="1394">
+          <caret line="82" column="1" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
         </state>
       </provider>
     </entry>

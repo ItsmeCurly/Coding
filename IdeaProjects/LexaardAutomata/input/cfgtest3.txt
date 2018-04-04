@@ -1,3 +1,6 @@
 define c1 cfg
 h
 S -> a
+
+define cfGen cfgGen c1 a
+print cfGen

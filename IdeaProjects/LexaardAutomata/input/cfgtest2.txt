@@ -1,3 +1,6 @@
 define c1 cfg
 g
 S
+
+define c1nf chomskyNF c1
+print c1nf
