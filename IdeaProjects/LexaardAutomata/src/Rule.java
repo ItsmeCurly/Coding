@@ -1,41 +1,46 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Rule implements Comparable<Rule> {
-    private static ArrayList<String> availableNames;
     private String lhs;
     private List<String> rhs;
 
-    public Rule() {
-        lhs = availableNames.remove(0);
-        rhs = new LinkedList<>();
+    /**
+     * Creates a rule with a LHS searched from available names, as must be unique, only has 78 choices
+     *
+     * @param lhs The LHS variable, either pregenerated or gotten from input
+     */
+    public Rule(String lhs) {
+        this.lhs = lhs;
+        this.rhs = new LinkedList<>();
     }
 
+    /**
+     * Creates a rule with specified lhs and rh s
+     *
+     * @param lhs String representing the LHS
+     * @param rhs List representing the RHS
+     */
     public Rule(String lhs, List<String> rhs) {
         this.lhs = lhs;
-        availableNames.remove(lhs);
         this.rhs = rhs;
     }
 
+    /**
+     * Creates a rule from the specified rule
+     *
+     * @param o The other rule
+     */
     public Rule(Rule o) {
         this.lhs = o.lhs;
-        availableNames.remove(lhs);
         this.rhs = new LinkedList<>(o.rhs);
     }
 
-    public static void initNames() {
-        availableNames = new ArrayList<>();
-        for (int i = 65; i <= 90; i++) {
-            availableNames.add((char) i + "");
-        }
-        int i = availableNames.size();
-        for (int j = 0; j < i; j++) {
-            availableNames.add(availableNames.get(j) + "*");
-            availableNames.add(availableNames.get(j) + '\'');
-        }
-    }
-
+    /**
+     * Adds an array to the RHS list
+     *
+     * @param rhs The array to add to the RHS variable
+     */
     public void addRHS(String[] rhs) {
         for (String s :
                 rhs) {
@@ -43,33 +48,61 @@ public class Rule implements Comparable<Rule> {
         }
     }
 
-
+    /**
+     * Adds a list to the RHS
+     *
+     * @param rhs The list to add to the RHS
+     */
     public void addRHS(List<String> rhs) {
         for (String s : rhs) {
             addRHS(s);
         }
     }
 
+    /**
+     * Adds to the end of the RHS list
+     *
+     * @param newString The string to add to RHS
+     */
     public void addRHS(String newString) {
         if (!rhs.contains(newString)) {
             rhs.add(newString);
         }
     }
 
+    /**
+     * Returns the rhs list
+     *
+     * @return The RHS variables
+     */
     public List<String> getRHS() {
         return rhs;
     }
 
+    /**
+     * Sets a certain rhs variable at index index
+     * @param index The index to change the rhs
+     * @param s The string to change index to
+     */
     public void setRHS(int index, String s) {
         this.rhs.set(index, s);
     }
 
-    public void setLHS(String lhs) {
-        this.lhs = lhs;
-    }
-
+    /**
+     * Returns the LHS
+     * @return the lhs string
+     */
     public String getLHS() {
         return lhs;
+    }
+
+    /**
+     * Sets the lhs variable
+     *
+     * @param lhs The new lhs
+     */
+    public void setLHS(String lhs) {
+        this.lhs = lhs;
     }
 
     public String toString() {

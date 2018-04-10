@@ -5,15 +5,11 @@ JC = javac
         $(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-	    Automaton.java \
-	    GNFA.java \
-	    GNFAState.java \
 	    Interpreter.java \
-	    OLDREGEX.java \
-	    Regex.java \
-	    State.java \
-	    Rule.java \
-	    CFG.java
+	    IslandGenerator.java \
+	    IslandGenerator2.java \
+	    Islands.java \
+	    TestInterpreter.java \
 
 default: classes
 

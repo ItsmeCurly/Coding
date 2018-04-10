@@ -4,3 +4,6 @@ A -> B b C
 B -> A a
 C -> A | ..
 .. x y a
+
+define c1nf chomskyNF c1
+print c1nf

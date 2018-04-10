@@ -10,17 +10,11 @@ public class Islands {
         nextIslands = new HashMap<>();
         longestRoute = new LinkedList<>();
         createIslands(pairs);
-        //System.out.println(nextIslands);
 
         LinkedList<Integer> route = new LinkedList<>();
         route.add(startIsland);
 
         findPath(copyMapping(nextIslands), route);
-        System.out.println(longestRoute.size() - 1);
-        for (int i : longestRoute) {
-            System.out.println(i);
-        }
-
     }
 
     private void createIslands(List<String> pairs) {
@@ -44,15 +38,22 @@ public class Islands {
         }
     }
 
-    private void findPath(Map<Integer, List<Integer>> temp, LinkedList<Integer> currentRoute) {
+    static <T> void addIfNotPresent(Collection<T> c, T element) {
+        if (!c.contains(element)) {
+            c.add(element);
+        }
+    }
 
+    private void findPath(Map<Integer, List<Integer>> temp, LinkedList<Integer> currentRoute) {
         if (currentRoute.getLast() == startIsland && currentRoute.size() > longestRoute.size()) {
-            longestRoute = currentRoute;
+            longestRoute = new LinkedList<>(currentRoute);
         }
 
-        //System.out.println(currentRoute);
-        for (int i : temp.get(currentRoute.getLast())) {
+        if (longestRoute.size() == temp.keySet().size()) {
+            return;
+        }
 
+        for (int i : temp.get(currentRoute.getLast())) {
             LinkedList<Integer> copyRoute = new LinkedList<>(currentRoute);
             copyRoute.add(i);
 
@@ -64,20 +65,53 @@ public class Islands {
         }
     }
 
-    private Map<Integer, List<Integer>> copyMapping(Map<Integer, List<Integer>> mapping) {
-        Map<Integer, List<Integer>> temp = new HashMap<>();
-
-        for (int i : mapping.keySet()) {
-            temp.put(i, new ArrayList<>(mapping.get(i)));
-        }
-        return temp;
-    }
-
     private void removeSlide(Integer first, Integer last, Map<Integer, List<Integer>> copyTemp) {
         List<Integer> movableIslands = copyTemp.get(first);
         movableIslands.remove(last);
 
         List<Integer> otherIslands = copyTemp.get(last);
         otherIslands.remove(first);
+    }
+
+    private Map<Integer, List<Integer>> copyMapping(Map<Integer, List<Integer>> mapping) {
+        Map<Integer, List<Integer>> temp = new HashMap<>();
+
+        for (int i : mapping.keySet()) {
+            temp.put(i, new ArrayList<>(mapping.get(i)));
+        }
+
+        return temp;
+    }
+
+    public int getNumIslands() {
+        return nextIslands.keySet().size();
+    }
+
+    public int getNumConnections() {
+        Map<Integer, List<Integer>> copy = copyMapping(nextIslands);
+        int result = 0;
+
+        for (int i : nextIslands.keySet()) {
+            List<Integer> list = copy.get(i);
+            List<Integer> copyList = new LinkedList<>(list);
+            for (int j : copyList) {
+                result += 1;
+                removeSlide(i, j, copy);
+            }
+        }
+        return result;
+    }
+
+    public int getLongestPath() {
+        return longestRoute.size() - 1;
+    }
+
+    public String getResult() {
+        String result = "" + (longestRoute.size() - 1) + '\n';
+
+        for (int i : longestRoute) {
+            result += i + '\n';
+        }
+        return result;
     }
 }

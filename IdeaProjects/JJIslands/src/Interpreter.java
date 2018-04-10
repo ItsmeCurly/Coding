@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class Interpreter {
 
-    public Interpreter() {
+    private Interpreter() {
         run();
     }
 
@@ -27,8 +27,8 @@ public class Interpreter {
             list.add(m.group());
         }
 
-        //System.out.println(list);
-
-        new Islands(list);
+        Islands il = new Islands(list);
+        System.out.println(il.getResult());
+        System.out.println(il.getNumConnections());
     }
 }
