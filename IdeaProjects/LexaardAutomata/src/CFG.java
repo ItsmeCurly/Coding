@@ -3,7 +3,6 @@ import java.util.*;
 public class CFG {
     private ArrayList<String> availableNames;
     private String name;
-    private String comment;
     private String startRule;
     private List<Rule> rules;
     private List<String> varAlphabet;
@@ -18,7 +17,7 @@ public class CFG {
         varAlphabet = new LinkedList<>();
         termAlphabet = new LinkedList<>();
 
-        startRule = name = comment = "";
+        startRule = name = "";
     }
 
     /**
@@ -42,7 +41,6 @@ public class CFG {
     public CFG(CFG oldCFG) {
         initNames();   //init names for default rules
         this.name = oldCFG.name;
-        this.comment = oldCFG.comment;
         this.startRule = oldCFG.startRule;
         List<Rule> temp = new ArrayList<>();
         for (Rule r : oldCFG.rules) {
@@ -392,7 +390,7 @@ public class CFG {
         Scanner scan = new Scanner(input);
         name = scan.next(); //get name and comment, not to sure about the usefulness or correctness of this
 
-        comment = scan.nextLine().trim();
+        String temp = scan.nextLine();
 
         int i = 0;
         while (scan.hasNextLine()) {    //first scan all of the rule LHS to store varAlphabets when scanning the rest of the RHS
@@ -565,7 +563,7 @@ public class CFG {
         }
 
         String result = "";
-        result += name + " " + comment + '\n';
+        result += name + '\n';
         for (String s : list) {
             result += s + '\n';
         }

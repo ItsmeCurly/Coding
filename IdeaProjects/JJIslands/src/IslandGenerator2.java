@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class IslandGenerator2 {
-    private static final int RUNS = 4;
+    private static final int RUNS = 5;
     private Map<Integer, List<Integer>> islandMapping;
 
     public IslandGenerator2(int numberIslands) {

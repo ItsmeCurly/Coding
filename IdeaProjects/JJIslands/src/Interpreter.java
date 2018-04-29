@@ -18,17 +18,13 @@ public class Interpreter {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
-        Pattern pattern = Pattern.compile("[0-9] [0-9]");
-
-        Matcher m = pattern.matcher(input);
         List<String> list = new LinkedList<>();
-
-        while (m.find()) {
-            list.add(m.group());
+        Scanner inputScan = new Scanner(input);
+        while (inputScan.hasNext()) {
+            list.add(inputScan.next() + " " + inputScan.next());
         }
 
         Islands il = new Islands(list);
         System.out.println(il.getResult());
-        System.out.println(il.getNumConnections());
     }
 }

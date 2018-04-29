@@ -7,129 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="983bf39e-45a3-45e8-a4f9-45fee65f8e0a" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Challenges/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../FSAInterpreter/src/Interpreter.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/.idea/artifacts/J5_jar.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/README.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/makefile" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../J5/src/META-INF/MANIFEST.MF" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/.idea/artifacts/Ramsey_jar.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/README.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/makefile" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../Ramsey/src/META-INF/MANIFEST.MF" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/../maxContigSubseqSum/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../Challenges/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Challenges/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../J5/src/JJ.java" afterPath="$PROJECT_DIR$/../J5/src/JJ.java" />
-      <change beforePath="$PROJECT_DIR$/../J5/src/Runner.java" afterPath="$PROJECT_DIR$/../J5/src/Runner.java" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/artifacts/JarHomework1_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/misc.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/modules.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/.idea/workspace.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/JarHomework1.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/Makefile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/README.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/artifacts/JarHomework1_jar/JarHomework1.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/InvalidKValException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/KSearchTree.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane$CaptionFrame.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane$StateFrame.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/Pane.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/RecordManager.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/SwingWindow.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/Gui/TreeNode.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/out/production/JarHomework1/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework1/src/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/artifacts/JarHomework4_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/misc.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/modules.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/uiDesigner.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/vcs.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../JarHomework4/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/JarHomework4.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/README.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/makefile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/artifacts/JarHomework4_jar/JarHomework4.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/InvalidArgsException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/InvalidKValException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/KSearchTree.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane$CaptionFrame.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane$StateFrame.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/Pane.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/RecordManager.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/SwingWindow.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/Gui/TreeNode.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/out/production/JarHomework4/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/InvalidArgsException.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/InvalidKValException.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/KSearchTree.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/Pane.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/RecordManager.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/SwingWindow.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4/src/TreeNode.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/artifacts/JarHomework4EC_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/misc.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/modules.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/vcs.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/.idea/workspace.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/JarHomework4EC.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/README.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/makefile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/artifacts/JarHomework4EC_jar/JarHomework4EC.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/AbstractClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/AnalogClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/ClockGUI.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/DateAndTime.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/DigitalClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/SliderBasedClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/out/production/JarHomework4EC/Window.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/AbstractClock.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/AnalogClock.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/ClockGUI.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/DateAndTime.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/DigitalClock.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/SliderBasedClock.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomework4EC/src/Window.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/artifacts/JarHomeworkEC1_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/misc.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/modules.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/.idea/workspace.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/JarHomeworkEC1.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/Makefile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/README.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/artifacts/JarHomeworkEC1_jar/JarHomeworkEC1.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/AbstractClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/AnalogClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/ClockGUI.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/DateAndTime.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/DigitalClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/SliderBasedClock.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/Clocks/Window.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/out/production/JarHomeworkEC1/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../JarHomeworkEC1/src/META-INF/MANIFEST.MF" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/.idea/misc.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/.idea/modules.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/.idea/workspace.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/NateHomework.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/out/production/NateHomework/BobCar.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/out/production/NateHomework/NestedLoop.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/src/BobCar.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../NateHomework/src/NestedLoop.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../Project/.idea/typescript-compiler.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../Project/.idea/vcs.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../Ramsey/src/Graph.java" afterPath="$PROJECT_DIR$/../Ramsey/src/Graph.java" />
-      <change beforePath="$PROJECT_DIR$/../Ramsey/src/Runner.java" afterPath="$PROJECT_DIR$/../Ramsey/src/Runner.java" />
-      <change beforePath="$PROJECT_DIR$/../maxContigSubseqSum/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../maxContigSubseqSum/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../PycharmProjects/COS125GAme/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../WebstormProjects/Project1/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../WebstormProjects/Project1/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/../JJIslands/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JJIslands/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JJIslands/input/testIslands.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../JJIslands/input/testIslands.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JJIslands/src/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JJIslands/src/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JJIslands/src/Islands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JJIslands/src/Islands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/input/cfgtest1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/src/CFG.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/src/CFG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LexaardAutomata/src/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LexaardAutomata/src/Rule.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -143,8 +29,8 @@
       <file leaf-file-name="main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+            <state relative-caret-position="595">
+              <caret line="38" column="41" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -152,42 +38,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="makefile" pinned="false" current-in-tab="false">
+      <file leaf-file-name="makefile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="85">
+              <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="182">
-              <caret line="25" column="20" lean-forward="false" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
-              <folding />
+              <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="README" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="KSearchTree.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2205">
-              <caret line="113" column="7" lean-forward="false" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-              <folding />
+            <state relative-caret-position="1785">
+              <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -195,8 +73,8 @@
       <file leaf-file-name="RecordManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+            <state relative-caret-position="255">
+              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
               <folding>
                 <element signature="e#540#541#0" expanded="true" />
                 <element signature="e#578#579#0" expanded="true" />
@@ -208,9 +86,8 @@
       <file leaf-file-name="TreeNode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="8" column="33" lean-forward="false" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-              <folding />
+            <state relative-caret-position="136">
+              <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -219,11 +96,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -240,32 +112,20 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-7" />
-    <option name="width" value="974" />
-    <option name="height" value="1037" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="width" value="975" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,7 +147,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -317,43 +178,17 @@
   </component>
   <component name="RunManager">
     <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
     </configuration>
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="main" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
       <module name="COS226Ktrees" />
-      <envs />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" />
@@ -363,24 +198,13 @@
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="singleModule" />
       </option>
-      <envs />
       <patterns />
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
@@ -393,17 +217,21 @@
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="singleModule" />
       </option>
       <option name="USE_DEFAULT_REPORTERS" value="false" />
       <option name="PROPERTIES_FILE" />
-      <envs />
       <properties />
       <listeners />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
@@ -412,13 +240,10 @@
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.main" />
+      <list>
+        <item itemvalue="Application.main" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -433,46 +258,48 @@
       <workItem from="1510182023779" duration="1087000" />
       <workItem from="1510184028270" duration="438000" />
       <workItem from="1518407561882" duration="191000" />
+      <workItem from="1522909851997" duration="40000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1716000" />
+    <option name="totallyTimeSpent" value="1756000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3080357" sideWeight="0.1984375" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30463576" sideWeight="0.8015625" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16354166" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39955848" sideWeight="0.49375" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
-      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.49375" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.49583334" order="4" side_tool="false" content_ui="tabs" />
+      <window_info anchor="right" id="Palette" order="0" />
+      <window_info anchor="bottom" id="TODO" order="13" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.1984375" side_tool="true" weight="0.3080357" />
+      <window_info anchor="right" id="Maven Projects" order="1" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.8015625" weight="0.30463576" />
+      <window_info anchor="bottom" id="Version Control" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info id="Capture Tool" order="0" />
+      <window_info id="Designer" order="1" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.08138021" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.49375" weight="0.39955848" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Execute Anonymous" order="10" />
+      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="2" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49375" weight="0.3289183" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Salesforce" order="11" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
+      <window_info anchor="bottom" id="Debug Logs" order="9" />
+      <window_info anchor="bottom" id="Find" order="4" sideWeight="0.49583334" weight="0.3289183" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -485,13 +312,19 @@
     <breakpoint-manager>
       <option name="time" value="2" />
     </breakpoint-manager>
-    <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="735">
-          <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+          <caret line="38" column="41" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -499,25 +332,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
-          <caret line="113" column="7" lean-forward="false" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding />
+          <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -528,23 +355,20 @@
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="8" column="33" lean-forward="false" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
-          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -552,25 +376,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
-          <caret line="113" column="7" lean-forward="false" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding />
+          <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -581,15 +399,13 @@
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="8" column="33" lean-forward="false" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -599,15 +415,14 @@
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
-          <caret line="113" column="7" lean-forward="false" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding />
+          <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -618,15 +433,13 @@
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="8" column="33" lean-forward="false" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -636,15 +449,14 @@
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
-          <caret line="113" column="7" lean-forward="false" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding />
+          <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -655,15 +467,13 @@
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="8" column="33" lean-forward="false" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -674,14 +484,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
           <caret line="113" column="7" lean-forward="true" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -693,14 +502,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="903">
-          <caret line="46" column="22" lean-forward="false" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
+          <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -710,7 +518,7 @@
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -721,23 +529,21 @@
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
+          <caret line="10" selection-end-line="101" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2667">
-          <caret line="139" column="5" lean-forward="false" selection-start-line="139" selection-start-column="5" selection-end-line="139" selection-end-column="5" />
-          <folding />
+          <caret line="139" column="5" selection-start-line="139" selection-start-column="5" selection-end-line="139" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="903">
-          <caret line="46" column="22" lean-forward="false" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
+          <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -747,15 +553,14 @@
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
+          <caret line="10" selection-end-line="101" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -767,7 +572,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2667">
           <caret line="139" column="5" lean-forward="true" selection-start-line="139" selection-start-column="5" selection-end-line="139" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -784,16 +588,14 @@
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="16" column="20" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="161" selection-end-column="1" />
-          <folding />
+          <caret line="16" column="20" selection-end-line="161" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
+          <caret line="10" lean-forward="true" selection-end-line="101" />
         </state>
       </provider>
     </entry>
@@ -810,8 +612,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -821,15 +622,14 @@
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -839,16 +639,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
-          <folding />
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -858,15 +656,14 @@
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        <state relative-caret-position="255">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#540#541#0" expanded="true" />
             <element signature="e#578#579#0" expanded="true" />
@@ -876,53 +673,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/KSearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2205">
-          <caret line="113" column="7" lean-forward="false" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding />
+        <state relative-caret-position="1785">
+          <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="33" lean-forward="false" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-          <folding />
+        <state relative-caret-position="136">
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/production/Coding/README" />
     <entry file="file://$PROJECT_DIR$/production/Coding/results.txt" />
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+        <state relative-caret-position="595">
+          <caret line="38" column="41" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
-          <caret line="25" column="20" lean-forward="false" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
-          <folding />
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
         </state>
       </provider>
     </entry>

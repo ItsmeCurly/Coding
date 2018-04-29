@@ -49,16 +49,13 @@ public class Islands {
             longestRoute = new LinkedList<>(currentRoute);
         }
 
-        if (longestRoute.size() == temp.keySet().size()) {
-            return;
-        }
-
         for (int i : temp.get(currentRoute.getLast())) {
             LinkedList<Integer> copyRoute = new LinkedList<>(currentRoute);
             copyRoute.add(i);
 
             Map<Integer, List<Integer>> copyTemp = copyMapping(temp);
 
+            System.out.println(currentRoute);
             removeSlide(currentRoute.getLast(), i, copyTemp);
 
             findPath(copyTemp, copyRoute);
@@ -110,7 +107,7 @@ public class Islands {
         String result = "" + (longestRoute.size() - 1) + '\n';
 
         for (int i : longestRoute) {
-            result += i + '\n';
+            result += i + "\n";
         }
         return result;
     }

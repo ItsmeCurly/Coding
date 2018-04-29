@@ -200,6 +200,23 @@ public class Interpreter {
                             varMap.put(name, b1);
                         else
                             varMap.replace(name, b1);
+                    } else if (command.equals("pda")) {
+                        String input = scan.nextLine() + '\n';
+
+                        input += scan.nextLine() + '\n';
+
+                        String temp;
+
+                        while (!(temp = scan.nextLine()).isEmpty()) {
+                            input += temp + '\n';
+                        }
+
+                        PDA pda;
+                        pda = PDA.constructPDA(input);
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, pda);
+                        else
+                            varMap.replace(name, pda);
                     } else if (command.contains("(") || isCharacter(command)) {
                         String input = command;
                         String temp;
