@@ -4,15 +4,12 @@ JC = javac
 .java.class:
         $(JC) $(JFLAGS) $*.java
 
-CLASSES = \
+CLASSES : \
 	    Automaton.java \
 	    GNFA.java \
-	    GNFAState.java \
 	    Interpreter.java \
 	    OLDREGEX.java \
 	    Regex.java \
-	    State.java \
-	    Rule.java \
 	    CFG.java
 
 default: classes
@@ -20,4 +17,4 @@ default: classes
 classes: $(CLASSES:.java=.class)
 
 clean:
-        $(RM) *.class
+        $(RM) *.class::

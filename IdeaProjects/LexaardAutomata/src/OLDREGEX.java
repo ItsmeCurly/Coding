@@ -110,8 +110,8 @@ public class OLDREGEX {
     }
 
     private void addNfa(char c) {
-        State s0 = new State(false);
-        State s1 = new State(true);
+        Automaton.State s0 = new Automaton.State(false);
+        Automaton.State s1 = new Automaton.State(true);
 
         Automaton nfa = new Automaton();
         if (c == EPSILONCHARACTER) {

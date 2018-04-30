@@ -55,7 +55,7 @@ public class Regex {
                 Regex r1 = gnfa1.getStates().get(j).getNextStateTransitions().remove(i - 1);
                 ownRegexes.add(r1);
             }
-            GNFAState st = gnfa1.getStates().remove(i - 1);
+            GNFA.GNFAState st = gnfa1.getStates().remove(i - 1);
             i -= 1;
         }
         return null;
@@ -110,8 +110,8 @@ public class Regex {
      * @return The NFA consisting of one connection
      */
     private Automaton addNfa(String s) {
-        State s0 = new State(false);
-        State s1 = new State(true);
+        Automaton.State s0 = new Automaton.State(false);
+        Automaton.State s1 = new Automaton.State(true);
 
         Automaton nfa = new Automaton();
 
