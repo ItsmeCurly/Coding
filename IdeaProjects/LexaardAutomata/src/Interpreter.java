@@ -217,6 +217,18 @@ public class Interpreter {
                             varMap.put(name, pda);
                         else
                             varMap.replace(name, pda);
+                    } else if (command.equals("cfg2pda")) {
+                        PDA pda = PDA.cfg2pda((CFG)varMap.get(scanIn.next()));
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, pda);
+                        else
+                            varMap.replace(name, pda);
+                    } else if (command.equals("pda2cfg")) {
+                        CFG cfg = PDA.pda2cfg((PDA)varMap.get(scanIn.next()));
+                        if (!varMap.containsKey(name))
+                            varMap.put(name, cfg);
+                        else
+                            varMap.replace(name, cfg);
                     } else if (command.contains("(") || isCharacter(command)) {
                         String input = command;
                         String temp;
@@ -274,7 +286,6 @@ public class Interpreter {
     private boolean isCharacter(String command) {
         return command.charAt(0) >= 'a' && command.charAt(0) <= 'z';
     }
-
 
     /**
      * Checks whether the identifier is valid for a certain variable

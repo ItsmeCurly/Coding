@@ -1,0 +1,6 @@
+define c1 cfg
+odd1 xetra c
+S -> a T b | b
+T -> T a | ..
+
+define p1 cfg2pda c1

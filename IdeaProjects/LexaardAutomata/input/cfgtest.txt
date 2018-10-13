@@ -6,5 +6,4 @@ C -> A
 D -> D
 E B F G
 
-define c1nf chomskyNF c1
-print c1nf
+print c1

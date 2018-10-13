@@ -19,8 +19,6 @@ var (
 )
 
 const (
-	EOF = 99
-
 	LETTER  = 0
 	DIGIT   = 1
 	UNKNOWN = 2
@@ -67,6 +65,8 @@ func main() {
 	getChar()
 	for len(buffer) > currentindex {
 		getLex()
+		getBool_Expr()
+		fmt.Printf("token is %d, lexeme is %s\n", nexttoken, lexeme)
 	}
 }
 
@@ -86,6 +86,10 @@ func lookup(b byte) int {
 		break
 	case '|':
 		addChar()
+		getChar()
+		if nextchar == '|' {
+			addChar()
+		}
 		nexttoken = BAR
 		break
 	case '!':
@@ -114,9 +118,9 @@ func getChar() {
 	nextchar = buffer[currentindex]
 	currentindex += 1
 	if unicode.IsNumber(rune(nextchar)) {
-		charclass = LETTER
-	} else if unicode.IsLetter(rune(nextchar)) {
 		charclass = DIGIT
+	} else if unicode.IsLetter(rune(nextchar)) {
+		charclass = LETTER
 	} else {
 		charclass = UNKNOWN
 	}
@@ -125,7 +129,7 @@ func getChar() {
 func getLex() {
 	lexlength = 0
 
-	for i, _ := range lexeme {
+	for i := range lexeme {
 		lexeme[i] = 0
 	}
 
@@ -143,52 +147,49 @@ func getLex() {
 		}
 		nexttoken = IDENTIFIER
 		break
-	case DIGIT:
-		addChar()
-		getChar()
-		for charclass == DIGIT {
-			addChar()
-			getChar()
-		}
-		nexttoken = INT_LIT
-		break
 	case UNKNOWN:
 		lookup(nextchar)
 		getChar()
 		break
 	}
-	fmt.Printf("token is %d, lexeme is %s\n", nexttoken, lexeme)
+
 }
 
-//func PrintLex() {
-//	var s string
-//	for {
-//		s +=
-//	}
-//}
+func getBool_Expr() {
+	fmt.Println("Enter <bool_expr>")
 
-//func getBool_Expr() {
-//	fmt.Println("Enter <bool_expr>")
-//
-//	getAndTerm()
-//}
-//
-//func getAndTerm() {
-//
-//}
-//
-//func getBoolFactor() {
-//
-//}
-//
-//func getRelationExpr() {
-//
-//}
-//
-//func getId() {
-//
-//}
-//
-//func getBoolLiteral() {
-//
-//}
+	getAndTerm()
+
+	for nexttoken == BAR {
+		getLex()
+		getAndTerm()
+	}
+	fmt.Println("Exit <bool_expr>")
+}
+
+func getAndTerm() {
+	fmt.Println("Enter <and_term>")
+
+	getBoolFactor()
+
+	for nexttoken == AMPERSAND {
+		getLex()
+		getBoolFactor()
+	}
+}
+
+func getBoolFactor() {
+
+}
+
+func getRelationExpr() {
+
+}
+
+func getId() {
+
+}
+
+func getBoolLiteral() {
+
+}

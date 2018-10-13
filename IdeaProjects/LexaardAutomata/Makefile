@@ -10,7 +10,8 @@ CLASSES : \
 	    Interpreter.java \
 	    OLDREGEX.java \
 	    Regex.java \
-	    CFG.java
+	    CFG.java \
+	    PDA.java
 
 default: classes
 

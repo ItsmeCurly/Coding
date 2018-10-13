@@ -286,6 +286,10 @@ public class CFG {
         return r;
     }
 
+    private void compressRules() {
+
+    }
+
     /**
      * Copy of getNumVars except returns number of terminals
      * @param s The string to check the number of terminals
@@ -459,9 +463,10 @@ public class CFG {
      * Adds a rule to the CFG
      * @param r The rule to add
      */
-    private void addRule(Rule r) {
+    public void addRule(Rule r) {
         if (!rules.contains(r)) {
             rules.add(r);
+            sortRules();
         }
     }
 
@@ -488,11 +493,13 @@ public class CFG {
     /**
      * Sorts the rules in lexicographic order
      */
-    private void sortRules() {
+    public void sortRules() {
         List<Rule> sortedRules = new ArrayList<>(rules);
         Collections.sort(sortedRules);  //sort in lexicographic order by compareTo
-        sortedRules.remove(getRule(startRule)); //add start rule to beginning of list
-        sortedRules.add(0, getRule(startRule));
+        if(!startRule.equals("")) {
+            sortedRules.remove(getRule(startRule)); //add start rule to beginning of list
+            sortedRules.add(0, getRule(startRule));
+        }
         rules = sortedRules;    //set new rules
     }
 
@@ -520,7 +527,7 @@ public class CFG {
                 return r;
             }
         }
-        return new Rule(getAvailableName());
+        return new Rule(lhs);
     }
 
     /**
@@ -541,6 +548,26 @@ public class CFG {
 
     public String getStartRule() {
         return startRule;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setStartRule(String startRule) {
+        this.startRule = startRule;
+    }
+
+    public List<String> getVarAlphabet() {
+        return varAlphabet;
+    }
+
+    public List<String> getTermAlphabet() {
+        return termAlphabet;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
