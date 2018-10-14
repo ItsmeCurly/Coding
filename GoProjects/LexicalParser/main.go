@@ -9,14 +9,14 @@ import (
 )
 
 var (
-	buffer       []byte
-	f            *os.File
-	nexttoken    int
-	nextchar     byte
-	currentindex = 0
-	charclass    = 0
-	lexeme       = make([]byte, 25)
-	lexlength    = 0
+	buffer     []byte
+	nexttoken  int
+	nextchar   byte
+	inputIndex = 0
+	charclass  = 0
+	lexeme     = make([]byte, 25)
+	lexlength  = 0
+	IdVariant  = 0
 )
 
 const (
@@ -26,21 +26,21 @@ const (
 
 	//TOKEN CODES
 
-	LEFT_PAREN         = 20
-	RIGHT_PAREN        = 21
-	AMPERSAND          = 22
-	BAR                = 23
-	EXCLAM             = 24
-	LESSTHAN           = 25
-	GREATERTHAN        = 26
-	IDENTIFIER         = 27
-	INT_LIT            = 28
-	BOOL_LIT           = 29
-	NOTEQUALTO         = 30
-	GREATERTHANEQUALTO = 31
-	LESSTHANEQUALTO    = 32
-	EQUALTO            = 33
-	EOF                = 99
+	LEFT_PAREN            = 20
+	RIGHT_PAREN           = 21
+	AMPERSAND             = 22
+	BAR                   = 23
+	EXCLAMATION           = 24
+	LESS_THAN             = 25
+	GREATER_THAN          = 26
+	IDENTIFIER            = 27
+	INT_LIT               = 28
+	BOOL_LIT              = 29
+	NOTEQUALTO            = 30
+	GREATER_THAN_EQUAL_TO = 31
+	LESSTHANEQUALTO       = 32
+	EQUALTO               = 33
+	EOF                   = 99
 )
 
 func main() {
@@ -49,15 +49,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	f = file
-	defer f.Close()
+
+	defer file.Close()
 
 	fileinfo, err := file.Stat()
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	filesize := fileinfo.Size() + 2
+	filesize := fileinfo.Size() + 1
 
 	buffer = make([]byte, filesize)
 	bytesread, err := file.Read(buffer)
@@ -65,77 +65,84 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("bytes read: ", bytesread)
-	fmt.Println("bytestream to string: ", string(buffer))
-	fmt.Println("bytestream: ", buffer)
+	fmt.Println("Number of bytes read: ", bytesread)
+	fmt.Println("Bytestream to string: ", string(buffer))
+	fmt.Println("Bytestream: ", buffer)
 
-	getChar()
-	for len(buffer) > currentindex {
-		getLex()
-		//getBool_Expr()
+	getCharFromStream()
+	for len(buffer) > inputIndex {
+		getLexeme()
+		getBool_Expr()
 	}
 }
 
-func lookup(b byte) int {
+func lookup(b byte) {
 	switch b {
 	case '(':
-		addChar()
+		addCharToLex()
 		nexttoken = LEFT_PAREN
 		break
 	case ')':
-		addChar()
+		addCharToLex()
 		nexttoken = RIGHT_PAREN
 		break
 	case '&':
-		addChar()
+		addCharToLex()
 		nexttoken = AMPERSAND
 		break
 	case '|':
-		addChar()
-		checkChar()
+		addCharToLex()
+		getCharFromStream()
 		if nextchar == '|' {
-			getChar()
-			addChar()
+			addCharToLex()
+			getCharFromStream()
+			nexttoken = BAR
+			break
 		}
-		nexttoken = BAR
-		break
+		panic(errors.New("not a valid operator"))
 	case '!':
-		addChar()
-		nexttoken = EXCLAM
+		addCharToLex()
+		nexttoken = EXCLAMATION
 		break
 	case '<':
-		addChar()
-		checkChar()
+		addCharToLex()
+		getCharFromStream()
 		if nextchar == '>' {
-			getChar()
-			addChar()
+			addCharToLex()
 			nexttoken = NOTEQUALTO
 			break
 		}
-		nexttoken = LESSTHAN
+		nexttoken = LESS_THAN
 		break
 	case '>':
-		addChar()
-		nexttoken = GREATERTHAN
+		addCharToLex()
+		nexttoken = GREATER_THAN
 		break
+	case '=':
+		addCharToLex()
+		getCharFromStream()
+		if nextchar == '=' {
+			addCharToLex()
+			nexttoken = EQUALTO
+			break
+		}
+		panic(errors.New("not a valid operator"))
 	case 0:
-		addChar()
+		addCharToLex()
 		nexttoken = EOF
 		charclass = EOF
 		break
 	}
-	return nexttoken
 }
 
-func addChar() {
+func addCharToLex() {
 	lexeme[lexlength] = nextchar
 	lexlength += 1
-	lexeme[lexlength] = 0
 }
 
-func getChar() {
-	nextchar = buffer[currentindex]
-	currentindex += 1
+func getCharFromStream() {
+	nextchar = buffer[inputIndex]
+	inputIndex += 1
 	if unicode.IsNumber(rune(nextchar)) {
 		charclass = DIGIT
 	} else if unicode.IsLetter(rune(nextchar)) {
@@ -147,141 +154,174 @@ func getChar() {
 	}
 }
 
-func checkChar() {
-	nextchar = buffer[currentindex]
-	if unicode.IsNumber(rune(nextchar)) {
-		charclass = DIGIT
-	} else if unicode.IsLetter(rune(nextchar)) {
-		charclass = LETTER
-	} else {
-		charclass = UNKNOWN
-	}
-}
-
 //returns the token
-func getLex() {
+func getLexeme() {
 	lexlength = 0
 
 	for i := range lexeme {
 		lexeme[i] = 0
 	}
 
+	//get rid of the spaces before the lex
 	for unicode.IsSpace(rune(nextchar)) {
-		getChar()
+		getCharFromStream()
 	}
 
 	switch charclass {
+	//parse identifiers
 	case LETTER:
-		addChar()
-		checkChar()
+		addCharToLex()
+		getCharFromStream()
 		for charclass == LETTER || charclass == DIGIT {
-			getChar()
-			addChar()
-			checkChar()
+			addCharToLex()
+			getCharFromStream()
 		}
-		nexttoken = IDENTIFIER
+		if checkIdentifier() {
+			nexttoken = IDENTIFIER
+			IdVariant = IDENTIFIER
+		} else {
+			nexttoken = BOOL_LIT
+			IdVariant = BOOL_LIT
+		}
+
 		break
+		//parse integer literals
+	case DIGIT:
+		addCharToLex()
+		getCharFromStream()
+		if charclass == LETTER {
+			panic(errors.New("not a valid identifier"))
+		}
+		for charclass == DIGIT {
+			addCharToLex()
+			getCharFromStream()
+		}
+		if charclass == LETTER {
+			panic(errors.New("not a valid identifier"))
+		}
+
+		nexttoken = IDENTIFIER
+		IdVariant = INT_LIT
+		break
+		//parse operators and other characters
 	case UNKNOWN:
 		lookup(nextchar)
-		getChar()
+		getCharFromStream()
 		break
+		//parse EOF, specified by 0 in input stream
 	case EOF:
 		nexttoken = EOF
 		lexeme[0] = 'E'
 		lexeme[1] = 'O'
 		lexeme[2] = 'F'
 		lexeme[3] = 0
-		getChar()
 		break
 	}
 	fmt.Printf("Next token is %d, readable variant is %s\n", nexttoken, lexeme)
 }
 
+/*
+returns if the identifier input is a boolean literal
+*/
+func checkIdentifier() bool {
+	if (lexeme[0] == 't' && lexeme[1] == 'r' && lexeme[2] == 'u' && lexeme[3] == 'e') ||
+		(lexeme[0] == 'f' && lexeme[1] == 'a' && lexeme[2] == 'l' && lexeme[3] == 's' && lexeme[4] == 'e') {
+		return false
+	}
+	return true
+}
+
+/*
+Start of recursive descent parser
+*/
+
 //<bool_expr> ::= <and_term> { || <and_term> }
 func getBool_Expr() {
-	fmt.Println("Enter <bool_expr>")
+	fmt.Println("Entering <bool_expr>")
 
 	getAndTerm()
 
 	for nexttoken == BAR {
-		getLex()
+		getLexeme()
 		getAndTerm()
 	}
-	fmt.Println("Exit <bool_expr>")
+	fmt.Println("Exiting <bool_expr>")
 }
 
 //<and_term> ::= <bool_factor> { & <bool_factor> }
 func getAndTerm() {
-	fmt.Println("Enter <and_term>")
+	fmt.Println("Entering <and_term>")
 
 	getBoolFactor()
 
 	for nexttoken == AMPERSAND {
-		getLex()
+		getLexeme()
 		getBoolFactor()
 	}
 
-	fmt.Println("Exit <and_term>")
+	fmt.Println("Exiting <and_term>")
 }
 
 //<bool_factor> ::= <bool_literal> | !<bool_factor> |
 //                 ( <bool_expr> ) | <relation_expr>
 func getBoolFactor() {
-	fmt.Println("Enter <bool_factor>")
+	fmt.Println("Entering <bool_factor>")
 
 	if nexttoken == BOOL_LIT {
 		getBoolLiteral()
-		getLex()
-	} else if nexttoken == EXCLAM {
-		getLex()
+		getLexeme()
+	} else if nexttoken == EXCLAMATION {
+		getLexeme()
 		getBoolFactor()
 	} else if nexttoken == LEFT_PAREN {
-		getLex()
+		getLexeme()
 		getBool_Expr()
 		if nexttoken == RIGHT_PAREN {
-			getLex()
+			getLexeme()
 		} else {
-			log.Fatal(errors.New("no right parenthesis"))
+			panic(errors.New("no right parentheses"))
 		}
 	} else {
 		getRelationExpr()
 	}
-	fmt.Println("Exit <bool_factor>")
+	fmt.Println("Exiting <bool_factor>")
 
 }
 
 //<relation_expr> ::= <id> { <relop> <id> }
 func getRelationExpr() {
-	fmt.Println("Enter <relation_expr>")
+	fmt.Println("Entering <relation_expr>")
 
 	getId()
 
-	for nexttoken == LESSTHAN || nexttoken == GREATERTHAN || nexttoken == GREATERTHANEQUALTO || nexttoken == LESSTHANEQUALTO || nexttoken == EQUALTO || nexttoken == NOTEQUALTO {
-		getLex()
+	for nexttoken == LESS_THAN || nexttoken == GREATER_THAN || nexttoken == GREATER_THAN_EQUAL_TO || nexttoken == LESSTHANEQUALTO || nexttoken == EQUALTO || nexttoken == NOTEQUALTO {
+		getLexeme()
 		getId()
 	}
-	fmt.Println("Exit <relation_expr>")
+	fmt.Println("Exiting <relation_expr>")
 }
 
 //<id> ::= letter { letter | digit }
 func getId() {
 	if nexttoken == IDENTIFIER {
-		fmt.Println("Enter <id>")
-
-		fmt.Printf("ID is %s\n", lexeme)
-
-		getLex()
-		fmt.Println("Exit <id>")
+		fmt.Println("Entering <id>")
+		if IdVariant == IDENTIFIER {
+			fmt.Printf("ID is %s\n", lexeme)
+		} else {
+			fmt.Printf("Integer is %s\n", lexeme)
+		}
+		getLexeme()
+		fmt.Println("Exiting <id>")
 	} else {
-		log.Fatal(errors.New("not an identifier, exiting"))
+		panic(errors.New("not an identifier, exiting"))
 	}
 }
 
 //<bool_literal> ::= true | false
 func getBoolLiteral() {
-	fmt.Println("Enter <bool_lit>")
+	fmt.Println("Entering <bool_lit>")
 
-	getLex()
+	getLexeme()
 
-	fmt.Println("Exit <bool_lit>")
+	fmt.Println("Exiting <bool_lit>")
 }
