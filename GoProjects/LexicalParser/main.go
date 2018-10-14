@@ -10,37 +10,39 @@ import (
 
 var (
 	buffer     []byte
-	nexttoken  int
-	nextchar   byte
+	nextToken  int
+	nextChar   byte
 	inputIndex = 0
-	charclass  = 0
+	charClass  = 0
 	lexeme     = make([]byte, 25)
-	lexlength  = 0
+	lexLength  = 0
 	IdVariant  = 0
 )
 
 const (
+	//CHARACTER TYPES
+
 	LETTER  = 0
 	DIGIT   = 1
 	UNKNOWN = 2
+	EOF     = 99
 
 	//TOKEN CODES
 
-	LEFT_PAREN            = 20
-	RIGHT_PAREN           = 21
-	AMPERSAND             = 22
-	BAR                   = 23
-	EXCLAMATION           = 24
-	LESS_THAN             = 25
-	GREATER_THAN          = 26
-	IDENTIFIER            = 27
-	INT_LIT               = 28
-	BOOL_LIT              = 29
-	NOTEQUALTO            = 30
-	GREATER_THAN_EQUAL_TO = 31
-	LESSTHANEQUALTO       = 32
-	EQUALTO               = 33
-	EOF                   = 99
+	LeftParen          = 20
+	RightParen         = 21
+	Ampersand          = 22
+	Bar                = 23
+	Exclamation        = 24
+	LessThan           = 25
+	GreaterThan        = 26
+	Identifier         = 27
+	IntLit             = 28
+	BoolLit            = 29
+	NotEqualTo         = 30
+	GreaterThanEqualTo = 31
+	LessThanEqualTo    = 32
+	EqualTo            = 33
 )
 
 func main() {
@@ -80,144 +82,144 @@ func lookup(b byte) {
 	switch b {
 	case '(':
 		addCharToLex()
-		nexttoken = LEFT_PAREN
+		nextToken = LeftParen
 		break
 	case ')':
 		addCharToLex()
-		nexttoken = RIGHT_PAREN
+		nextToken = RightParen
 		break
 	case '&':
 		addCharToLex()
-		nexttoken = AMPERSAND
+		nextToken = Ampersand
 		break
 	case '|':
 		addCharToLex()
 		getCharFromStream()
-		if nextchar == '|' {
+		if nextChar == '|' {
 			addCharToLex()
 			getCharFromStream()
-			nexttoken = BAR
+			nextToken = Bar
 			break
 		}
 		panic(errors.New("not a valid operator"))
 	case '!':
 		addCharToLex()
-		nexttoken = EXCLAMATION
+		nextToken = Exclamation
 		break
 	case '<':
 		addCharToLex()
 		getCharFromStream()
-		if nextchar == '>' {
+		if nextChar == '>' {
 			addCharToLex()
-			nexttoken = NOTEQUALTO
+			nextToken = NotEqualTo
 			break
 		}
-		nexttoken = LESS_THAN
+		nextToken = LessThan
 		break
 	case '>':
 		addCharToLex()
-		nexttoken = GREATER_THAN
+		nextToken = GreaterThan
 		break
 	case '=':
 		addCharToLex()
 		getCharFromStream()
-		if nextchar == '=' {
+		if nextChar == '=' {
 			addCharToLex()
-			nexttoken = EQUALTO
+			nextToken = EqualTo
 			break
 		}
 		panic(errors.New("not a valid operator"))
 	case 0:
 		addCharToLex()
-		nexttoken = EOF
-		charclass = EOF
+		nextToken = EOF
+		charClass = EOF
 		break
 	}
 }
 
 func addCharToLex() {
-	lexeme[lexlength] = nextchar
-	lexlength += 1
+	lexeme[lexLength] = nextChar
+	lexLength += 1
 }
 
 func getCharFromStream() {
-	nextchar = buffer[inputIndex]
+	nextChar = buffer[inputIndex]
 	inputIndex += 1
-	if unicode.IsNumber(rune(nextchar)) {
-		charclass = DIGIT
-	} else if unicode.IsLetter(rune(nextchar)) {
-		charclass = LETTER
-	} else if nextchar == 0 {
-		charclass = EOF
+	if unicode.IsNumber(rune(nextChar)) {
+		charClass = DIGIT
+	} else if unicode.IsLetter(rune(nextChar)) {
+		charClass = LETTER
+	} else if nextChar == 0 {
+		charClass = EOF
 	} else {
-		charclass = UNKNOWN
+		charClass = UNKNOWN
 	}
 }
 
 //returns the token
 func getLexeme() {
-	lexlength = 0
+	lexLength = 0
 
 	for i := range lexeme {
 		lexeme[i] = 0
 	}
 
 	//get rid of the spaces before the lex
-	for unicode.IsSpace(rune(nextchar)) {
+	for unicode.IsSpace(rune(nextChar)) {
 		getCharFromStream()
 	}
 
-	switch charclass {
+	switch charClass {
 	//parse identifiers
 	case LETTER:
 		addCharToLex()
 		getCharFromStream()
-		for charclass == LETTER || charclass == DIGIT {
+		for charClass == LETTER || charClass == DIGIT {
 			addCharToLex()
 			getCharFromStream()
 		}
 		if checkIdentifier() {
-			nexttoken = IDENTIFIER
-			IdVariant = IDENTIFIER
+			nextToken = Identifier
+			IdVariant = Identifier
 		} else {
-			nexttoken = BOOL_LIT
-			IdVariant = BOOL_LIT
+			nextToken = BoolLit
+			IdVariant = BoolLit
 		}
-
 		break
+
 		//parse integer literals
 	case DIGIT:
 		addCharToLex()
 		getCharFromStream()
-		if charclass == LETTER {
-			panic(errors.New("not a valid identifier"))
-		}
-		for charclass == DIGIT {
+
+		for charClass == DIGIT || charClass == LETTER {
+			if charClass == LETTER {
+				panic(errors.New("not a valid identifier"))
+			}
 			addCharToLex()
 			getCharFromStream()
 		}
-		if charclass == LETTER {
-			panic(errors.New("not a valid identifier"))
-		}
 
-		nexttoken = IDENTIFIER
-		IdVariant = INT_LIT
+		nextToken = Identifier
+		IdVariant = IntLit
 		break
+
 		//parse operators and other characters
 	case UNKNOWN:
-		lookup(nextchar)
+		lookup(nextChar)
 		getCharFromStream()
 		break
+
 		//parse EOF, specified by 0 in input stream
 	case EOF:
-		nexttoken = EOF
+		nextToken = EOF
 		lexeme[0] = 'E'
 		lexeme[1] = 'O'
 		lexeme[2] = 'F'
 		lexeme[3] = 0
 		break
 	}
-	fmt.Printf("Next token is %d, readable variant is %s\n", nexttoken, lexeme)
+	fmt.Printf("Next token is %d, readable variant is %s\n", nextToken, lexeme)
 }
 
 /*
@@ -241,7 +243,7 @@ func getBool_Expr() {
 
 	getAndTerm()
 
-	for nexttoken == BAR {
+	for nextToken == Bar {
 		getLexeme()
 		getAndTerm()
 	}
@@ -254,7 +256,7 @@ func getAndTerm() {
 
 	getBoolFactor()
 
-	for nexttoken == AMPERSAND {
+	for nextToken == Ampersand {
 		getLexeme()
 		getBoolFactor()
 	}
@@ -267,16 +269,16 @@ func getAndTerm() {
 func getBoolFactor() {
 	fmt.Println("Entering <bool_factor>")
 
-	if nexttoken == BOOL_LIT {
+	if nextToken == BoolLit {
 		getBoolLiteral()
 		getLexeme()
-	} else if nexttoken == EXCLAMATION {
+	} else if nextToken == Exclamation {
 		getLexeme()
 		getBoolFactor()
-	} else if nexttoken == LEFT_PAREN {
+	} else if nextToken == LeftParen {
 		getLexeme()
 		getBool_Expr()
-		if nexttoken == RIGHT_PAREN {
+		if nextToken == RightParen {
 			getLexeme()
 		} else {
 			panic(errors.New("no right parentheses"))
@@ -294,7 +296,7 @@ func getRelationExpr() {
 
 	getId()
 
-	for nexttoken == LESS_THAN || nexttoken == GREATER_THAN || nexttoken == GREATER_THAN_EQUAL_TO || nexttoken == LESSTHANEQUALTO || nexttoken == EQUALTO || nexttoken == NOTEQUALTO {
+	for nextToken == LessThan || nextToken == GreaterThan || nextToken == GreaterThanEqualTo || nextToken == LessThanEqualTo || nextToken == EqualTo || nextToken == NotEqualTo {
 		getLexeme()
 		getId()
 	}
@@ -303,9 +305,9 @@ func getRelationExpr() {
 
 //<id> ::= letter { letter | digit }
 func getId() {
-	if nexttoken == IDENTIFIER {
+	if nextToken == Identifier {
 		fmt.Println("Entering <id>")
-		if IdVariant == IDENTIFIER {
+		if IdVariant == Identifier {
 			fmt.Printf("ID is %s\n", lexeme)
 		} else {
 			fmt.Printf("Integer is %s\n", lexeme)
