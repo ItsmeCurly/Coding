@@ -22,10 +22,10 @@ var (
 const (
 	//CHARACTER TYPES
 
-	LETTER  = 0
-	DIGIT   = 1
-	UNKNOWN = 2
-	EOF     = 99
+	ALPHA    = 0
+	NUMER    = 1
+	UNKNOWN  = 2
+	TERMINAL = 99
 
 	//TOKEN CODES
 
@@ -71,68 +71,65 @@ func main() {
 	fmt.Println("Bytestream to string: ", string(buffer))
 	fmt.Println("Bytestream: ", buffer)
 
-	getCharFromStream()
-	for len(buffer) > inputIndex {
-		getLexeme()
-		getBool_Expr()
-	}
+	initByteStream()
+
+	getLexeme()
+	getBool_Expr()
 }
 
-func lookup(b byte) {
+func initByteStream() {
+	getCharFromStream()
+}
+
+func unknown(b byte) {
 	switch b {
 	case '(':
-		addCharToLex()
+		compute()
 		nextToken = LeftParen
 		break
 	case ')':
-		addCharToLex()
+		compute()
 		nextToken = RightParen
 		break
 	case '&':
-		addCharToLex()
+		compute()
 		nextToken = Ampersand
 		break
 	case '|':
-		addCharToLex()
-		getCharFromStream()
+		compute()
 		if nextChar == '|' {
-			addCharToLex()
-			getCharFromStream()
+			compute()
 			nextToken = Bar
 			break
 		}
 		panic(errors.New("not a valid operator"))
 	case '!':
-		addCharToLex()
+		compute()
 		nextToken = Exclamation
 		break
 	case '<':
-		addCharToLex()
-		getCharFromStream()
+		compute()
 		if nextChar == '>' {
-			addCharToLex()
+			compute()
 			nextToken = NotEqualTo
 			break
 		}
 		nextToken = LessThan
 		break
 	case '>':
-		addCharToLex()
+		compute()
 		nextToken = GreaterThan
 		break
 	case '=':
-		addCharToLex()
-		getCharFromStream()
+		compute()
 		if nextChar == '=' {
-			addCharToLex()
+			compute()
 			nextToken = EqualTo
 			break
 		}
 		panic(errors.New("not a valid operator"))
 	case 0:
-		addCharToLex()
-		nextToken = EOF
-		charClass = EOF
+		charClass = TERMINAL
 		break
 	}
 }
@@ -146,14 +143,19 @@ func getCharFromStream() {
 	nextChar = buffer[inputIndex]
 	inputIndex += 1
 	if unicode.IsNumber(rune(nextChar)) {
-		charClass = DIGIT
+		charClass = NUMER
 	} else if unicode.IsLetter(rune(nextChar)) {
-		charClass = LETTER
+		charClass = ALPHA
 	} else if nextChar == 0 {
-		charClass = EOF
+		charClass = TERMINAL
 	} else {
 		charClass = UNKNOWN
 	}
+}
+
+func compute() {
+	addCharToLex()
+	getCharFromStream()
 }
 
 //returns the token
@@ -171,12 +173,10 @@ func getLexeme() {
 
 	switch charClass {
 	//parse identifiers
-	case LETTER:
-		addCharToLex()
-		getCharFromStream()
-		for charClass == LETTER || charClass == DIGIT {
-			addCharToLex()
-			getCharFromStream()
+	case ALPHA:
+		compute()
+		for charClass == ALPHA || charClass == NUMER {
+			compute()
 		}
 		if checkIdentifier() {
 			nextToken = Identifier
@@ -188,16 +188,14 @@ func getLexeme() {
 		break
 
 		//parse integer literals
-	case DIGIT:
-		addCharToLex()
-		getCharFromStream()
+	case NUMER:
+		compute()
 
-		for charClass == DIGIT || charClass == LETTER {
-			if charClass == LETTER {
+		for charClass == NUMER || charClass == ALPHA {
+			if charClass == ALPHA {
 				panic(errors.New("not a valid identifier"))
 			}
-			addCharToLex()
-			getCharFromStream()
+			compute()
 		}
 
 		nextToken = Identifier
@@ -206,16 +204,13 @@ func getLexeme() {
 
 		//parse operators and other characters
 	case UNKNOWN:
-		lookup(nextChar)
-		getCharFromStream()
+		unknown(nextChar)
 		break
 
-		//parse EOF, specified by 0 in input stream
-	case EOF:
-		nextToken = EOF
-		lexeme[0] = 'E'
-		lexeme[1] = 'O'
-		lexeme[2] = 'F'
+		//parse TERMINAL, specified by 0 in input stream
+	case TERMINAL:
+		nextToken = TERMINAL
+		lexeme[0] = '$'
 		lexeme[3] = 0
 		break
 	}
