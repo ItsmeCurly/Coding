@@ -8,7 +8,6 @@
 using namespace std;
 
 int main()
-
 {
     //VARIABLES
     const double TA = 500;          //  temp at A in rankine

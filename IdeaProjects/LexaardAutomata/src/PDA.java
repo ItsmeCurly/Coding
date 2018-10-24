@@ -8,7 +8,7 @@ public class PDA {
 
     private List<String> stackAlphabet;
 
-    private List<String> inputAlphabet;
+    private List<Stjring> inputAlphabet;
 
     /**
      * Instantiates a blank PDA
