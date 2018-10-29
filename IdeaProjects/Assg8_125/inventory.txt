@@ -1,0 +1,7 @@
+Mop 15 5.99
+Pail 10 3.99
+Hammer 1 7.99
+Wrench 15 6.99
+Pen 50 0.99
+Pad 10 3.99
+Calendar 0 2.99
