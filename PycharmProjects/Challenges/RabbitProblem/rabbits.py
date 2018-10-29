@@ -15,6 +15,3 @@ def increasePop(males, females):
     breeding_females = sum(females[FERTILEAGE:])
     newMales = 5 * breeding_females
     newFemales = 9 * breeding_females
-
-
-def run(male, female, maxPop):

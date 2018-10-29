@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
@@ -18,9 +18,8 @@ int main() {
     int midterms[CAPACITY];
     int finals[CAPACITY];
 
-
     ifstream fin;
-    fin.open("grades.txt");
+    fin.open(R"(C:\Users\Bonnie\Coding\CLionProjects\Assg6_220\grades.txt)");
 
     if(fin.fail()) {
         printf("Error opening file");
@@ -28,13 +27,13 @@ int main() {
     }
     int counter = 0;
     string id, lastName, firstName;
-    while(!fin.eof()) {
+    while (CAPACITY > counter) {
         string dept, year;
-        int mt, fn;
         fin >> id >> lastName >> firstName;
         codes[counter] = code(id, lastName, firstName);
         fin >> dept >> year;
-        fin >> mt >> fn;
+        fin >> midterms[counter] >> finals[counter];
+        counter += 1;
     }
     fin.close();
     double mtMean = mean(midterms, CAPACITY);
@@ -44,9 +43,12 @@ int main() {
     double fnStddev = stddev(finals, CAPACITY, fnMean);
 
     for(int i = 0; i < CAPACITY; i++) {
-        cout << codes[i] << "Midterm: " << midterms[i] << "(" << letter(midterms[i], mtMean, mtStddev) << ")" << "Final: " << finals[i] << "(" << letter(finals[i], fnMean, fnStddev) << ")";
+        cout << codes[i] << " Midterm: " << midterms[i] << "("
+             << letter(midterms[i], mtMean, mtStddev) << ")" << "Final: "
+             << finals[i] << "(" << letter(finals[i], fnMean, fnStddev) << ")" << endl;
     }
-    cout << "Midterm: Mean: " << mtMean << " Standard Deviation: " << mtStddev;
+    cout << "Midterm: Mean: " << mtMean << " Standard Deviation: " << mtStddev << endl;
+    cout << "Final: Mean " << fnMean << " Standard Deviation: " << fnStddev << endl;
 
     return 0;
 }
@@ -60,7 +62,13 @@ double mean(int v[], int size) {
 }
 
 double stddev(int v[], int size, double m) {
-
+    double temp = 0;
+    for (int i = 0; i < size; i++) {
+        temp += pow(v[i] - m, 2);
+    }
+    cout << temp << endl;
+    temp /= (size - 1);
+    return sqrt(temp);
 }
 
 char letter(int score, double m, double s) {
@@ -77,6 +85,6 @@ char letter(int score, double m, double s) {
 }
 
 string code(const string id, const string lastName, const string firstName) {
-    return lastName.substr(0,1) + firstName.substr(0,1) + id.substr(5,2);
+    return firstName.substr(0, 1) + lastName.substr(0, 1) + id.substr(5, 2);
 
 }
