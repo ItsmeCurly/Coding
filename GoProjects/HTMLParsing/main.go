@@ -1,4 +1,4 @@
-package HTMLParsing
+package main
 
 func main() {
 

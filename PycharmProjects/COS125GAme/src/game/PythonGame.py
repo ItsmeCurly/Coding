@@ -1,11 +1,7 @@
-"""FINALIZED PROJECT FOR COS 125"""
-
 import os
 import pygame
 import sys
 from pygame.locals import *
-
-"""------------------------------------------------------------------------------------------------------"""
 
 # GLOBAL VARIABLES AND OBJECTS
 
