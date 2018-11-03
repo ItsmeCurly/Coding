@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	FILE_OUTPUT     = "C:\\Users\\Bonnie\\Coding\\GoProjects\\HTMLParsing"
+	//FILE_OUTPUT     = Coding\\GoProjects\\HTMLParsing"
 	DOC             = "https://www.webscraper.io/test-sites/e-commerce/allinone"
 	KEYWORD         = "Lenovo"
 	HighlightColor  = "white"
@@ -91,28 +91,6 @@ func getBodyNode(startNode *html.Node) (*html.Node, error) {
 	moveDownTree = func(node *html.Node) {
 		if node.Type == html.ElementNode && node.Data == "body" {
 			b = node
-		}
-		for child := node.FirstChild; child != nil; child = child.NextSibling {
-			moveDownTree(child)
-		}
-	}
-	moveDownTree(startNode)
-	if b != nil {
-		return b, nil
-	}
-	return nil, errors.New("could not find body element")
-}
-
-func getSpanNode(startNode *html.Node) (*html.Node, error) {
-	var b *html.Node
-	var moveDownTree func(*html.Node)
-	moveDownTree = func(node *html.Node) {
-		if node.Type == html.ElementNode && node.Data == "span" {
-			for _, element := range node.Attr {
-				fmt.Print(element.Namespace + " ")
-				fmt.Print(element.Key + " ")
-				fmt.Println(element.Val)
-			}
 		}
 		for child := node.FirstChild; child != nil; child = child.NextSibling {
 			moveDownTree(child)
