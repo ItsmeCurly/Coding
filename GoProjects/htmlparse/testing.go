@@ -30,14 +30,6 @@ func getSpanNode(startNode *html.Node) (*html.Node, error) {
 	return nil, errors.New("could not find body element")
 }
 
-func getFileDirectory() string {
-	_, filename, _, err := runtime.Caller(0)
-	if !err {
-		panic("No caller information")
-	}
-	return path.Dir(filename)
-}
-
 func main() {
 	_, filename, _, ok := runtime.Caller(0)
 	if !ok {

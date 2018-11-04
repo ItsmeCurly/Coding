@@ -9,15 +9,19 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
+	"path"
+	"runtime"
 	"strings"
 )
 
 const (
-	//FILE_OUTPUT     = Coding\\GoProjects\\HTMLParsing"
 	DOC             = "https://www.webscraper.io/test-sites/e-commerce/allinone"
 	KEYWORD         = "Lenovo"
-	HighlightColor  = "white"
-	BackgroundColor = "blue"
+	HighlightColor  = "#FFFFFF"
+	BackgroundColor = "#FFFF00"
+	FILENAME        = "newhtml.html"
 )
 
 func getHTMLdoc(doc string) string {
@@ -103,11 +107,65 @@ func getBodyNode(startNode *html.Node) (*html.Node, error) {
 	return nil, errors.New("could not find body element")
 }
 
-func getNodeString(node *html.Node) string {
+func GetNodeString(node *html.Node) string {
 	var buf bytes.Buffer
 	writer := io.Writer(&buf)
 	html.Render(writer, node)
 	return buf.String()
+}
+
+func WriteHtmlToFile(doc *html.Node) bool {
+	newHtml := GetNodeString(doc)
+
+	if _, err := os.Stat(FILENAME); !os.IsNotExist(err) {
+		os.Remove(FILENAME)
+	}
+
+	file, err := os.OpenFile(FILENAME, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	defer file.Close()
+
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+
+	file.Truncate(0)
+	file.Seek(0, 0)
+
+	_, err = file.WriteString(newHtml)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
+}
+
+func getFileDirectory() string {
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		panic("No caller information")
+	}
+	return path.Dir(filename)
+}
+
+//from https://gist.github.com/hyg/9c4afcd91fe24316cbf0
+func openbrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
 
 func main() {
@@ -120,5 +178,8 @@ func main() {
 	}
 	highlightKeyword(bodyNode)
 
-	fmt.Println(getNodeString(document))
+	if !WriteHtmlToFile(document) {
+		log.Fatal("could not write html to file")
+	}
+	openbrowser(getFileDirectory() + "\\" + FILENAME)
 }
