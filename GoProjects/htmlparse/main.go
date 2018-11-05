@@ -18,39 +18,69 @@ import (
 
 const (
 	DOC             = "https://www.webscraper.io/test-sites/e-commerce/allinone"
-	KEYWORD         = "Lenovo"
-	HighlightColor  = "#FFFFFF"
+	KEYWORD         = "to"
+	HighlightColor  = "#000000"
 	BackgroundColor = "#FFFF00"
-	FILENAME        = "newhtml.html"
+	NewFilename     = "newhtml.html"
+	OldFilename     = "html.html"
+	OpenBrowser     = false
+	OpenFromFile    = true
 )
 
+/*
+Checks for an error, generic error checker
+*/
+func check(e error) {
+	if e != nil {
+		log.Fatal(e)
+	}
+}
+
+/*
+Gets HTML from website specified by the DOC variable
+*/
 func getHTMLdoc(doc string) string {
 	resp, err := http.Get(doc)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 	defer resp.Body.Close()
 
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 
 	return string(bodyBytes)
 }
 
-func highlightKeyword(bodyNode *html.Node) (highlightedBodyText string) {
+/*
+Gets the html file from the directory, named html.html by default.
 
+HTML file can be specified by the OldFilename variable
+
+*/
+func getHTMLfile() string {
+	dat, err := ioutil.ReadFile(OldFilename)
+	check(err)
+
+	return string(dat)
+}
+
+/*
+main function - with body node will recursively travel down the tree to find the text nodes that are not scripts and
+will search within the text to find the keyword. When a keyword is found, the function will separate the textnode into
+two text nodes with a span node in the middle and a child textnode pointing to that. The function will work with an
+arbitrary amount of occurrences within a text node.
+
+The highlighting colors are specified through the BackgroundColor and HighlightColor
+*/
+func highlightKeyword(bodyNode *html.Node) {
 	var f func(*html.Node)
 	f = func(n *html.Node) {
 		if n.Type == html.TextNode {
 			if n.Parent.Data != "script" {
-				if strings.Contains(n.Data, KEYWORD) {
-					oldText := n.Data
-					text := strings.Split(oldText, KEYWORD)
-					leftText := text[0]
+				text := strings.Split(n.Data, KEYWORD)
+				for i := 0; i < len(text)-1; i++ {
+					leftText := text[i]
 
-					rightText := text[1]
+					rightText := text[i+1]
 
 					leftTextNode := &html.Node{
 						Type: html.TextNode,
@@ -72,11 +102,12 @@ func highlightKeyword(bodyNode *html.Node) (highlightedBodyText string) {
 					n.Parent.InsertBefore(leftTextNode, n)
 					n.Parent.InsertBefore(spanTextNode, n)
 					spanTextNode.AppendChild(textNode)
-					n.Parent.InsertBefore(rightTextNode, n)
-					for c := n.FirstChild; c != nil; c = c.NextSibling {
-						c.Parent = leftTextNode
-						n.RemoveChild(c)
+					if i == len(text)-2 {
+						n.Parent.InsertBefore(rightTextNode, n)
 					}
+
+				}
+				if strings.Contains(n.Data, KEYWORD) {
 					n.Parent.RemoveChild(n)
 				}
 			}
@@ -89,6 +120,11 @@ func highlightKeyword(bodyNode *html.Node) (highlightedBodyText string) {
 	return
 }
 
+/*
+Returns the body node from the html file
+
+Returns an error if no body node is found
+*/
 func getBodyNode(startNode *html.Node) (*html.Node, error) {
 	var b *html.Node
 	var moveDownTree func(*html.Node)
@@ -107,6 +143,9 @@ func getBodyNode(startNode *html.Node) (*html.Node, error) {
 	return nil, errors.New("could not find body element")
 }
 
+/*
+Gets the string of the HTML from the node down
+*/
 func GetNodeString(node *html.Node) string {
 	var buf bytes.Buffer
 	writer := io.Writer(&buf)
@@ -114,14 +153,17 @@ func GetNodeString(node *html.Node) string {
 	return buf.String()
 }
 
+/*
+Writes the HTML to the new file, specified by the NewHTMLFile variable
+*/
 func WriteHtmlToFile(doc *html.Node) bool {
 	newHtml := GetNodeString(doc)
 
-	if _, err := os.Stat(FILENAME); !os.IsNotExist(err) {
-		os.Remove(FILENAME)
+	if _, err := os.Stat(NewFilename); !os.IsNotExist(err) {
+		os.Remove(NewFilename)
 	}
 
-	file, err := os.OpenFile(FILENAME, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(NewFilename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	defer file.Close()
 
 	if err != nil {
@@ -140,6 +182,9 @@ func WriteHtmlToFile(doc *html.Node) bool {
 	return true
 }
 
+/*
+Gets the file directory of the caller, for use with opening browser
+*/
 func getFileDirectory() string {
 	_, filename, _, ok := runtime.Caller(0)
 	if !ok {
@@ -148,7 +193,11 @@ func getFileDirectory() string {
 	return path.Dir(filename)
 }
 
-//from https://gist.github.com/hyg/9c4afcd91fe24316cbf0
+//
+/*
+from https://gist.github.com/hyg/9c4afcd91fe24316cbf0
+Opens up a browser with certain url, specified by the html file
+*/
 func openbrowser(url string) {
 	var err error
 
@@ -162,24 +211,28 @@ func openbrowser(url string) {
 	default:
 		err = fmt.Errorf("unsupported platform")
 	}
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 
 }
 
 func main() {
-	htm := getHTMLdoc(DOC)
+	var htm string
+	if OpenFromFile {
+		htm = getHTMLfile()
+	} else {
+		htm = getHTMLdoc(DOC)
+	}
 	document, _ := html.Parse(strings.NewReader(htm))
 
 	bodyNode, err := getBodyNode(document)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
+
 	highlightKeyword(bodyNode)
 
 	if !WriteHtmlToFile(document) {
 		log.Fatal("could not write html to file")
 	}
-	openbrowser(getFileDirectory() + "\\" + FILENAME)
+	if OpenBrowser {
+		openbrowser(getFileDirectory() + "\\" + NewFilename)
+	}
 }
