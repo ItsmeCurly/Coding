@@ -23,7 +23,7 @@ const (
 	BackgroundColor = "#FFFF00"
 	NewFilename     = "newhtml.html"
 	OldFilename     = "html.html"
-	OpenBrowser     = false
+	OpenBrowser     = true
 	OpenFromFile    = true
 )
 

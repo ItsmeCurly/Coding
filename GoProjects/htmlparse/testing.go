@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/html"
-	"path"
-	"runtime"
 )
 
 func getSpanNode(startNode *html.Node) (*html.Node, error) {
@@ -31,9 +29,5 @@ func getSpanNode(startNode *html.Node) (*html.Node, error) {
 }
 
 func main() {
-	_, filename, _, ok := runtime.Caller(0)
-	if !ok {
-		panic("No caller information")
-	}
-	fmt.Printf("Filename : %q, Dir : %q\n", filename, path.Dir(filename))
+
 }
