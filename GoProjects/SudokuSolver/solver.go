@@ -8,19 +8,16 @@ import (
 )
 
 var table [][]int
+var orig [][]bool
 
 const InputFileName string = "input.txt"
 
-type CurrentSpace struct {
-	Row   int
-	Col   int
-	Value int
-}
-
 func main() {
 	table = make([][]int, 9)
+	orig = make([][]bool, 9)
 	for a := range table {
 		table[a] = make([]int, 9)
+		orig[a] = make([]bool, 9)
 	}
 
 	parseSudoku()
@@ -34,10 +31,15 @@ func main() {
 		table[currentRow][currentCol] = 1
 		if !validValue(currentRow, currentCol, table[currentRow][currentCol]) {
 			if table[currentRow][currentCol] == 8 {
-				currentCol = 1
+				moveLastSpace(&currentRow, &currentCol)
+				for !orig[currentRow][currentCol] {
+					moveLastSpace(&currentRow, &currentCol)
+				}
 			} else {
 				table[currentRow][currentCol]++
 			}
+		} else {
+			moveNextSpace(&currentRow, &currentCol)
 		}
 		if validValue(8, 8, table[currentRow][currentCol]) {
 			solved = true
@@ -47,7 +49,7 @@ func main() {
 }
 
 func validValue(i int, j int, value int) bool {
-	if validRow(i, value) && validCol(j, value) && validSpace() {
+	if validRow(i, value) && validCol(j, value) && validSpace(i, j, value) {
 		return true
 	}
 	return false
@@ -64,10 +66,6 @@ func validCol(colNum int, value int) bool {
 		}
 	}
 	return false
-}
-
-func existBox(rowNum int, colNum int, toCheck int) bool {
-
 }
 
 func checkArray(a []int, toCheck int) bool {
@@ -93,6 +91,11 @@ func parseSudoku() {
 			val, err := strconv.Atoi(s1)
 			check(err)
 			table[i][j] = val
+			if val != 0 {
+				orig[i][j] = true
+			} else {
+				orig[i][j] = false
+			}
 		}
 	}
 }
@@ -118,6 +121,14 @@ func moveNextSpace(row *int, col *int) {
 		*col = 0
 	} else {
 		*col++
+	}
+}
+func moveLastSpace(row *int, col *int) {
+	if *col == 0 {
+		*row--
+		*col = 8
+	} else {
+		*col--
 	}
 }
 
