@@ -6,13 +6,14 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var prevValue [][]int
 var table [][]int
 var orig [][]bool
 
-const InputFileName string = "input.txt"
+const InputFileName string = "input2.txt"
 
 func main() {
 	table = make([][]int, 9)
@@ -28,9 +29,12 @@ func main() {
 
 	row, col, solved := 0, 0, false
 
+	start := time.Now()
+
 	for !solved {
 		if row == 8 && col == 8 && validValue(8, 8, table[row][col]) {
 			solved = true
+			break
 		}
 		for orig[row][col] {
 			moveNextSpace(&row, &col)
@@ -53,11 +57,12 @@ func main() {
 		} else {
 			prevValue[row][col] = table[row][col]
 			moveNextSpace(&row, &col)
-			printTable()
-		}
-		//printTable()
-	}
 
+		}
+	}
+	end := time.Now()
+	fmt.Printf("Time taken %f\n", end.Sub(start).Seconds())
+	printTable()
 }
 
 func validValue(i int, j int, value int) bool {
@@ -117,7 +122,11 @@ func boxContains(row int, col int, value int) bool {
 
 	for _, v := range validRows {
 		for _, u := range validCols {
-			if (v != row && u != col) && table[v][u] == value {
+			check1 := !(v == row && u == col)
+			check3 := table[v][u] == value
+
+			boxVal := check1 && check3
+			if boxVal {
 				return true
 			}
 		}
