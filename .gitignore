@@ -5,3 +5,5 @@ CLionProjects/Assg6_220/.idea/vcs.xml
 CLionProjects/Assg6_220/.idea/workspace.xml
 CLionProjects/Assg6_220/.idea/codeStyles/Project.xml
 CLionProjects/Assg6_220/cmake-build-debug/Assg6_220.cbp
+*.xml
+PycharmProjects/IdentityPy/config.json
