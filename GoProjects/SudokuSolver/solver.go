@@ -13,7 +13,7 @@ var prevValue [][][]int
 var table [][][]int
 var orig [][][]bool
 
-const InputFileName string = "input.txt"
+const InputFileName string = "input\\input.txt"
 
 func main() {
 	parseSudoku()
