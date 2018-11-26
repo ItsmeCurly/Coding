@@ -1,2 +1,2 @@
 # Coding
-Coding repository
+Repository of my main coding projects whiel at UMaine
