@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="COS226Ktrees:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/COS226Ktrees_jar</output-path>
-    <root id="archive" name="COS226Ktrees.jar">
-      <element id="module-output" name="COS226Ktrees" />
-      <element id="dir-copy" path="$PROJECT_DIR$/src" />
-    </root>
-  </artifact>
-</component>
