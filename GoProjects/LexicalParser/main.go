@@ -46,7 +46,7 @@ const (
 )
 
 func main() {
-	file, err := os.OpenFile("in.txt", os.O_RDWR, 0666)
+	file, err := os.OpenFile("input\\in.txt", os.O_RDWR, 0666)
 
 	if err != nil {
 		log.Fatal(err)
